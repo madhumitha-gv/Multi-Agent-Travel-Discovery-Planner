@@ -6,7 +6,7 @@ Maybe you know the kind of trip you want — beaches, food, nature, nightlife, h
 
 That is exactly what this project is built for.
 
-The **Multi-Agent Travel Planner** takes a simple free-text description of your ideal trip, understands your travel persona, matches it against 500 cities, checks live weather for the best candidates, and builds a complete travel plan around the destination that fits you best. 🌍✈️
+The **Multi-Agent Travel Planner** takes a simple free-text description of your ideal trip, understands your travel persona, matches it against 500 cities, checks live weather for the best candidates, and builds a complete travel plan around the destination that fits you best. 
 
 Instead of asking you to choose a city first, the planner starts with **you**.
 
@@ -33,7 +33,7 @@ Describe the trip you want in plain language and hit **Let's Plan**. The left ra
 <img width="1881" height="836" alt="ChatGPT Image Sep 6, 2026, 01_42_46 PM" src="https://github.com/user-attachments/assets/ebad7013-aa81-4bc5-b9f7-b1c07f4179ca" />
 
 
-## ✨ What It Does
+## What It Does
 
 You type something like *"a relaxed beach trip with good food, nothing too expensive"* and the system:
 
@@ -45,7 +45,7 @@ You type something like *"a relaxed beach trip with good food, nothing too expen
 
 If every candidate has harsh weather, the graph routes to a failure branch and tells you to try different preferences rather than returning a bad plan.
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -57,7 +57,7 @@ If every candidate has harsh weather, the graph routes to a failure branch and t
 | Cultural tips | `EleutherAI/gpt-neo-1.3B` (local pipeline) |
 | Weather | [Open-Meteo](https://open-meteo.com/) API, cached 1h with retries |
 
-## 🤖 The Agents
+## The Agents
 
 - **Persona Agent** 👤 — Zero-shot classifies your input across 12 labels (`beach`, `adventure`, `history`, `food`, `budget`, `luxury`, `nature`, `nightlife`, …) and keeps the top 3.
 - **Destination Agent** 🌍 — Embeds your persona and every city's feature string, then ranks all 500 cities by cosine similarity and returns the top 3.
@@ -113,7 +113,7 @@ travel_planner/
 └── data/                     # City datasets
 ```
 
-## 📊 Data
+## Data
 
 `data/top_500_cities.json` holds the 500 cities the planner ranks, each with coordinates and a feature description used for matching:
 
