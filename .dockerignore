@@ -1,0 +1,15 @@
+.git
+.github
+venv/
+.venv/
+env/
+docs/
+**/__pycache__/
+*.pyc
+*.sqlite
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.DS_Store
+README.md
