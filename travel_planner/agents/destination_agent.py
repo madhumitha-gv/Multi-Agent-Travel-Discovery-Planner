@@ -59,7 +59,7 @@ def rank(persona, top_n=3):
 
     if not ranked:
         print("⚠️ No destination matches found.")
-    return ranked[:top_n]
+    return ranked if top_n is None else ranked[:top_n]
 
 
 def run(state, top_n=3):

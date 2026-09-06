@@ -706,38 +706,55 @@ def all_candidates_rejected(result):
     return bool(log) and all(entry.get("skipped") for entry in log)
 
 
-def find_cooler_alternatives(result, wanted=5, scan=25):
-    """Look further down the ranking for cities that pass the weather gate.
+def find_cooler_alternatives(result, wanted=5, per_country=1):
+    """Find the best-matching cities that actually pass the weather check.
 
-    The shortlist only ever holds the top few matches, so when all of them
-    are too hot the next best thing is to keep walking the ranked list
-    rather than make the traveller accept bad weather.
+    Weather for every candidate is fetched in a handful of batched
+    requests, so the whole catalogue can be filtered first and only the
+    survivors ranked. That beats ranking first and probing a short window,
+    which could only ever see the top few matches.
+
+    Most cities in the dataset share one of a dozen feature strings, so
+    similarity scores tie constantly and the winners would otherwise all
+    come from whichever country happens to sit first in the file.
+    `per_country` keeps the shortlist varied.
     """
     from agents import destination_agent
     from langgraph_setup.nodes import HARSH_CONDITIONS
-    from utils.weather_api import fetch_apparent_temperature
+    from utils.weather_api import fetch_apparent_temperatures
     from utils.weather_utils import get_current_weather
 
-    already = {e["city"] for e in result.get("weather_log", [])}
-    passing = []
+    ranked = destination_agent.rank(result.get("persona", []), top_n=None)
+    if not ranked:
+        return []
 
-    for candidate in destination_agent.rank(result.get("persona", []), top_n=scan):
-        if candidate["name"] in already:
+    already = {e["city"] for e in result.get("weather_log", [])}
+    ranked = [c for c in ranked if c["name"] not in already]
+
+    temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
+
+    passing = []
+    seen_countries = {}
+    for candidate, temperature in zip(ranked, temperatures):
+        if temperature is None:
             continue
-        try:
-            temp = fetch_apparent_temperature(candidate["lat"], candidate["lng"])
-        except Exception:
+        condition = get_current_weather(temperature)
+        if condition in HARSH_CONDITIONS:
             continue
-        condition = get_current_weather(temp)
-        if condition not in HARSH_CONDITIONS:
-            passing.append({
-                "city": candidate["name"],
-                "country": candidate.get("country", ""),
-                "temperature": temp,
-                "condition": condition,
-            })
-            if len(passing) >= wanted:
-                break
+
+        country = candidate.get("country", "Unknown")
+        if seen_countries.get(country, 0) >= per_country:
+            continue
+        seen_countries[country] = seen_countries.get(country, 0) + 1
+
+        passing.append({
+            "city": candidate["name"],
+            "country": country,
+            "temperature": temperature,
+            "condition": condition,
+        })
+        if len(passing) >= wanted:
+            break
 
     return passing
 
@@ -804,8 +821,8 @@ if result:
 
         else:
             st.caption(
-                "Keeps walking down the ranked list, checking live weather, "
-                "until it finds matches that do pass the check."
+                "Checks live weather for every city in the catalogue, then ranks the "
+                "ones that pass \u2014 at most one per country, so the list stays varied."
             )
             if st.button("Search for cooler cities", key="cooler_search"):
                 with st.spinner("Checking weather further down the ranking..."):
