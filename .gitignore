@@ -1,0 +1,22 @@
+# Environments
+venv/
+.venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+
+# Caches
+*.cache.sqlite
+.cache.sqlite
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store

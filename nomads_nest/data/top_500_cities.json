@@ -1,0 +1,3502 @@
+[
+  {
+    "city":"Tokyo",
+    "lat":35.6897,
+    "lng":139.6922,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Jakarta",
+    "lat":-6.175,
+    "lng":106.8275,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Delhi",
+    "lat":28.61,
+    "lng":77.23,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Guangzhou",
+    "lat":23.13,
+    "lng":113.26,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Mumbai",
+    "lat":19.0761,
+    "lng":72.8775,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Manila",
+    "lat":14.5958,
+    "lng":120.9772,
+    "country":"Philippines",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shanghai",
+    "lat":31.2286,
+    "lng":121.4747,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"S\u00e3o Paulo",
+    "lat":-23.55,
+    "lng":-46.6333,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Seoul",
+    "lat":37.56,
+    "lng":126.99,
+    "country":"Korea, South",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mexico City",
+    "lat":19.4333,
+    "lng":-99.1333,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Cairo",
+    "lat":30.0444,
+    "lng":31.2358,
+    "country":"Egypt",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"New York",
+    "lat":40.6943,
+    "lng":-73.9249,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Dhaka",
+    "lat":23.7639,
+    "lng":90.3889,
+    "country":"Bangladesh",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Beijing",
+    "lat":39.9067,
+    "lng":116.3975,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kolk\u0101ta",
+    "lat":22.5675,
+    "lng":88.37,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Bangkok",
+    "lat":13.7525,
+    "lng":100.4942,
+    "country":"Thailand",
+    "features":"Food Adventure, Local Transport Adventure, Cultural Immersion"
+  },
+  {
+    "city":"Shenzhen",
+    "lat":22.5415,
+    "lng":114.0596,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Moscow",
+    "lat":55.7558,
+    "lng":37.6172,
+    "country":"Russia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Buenos Aires",
+    "lat":-34.6033,
+    "lng":-58.3817,
+    "country":"Argentina",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Lagos",
+    "lat":6.455,
+    "lng":3.3841,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Istanbul",
+    "lat":41.0136,
+    "lng":28.955,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Karachi",
+    "lat":24.86,
+    "lng":67.01,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Bangalore",
+    "lat":12.9789,
+    "lng":77.5917,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Ho Chi Minh City",
+    "lat":10.7756,
+    "lng":106.7019,
+    "country":"Vietnam",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"\u014csaka",
+    "lat":34.6939,
+    "lng":135.5022,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Chengdu",
+    "lat":30.66,
+    "lng":104.0633,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Tehran",
+    "lat":35.6892,
+    "lng":51.3889,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kinshasa",
+    "lat":-4.3219,
+    "lng":15.3119,
+    "country":"Congo (Kinshasa)",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Rio de Janeiro",
+    "lat":-22.9111,
+    "lng":-43.2056,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Chennai",
+    "lat":13.0825,
+    "lng":80.275,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Xi\u2019an",
+    "lat":34.2611,
+    "lng":108.9422,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lahore",
+    "lat":31.5497,
+    "lng":74.3436,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Chongqing",
+    "lat":29.5637,
+    "lng":106.5504,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Los Angeles",
+    "lat":34.1141,
+    "lng":-118.4068,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Baoding",
+    "lat":38.874,
+    "lng":115.464,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"London",
+    "lat":51.5072,
+    "lng":-0.1275,
+    "country":"United Kingdom",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Paris",
+    "lat":48.8567,
+    "lng":2.3522,
+    "country":"France",
+    "features":"Photogenic Charm, Architectural Awe, Food Adventure"
+  },
+  {
+    "city":"Linyi",
+    "lat":35.1038,
+    "lng":118.3564,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dongguan",
+    "lat":23.021,
+    "lng":113.752,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hyder\u0101b\u0101d",
+    "lat":17.3617,
+    "lng":78.4747,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Tianjin",
+    "lat":39.1336,
+    "lng":117.2054,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lima",
+    "lat":-12.06,
+    "lng":-77.0375,
+    "country":"Peru",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Wuhan",
+    "lat":30.5934,
+    "lng":114.3046,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nanyang",
+    "lat":32.9987,
+    "lng":112.5292,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hangzhou",
+    "lat":30.267,
+    "lng":120.153,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Foshan",
+    "lat":23.0214,
+    "lng":113.1216,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nagoya",
+    "lat":35.1833,
+    "lng":136.9,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Tongshan",
+    "lat":34.204,
+    "lng":117.284,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Luanda",
+    "lat":-8.8383,
+    "lng":13.2344,
+    "country":"Angola",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zhoukou",
+    "lat":33.625,
+    "lng":114.6418,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ganzhou",
+    "lat":25.831,
+    "lng":114.933,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kuala Lumpur",
+    "lat":3.1478,
+    "lng":101.6953,
+    "country":"Malaysia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Heze",
+    "lat":35.2343,
+    "lng":115.4796,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Quanzhou",
+    "lat":24.8744,
+    "lng":118.6757,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Johannesburg",
+    "lat":-26.2044,
+    "lng":28.0456,
+    "country":"South Africa",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Chicago",
+    "lat":41.8375,
+    "lng":-87.6866,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Nanjing",
+    "lat":32.0608,
+    "lng":118.7789,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jining",
+    "lat":35.4151,
+    "lng":116.5871,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hanoi",
+    "lat":21.0,
+    "lng":105.85,
+    "country":"Vietnam",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pune",
+    "lat":18.5203,
+    "lng":73.8567,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Fuyang",
+    "lat":32.89,
+    "lng":115.814,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ahmedabad",
+    "lat":23.0225,
+    "lng":72.5714,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Bogot\u00e1",
+    "lat":4.7111,
+    "lng":-74.0722,
+    "country":"Colombia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shenyang",
+    "lat":41.8025,
+    "lng":123.4281,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dar es Salaam",
+    "lat":-6.8161,
+    "lng":39.2803,
+    "country":"Tanzania",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Khartoum",
+    "lat":15.6,
+    "lng":32.5,
+    "country":"Sudan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shangqiu",
+    "lat":34.415,
+    "lng":115.656,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hong Kong",
+    "lat":22.3,
+    "lng":114.2,
+    "country":"Hong Kong",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Cangzhou",
+    "lat":38.3047,
+    "lng":116.8387,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Riyadh",
+    "lat":24.6333,
+    "lng":46.7167,
+    "country":"Saudi Arabia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Santiago",
+    "lat":-33.4372,
+    "lng":-70.6506,
+    "country":"Chile",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Xingtai",
+    "lat":37.0717,
+    "lng":114.5048,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhumadian",
+    "lat":33.014,
+    "lng":114.022,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chattogram",
+    "lat":22.335,
+    "lng":91.8325,
+    "country":"Bangladesh",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Surabaya",
+    "lat":-7.2458,
+    "lng":112.7378,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Zhanjiang",
+    "lat":21.2701,
+    "lng":110.3575,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bijie",
+    "lat":27.284,
+    "lng":105.292,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yancheng",
+    "lat":33.3482,
+    "lng":120.1626,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hengyang",
+    "lat":26.894,
+    "lng":112.572,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zunyi",
+    "lat":27.722,
+    "lng":107.031,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Shaoyang",
+    "lat":27.2395,
+    "lng":111.4679,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"S\u016brat",
+    "lat":21.1702,
+    "lng":72.8311,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Shangrao",
+    "lat":28.4551,
+    "lng":117.9431,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xinyang",
+    "lat":32.149,
+    "lng":114.091,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Madrid",
+    "lat":40.4169,
+    "lng":-3.7033,
+    "country":"Spain",
+    "features":"Night Ambience, Artistic Vibe, Food Adventure"
+  },
+  {
+    "city":"Baghdad",
+    "lat":33.3153,
+    "lng":44.3661,
+    "country":"Iraq",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Maoming",
+    "lat":21.6627,
+    "lng":110.9255,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jieyang",
+    "lat":23.551,
+    "lng":116.3727,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Miami",
+    "lat":25.784,
+    "lng":-80.2101,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Singapore",
+    "lat":1.3,
+    "lng":103.8,
+    "country":"Singapore",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Houston",
+    "lat":29.786,
+    "lng":-95.3885,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Liaocheng",
+    "lat":36.4559,
+    "lng":115.9852,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huanggang",
+    "lat":30.4537,
+    "lng":114.8724,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dalian",
+    "lat":38.9,
+    "lng":121.6,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dallas",
+    "lat":32.7935,
+    "lng":-96.7667,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Qingdao",
+    "lat":36.0669,
+    "lng":120.3827,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yulin",
+    "lat":22.654,
+    "lng":110.181,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Douala",
+    "lat":4.05,
+    "lng":9.7,
+    "country":"Cameroon",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Qujing",
+    "lat":25.491,
+    "lng":103.796,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nangandao",
+    "lat":35.3036,
+    "lng":113.9268,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Philadelphia",
+    "lat":40.0077,
+    "lng":-75.1339,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pudong",
+    "lat":31.2347,
+    "lng":121.5064,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Toronto",
+    "lat":43.7417,
+    "lng":-79.3733,
+    "country":"Canada",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zhengzhou",
+    "lat":34.764,
+    "lng":113.684,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dezhou",
+    "lat":37.436,
+    "lng":116.359,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nanchong",
+    "lat":30.8372,
+    "lng":106.1106,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jinan",
+    "lat":36.6702,
+    "lng":117.0207,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Giza",
+    "lat":29.987,
+    "lng":31.2118,
+    "country":"Egypt",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Nairobi",
+    "lat":-1.2864,
+    "lng":36.8172,
+    "country":"Kenya",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Guadalajara",
+    "lat":20.6767,
+    "lng":-103.3475,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Ankara",
+    "lat":39.93,
+    "lng":32.85,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tai\u2019an",
+    "lat":36.202,
+    "lng":117.087,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Langfang",
+    "lat":39.5383,
+    "lng":116.6835,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dazhou",
+    "lat":31.2093,
+    "lng":107.4678,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Saint Petersburg",
+    "lat":59.9375,
+    "lng":30.3086,
+    "country":"Russia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Monterrey",
+    "lat":25.6667,
+    "lng":-100.3,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Belo Horizonte",
+    "lat":-19.9167,
+    "lng":-43.9333,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Suzhou",
+    "lat":33.6333,
+    "lng":116.9683,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yongzhou",
+    "lat":26.42,
+    "lng":111.613,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Changde",
+    "lat":29.031,
+    "lng":111.699,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xiangyang",
+    "lat":32.01,
+    "lng":112.122,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Rangoon",
+    "lat":16.795,
+    "lng":96.16,
+    "country":"Burma",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Atlanta",
+    "lat":33.7628,
+    "lng":-84.422,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Washington",
+    "lat":38.9047,
+    "lng":-77.0163,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zhaotong",
+    "lat":27.338,
+    "lng":103.717,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhangzhou",
+    "lat":24.513,
+    "lng":117.647,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Melbourne",
+    "lat":-37.8142,
+    "lng":144.9631,
+    "country":"Australia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yichun",
+    "lat":27.816,
+    "lng":114.417,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bozhou",
+    "lat":33.8626,
+    "lng":115.7742,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Suqian",
+    "lat":33.9331,
+    "lng":118.2831,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Abidjan",
+    "lat":5.3167,
+    "lng":-4.0333,
+    "country":"C\u00f4te d\u2019Ivoire",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ji\u2019an",
+    "lat":27.0912,
+    "lng":114.9668,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Guilin",
+    "lat":25.275,
+    "lng":110.296,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Pingdingshan",
+    "lat":33.735,
+    "lng":113.2999,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Berlin",
+    "lat":52.52,
+    "lng":13.405,
+    "country":"Germany",
+    "features":"Architectural Awe, Urban Energy, Cultural Contrast"
+  },
+  {
+    "city":"Alexandria",
+    "lat":31.1975,
+    "lng":29.8925,
+    "country":"Egypt",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mianyang",
+    "lat":31.468,
+    "lng":104.679,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Sydney",
+    "lat":-33.8678,
+    "lng":151.21,
+    "country":"Australia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Huanglongsi",
+    "lat":34.795,
+    "lng":114.345,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Barcelona",
+    "lat":41.3828,
+    "lng":2.1769,
+    "country":"Spain",
+    "features":"Night Ambience, Artistic Vibe, Food Adventure"
+  },
+  {
+    "city":"Yuncheng",
+    "lat":35.0267,
+    "lng":111.007,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Cape Town",
+    "lat":-33.9253,
+    "lng":18.4239,
+    "country":"South Africa",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Changsha",
+    "lat":28.228,
+    "lng":112.939,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jeddah",
+    "lat":21.5433,
+    "lng":39.1728,
+    "country":"Saudi Arabia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Weinan",
+    "lat":34.5206,
+    "lng":109.471,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chenzhou",
+    "lat":25.77,
+    "lng":113.016,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jiangmen",
+    "lat":22.5789,
+    "lng":113.0815,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jiujiang",
+    "lat":29.661,
+    "lng":115.954,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xinpu",
+    "lat":34.5966,
+    "lng":119.2214,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yibin",
+    "lat":28.752,
+    "lng":104.643,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huaihua",
+    "lat":27.5698,
+    "lng":110.0016,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yangzhou",
+    "lat":32.3912,
+    "lng":119.4363,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Taizhou",
+    "lat":32.4567,
+    "lng":119.9229,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kunming",
+    "lat":25.0464,
+    "lng":102.7094,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yiyang",
+    "lat":28.5549,
+    "lng":112.356,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Changchun",
+    "lat":43.897,
+    "lng":125.326,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lu\u2019an",
+    "lat":31.736,
+    "lng":116.52,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jiangguanchi",
+    "lat":34.0244,
+    "lng":113.8201,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Meizhou",
+    "lat":24.289,
+    "lng":116.122,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"\u00dcr\u00fcmqi",
+    "lat":43.8225,
+    "lng":87.6125,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Boston",
+    "lat":42.3188,
+    "lng":-71.0852,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"\u0130zmir",
+    "lat":38.42,
+    "lng":27.14,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Guigang",
+    "lat":23.112,
+    "lng":109.599,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Shantou",
+    "lat":23.354,
+    "lng":116.682,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kabul",
+    "lat":34.5253,
+    "lng":69.1783,
+    "country":"Afghanistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Xiaoganzhan",
+    "lat":30.918,
+    "lng":113.957,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bamako",
+    "lat":12.6392,
+    "lng":-8.0028,
+    "country":"Mali",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Luzhou",
+    "lat":28.871,
+    "lng":105.442,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hefei",
+    "lat":31.8206,
+    "lng":117.2273,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hengshui",
+    "lat":37.739,
+    "lng":115.669,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Fortaleza",
+    "lat":-3.7275,
+    "lng":-38.5275,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Anqing",
+    "lat":30.5318,
+    "lng":117.1153,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Liuzhou",
+    "lat":24.3264,
+    "lng":109.4281,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhangjiakou",
+    "lat":40.769,
+    "lng":114.886,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhaoqing",
+    "lat":23.05,
+    "lng":112.4667,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Shijiazhuang",
+    "lat":38.0425,
+    "lng":114.51,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ningbo",
+    "lat":29.8603,
+    "lng":121.6245,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Qiqihar",
+    "lat":47.3549,
+    "lng":123.9182,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Phoenix",
+    "lat":33.5722,
+    "lng":-112.0892,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Fuzhou",
+    "lat":27.949,
+    "lng":116.358,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chifeng",
+    "lat":42.257,
+    "lng":118.888,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xiaoxita",
+    "lat":30.692,
+    "lng":111.287,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Amman",
+    "lat":31.9497,
+    "lng":35.9328,
+    "country":"Jordan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Chuzhou",
+    "lat":32.256,
+    "lng":118.333,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Linfen",
+    "lat":36.088,
+    "lng":111.519,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Qingyuan",
+    "lat":23.682,
+    "lng":113.056,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xianyang",
+    "lat":34.3299,
+    "lng":108.7088,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Loudi",
+    "lat":27.6998,
+    "lng":111.9944,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Binzhou",
+    "lat":37.383,
+    "lng":117.971,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhuzhou",
+    "lat":27.829,
+    "lng":113.133,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Taiyuan",
+    "lat":37.8704,
+    "lng":112.5497,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nanning",
+    "lat":22.8167,
+    "lng":108.3275,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Harbin",
+    "lat":45.7576,
+    "lng":126.6409,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Abuja",
+    "lat":9.0667,
+    "lng":7.4833,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yokohama",
+    "lat":35.4442,
+    "lng":139.6381,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Suihua",
+    "lat":46.654,
+    "lng":126.969,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zaozhuang",
+    "lat":34.8109,
+    "lng":117.3238,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Detroit",
+    "lat":42.3834,
+    "lng":-83.1024,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Xiamen",
+    "lat":24.4796,
+    "lng":118.0889,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Neijiang",
+    "lat":29.5802,
+    "lng":105.058,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Montr\u00e9al",
+    "lat":45.5089,
+    "lng":-73.5617,
+    "country":"Canada",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Baicheng",
+    "lat":23.903,
+    "lng":106.619,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Wuhu",
+    "lat":31.3526,
+    "lng":118.4331,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yulinshi",
+    "lat":38.2858,
+    "lng":109.7341,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Medan",
+    "lat":3.5894,
+    "lng":98.6739,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Wenzhou",
+    "lat":27.9938,
+    "lng":120.6993,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Changzhou",
+    "lat":31.811,
+    "lng":119.974,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Puyang",
+    "lat":35.7627,
+    "lng":115.0292,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jiaozuo",
+    "lat":35.2157,
+    "lng":113.2419,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nanchang",
+    "lat":28.683,
+    "lng":115.858,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Seattle",
+    "lat":47.6211,
+    "lng":-122.3244,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ibadan",
+    "lat":7.3964,
+    "lng":3.9167,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Casablanca",
+    "lat":33.5333,
+    "lng":-7.5833,
+    "country":"Morocco",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kumasi",
+    "lat":6.7,
+    "lng":-1.625,
+    "country":"Ghana",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Deyang",
+    "lat":31.127,
+    "lng":104.398,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Busan",
+    "lat":35.18,
+    "lng":129.075,
+    "country":"Korea, South",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Hohhot",
+    "lat":40.842,
+    "lng":111.749,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hechi",
+    "lat":24.693,
+    "lng":108.085,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Algiers",
+    "lat":36.7539,
+    "lng":3.0589,
+    "country":"Algeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tangshan",
+    "lat":39.6294,
+    "lng":118.1739,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Shiyan",
+    "lat":32.629,
+    "lng":110.7987,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lucknow",
+    "lat":26.85,
+    "lng":80.95,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Mashhad",
+    "lat":36.3264,
+    "lng":59.5433,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"San Francisco",
+    "lat":37.7558,
+    "lng":-122.4449,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Boankra",
+    "lat":6.6944,
+    "lng":-1.4028,
+    "country":"Ghana",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Dubai",
+    "lat":25.2631,
+    "lng":55.2972,
+    "country":"United Arab Emirates",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Anshan",
+    "lat":41.108,
+    "lng":122.994,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Baojishi",
+    "lat":34.363,
+    "lng":107.238,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Qinzhou",
+    "lat":21.981,
+    "lng":108.654,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Guiyang",
+    "lat":26.647,
+    "lng":106.63,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bengbu",
+    "lat":32.917,
+    "lng":117.389,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bazhou",
+    "lat":31.868,
+    "lng":106.748,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Suining",
+    "lat":30.533,
+    "lng":105.593,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Wuxi",
+    "lat":31.491,
+    "lng":120.312,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kotla Qasim Khan",
+    "lat":32.5833,
+    "lng":73.75,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Hanzhong",
+    "lat":33.0664,
+    "lng":107.0232,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Putian",
+    "lat":25.4526,
+    "lng":119.0078,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhenjiang",
+    "lat":32.188,
+    "lng":119.424,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Guang\u2019an",
+    "lat":30.4564,
+    "lng":106.6326,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Faisalabad",
+    "lat":31.4167,
+    "lng":73.0911,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Changzhi",
+    "lat":36.195,
+    "lng":113.117,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Tongren",
+    "lat":27.7316,
+    "lng":109.1895,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Leshan",
+    "lat":29.552,
+    "lng":103.766,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Santa Cruz de la Sierra",
+    "lat":-17.7892,
+    "lng":-63.1975,
+    "country":"Bolivia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Qinhuangdao",
+    "lat":39.8882,
+    "lng":119.5202,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jaipur",
+    "lat":26.9,
+    "lng":75.8,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Xinzhou",
+    "lat":38.416,
+    "lng":112.734,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lanzhou",
+    "lat":36.0606,
+    "lng":103.8268,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Wuzhou",
+    "lat":23.4767,
+    "lng":111.279,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Athens",
+    "lat":37.9842,
+    "lng":23.7281,
+    "country":"Greece",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"San Diego",
+    "lat":32.8313,
+    "lng":-117.1222,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Addis Ababa",
+    "lat":9.03,
+    "lng":38.74,
+    "country":"Ethiopia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Taichung",
+    "lat":24.1439,
+    "lng":120.6794,
+    "country":"Taiwan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Huainan",
+    "lat":32.6314,
+    "lng":117.0194,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Guatemala City",
+    "lat":14.6133,
+    "lng":-90.5353,
+    "country":"Guatemala",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kuwait City",
+    "lat":29.3697,
+    "lng":47.9783,
+    "country":"Kuwait",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Budapest",
+    "lat":47.4925,
+    "lng":19.0514,
+    "country":"Hungary",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Qincheng",
+    "lat":34.5809,
+    "lng":105.7311,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Rizhao",
+    "lat":35.417,
+    "lng":119.527,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Quezon City",
+    "lat":14.65,
+    "lng":121.0475,
+    "country":"Philippines",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Sanaa",
+    "lat":15.3483,
+    "lng":44.2064,
+    "country":"Yemen",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tashkent",
+    "lat":41.3111,
+    "lng":69.2797,
+    "country":"Uzbekistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kyiv",
+    "lat":50.45,
+    "lng":30.5233,
+    "country":"Ukraine",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Meishan",
+    "lat":30.0771,
+    "lng":103.8484,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Incheon",
+    "lat":37.4833,
+    "lng":126.6333,
+    "country":"Korea, South",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Birmingham",
+    "lat":52.48,
+    "lng":-1.9025,
+    "country":"United Kingdom",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ningde",
+    "lat":26.6662,
+    "lng":119.5477,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zhongshan",
+    "lat":22.517,
+    "lng":113.3925,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Weihai",
+    "lat":37.5133,
+    "lng":122.1205,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bursa",
+    "lat":40.1833,
+    "lng":29.05,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Minneapolis",
+    "lat":44.9635,
+    "lng":-93.2678,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mbuji-Mayi",
+    "lat":-6.15,
+    "lng":23.6,
+    "country":"Congo (Kinshasa)",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Haikou",
+    "lat":20.0186,
+    "lng":110.3488,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Tongliao",
+    "lat":43.654,
+    "lng":122.243,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chaoyang",
+    "lat":41.571,
+    "lng":120.453,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"La Paz",
+    "lat":-16.4958,
+    "lng":-68.1333,
+    "country":"Bolivia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pyongyang",
+    "lat":39.0167,
+    "lng":125.7475,
+    "country":"Korea, North",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tampa",
+    "lat":27.9945,
+    "lng":-82.4447,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shaoguan",
+    "lat":24.811,
+    "lng":113.597,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Heyuan",
+    "lat":23.7443,
+    "lng":114.7002,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bras\u00edlia",
+    "lat":-15.7939,
+    "lng":-47.8828,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Omdurman",
+    "lat":15.65,
+    "lng":32.4833,
+    "country":"Sudan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Malang",
+    "lat":-7.98,
+    "lng":112.62,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Stuttgart",
+    "lat":48.7775,
+    "lng":9.18,
+    "country":"Germany",
+    "features":"Architectural Awe, Urban Energy, Cultural Contrast"
+  },
+  {
+    "city":"Daqing",
+    "lat":46.589,
+    "lng":125.104,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Rome",
+    "lat":41.8933,
+    "lng":12.4828,
+    "country":"Italy",
+    "features":"Sense of History, Food Adventure, Architectural Awe"
+  },
+  {
+    "city":"Brooklyn",
+    "lat":40.6501,
+    "lng":-73.9496,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kaohsiung",
+    "lat":22.615,
+    "lng":120.2975,
+    "country":"Taiwan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Xiangtan",
+    "lat":27.8313,
+    "lng":112.9454,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Longyan",
+    "lat":25.076,
+    "lng":117.017,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Baotou",
+    "lat":40.6213,
+    "lng":109.9532,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Handan",
+    "lat":36.601,
+    "lng":114.487,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jinzhou",
+    "lat":41.129,
+    "lng":121.148,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kanpur",
+    "lat":26.4499,
+    "lng":80.3319,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Denver",
+    "lat":39.762,
+    "lng":-104.8758,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Nanping",
+    "lat":26.6418,
+    "lng":118.1774,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"G\u0101zipura",
+    "lat":23.9889,
+    "lng":90.375,
+    "country":"Bangladesh",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shanwei",
+    "lat":22.7872,
+    "lng":115.3756,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chaozhou",
+    "lat":23.658,
+    "lng":116.622,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Guayaquil",
+    "lat":-2.19,
+    "lng":-79.8875,
+    "country":"Ecuador",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Weifang",
+    "lat":36.708,
+    "lng":119.162,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huai\u2019an",
+    "lat":33.551,
+    "lng":119.113,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Zibo",
+    "lat":36.8138,
+    "lng":118.055,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ankang",
+    "lat":32.6854,
+    "lng":109.029,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Mogadishu",
+    "lat":2.0392,
+    "lng":45.3419,
+    "country":"Somalia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Munich",
+    "lat":48.1375,
+    "lng":11.575,
+    "country":"Germany",
+    "features":"Architectural Awe, Urban Energy, Cultural Contrast"
+  },
+  {
+    "city":"Gulou",
+    "lat":26.0865,
+    "lng":119.298,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Taipei",
+    "lat":25.0375,
+    "lng":121.5625,
+    "country":"Taiwan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Bekasi",
+    "lat":-6.2349,
+    "lng":106.9923,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Damascus",
+    "lat":33.5131,
+    "lng":36.2919,
+    "country":"Syria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Sanming",
+    "lat":26.2634,
+    "lng":117.6389,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yangjiang",
+    "lat":21.857,
+    "lng":111.983,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jiamusi",
+    "lat":46.8,
+    "lng":130.319,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Luohe",
+    "lat":33.583,
+    "lng":114.0109,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Medell\u00edn",
+    "lat":6.2308,
+    "lng":-75.5906,
+    "country":"Colombia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Dingxi",
+    "lat":35.608,
+    "lng":104.592,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Shaoxing",
+    "lat":30.0511,
+    "lng":120.5833,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yantai",
+    "lat":37.4646,
+    "lng":121.4478,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huizhou",
+    "lat":23.112,
+    "lng":114.416,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lishui",
+    "lat":28.468,
+    "lng":119.923,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xuanzhou",
+    "lat":30.939,
+    "lng":118.759,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Khowrhesht",
+    "lat":36.205,
+    "lng":49.6872,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mirz\u0101pur",
+    "lat":25.146,
+    "lng":82.569,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Zigong",
+    "lat":29.339,
+    "lng":104.779,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Hamburg",
+    "lat":53.55,
+    "lng":10.0,
+    "country":"Germany",
+    "features":"Architectural Awe, Urban Energy, Cultural Contrast"
+  },
+  {
+    "city":"Guangyuan",
+    "lat":32.436,
+    "lng":105.844,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Cali",
+    "lat":3.4206,
+    "lng":-76.5222,
+    "country":"Colombia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Huangshi",
+    "lat":30.2011,
+    "lng":115.039,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Xining",
+    "lat":36.6224,
+    "lng":101.7804,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lusaka",
+    "lat":-15.4167,
+    "lng":28.2833,
+    "country":"Zambia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ouagadougou",
+    "lat":12.3686,
+    "lng":-1.5275,
+    "country":"Burkina Faso",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yaound\u00e9",
+    "lat":3.8667,
+    "lng":11.5167,
+    "country":"Cameroon",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zhuhai",
+    "lat":22.2716,
+    "lng":113.5769,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huludao",
+    "lat":40.711,
+    "lng":120.837,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Baoshan",
+    "lat":25.112,
+    "lng":99.161,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Mecca",
+    "lat":21.4225,
+    "lng":39.8233,
+    "country":"Saudi Arabia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Vancouver",
+    "lat":49.25,
+    "lng":-123.1,
+    "country":"Canada",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Lianshan",
+    "lat":40.7523,
+    "lng":120.828,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Beirut",
+    "lat":33.8983,
+    "lng":35.5057,
+    "country":"Lebanon",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Salvador",
+    "lat":-12.9747,
+    "lng":-38.4767,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Bucharest",
+    "lat":44.4325,
+    "lng":26.1039,
+    "country":"Romania",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Longba",
+    "lat":33.3702,
+    "lng":104.9603,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"N\u0101gpur",
+    "lat":21.1497,
+    "lng":79.0806,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Queens",
+    "lat":40.7498,
+    "lng":-73.7976,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Jilin",
+    "lat":43.8519,
+    "lng":126.5481,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Tieling",
+    "lat":42.2237,
+    "lng":123.726,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Accra",
+    "lat":5.55,
+    "lng":-0.2,
+    "country":"Ghana",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yunfu",
+    "lat":22.9152,
+    "lng":112.0445,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Bekasi Kota",
+    "lat":-6.2333,
+    "lng":107.0,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Daegu",
+    "lat":35.8717,
+    "lng":128.6017,
+    "country":"Korea, South",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Gh\u0101zi\u0101b\u0101d",
+    "lat":28.67,
+    "lng":77.42,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Luoyang",
+    "lat":34.6197,
+    "lng":112.4539,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Brisbane",
+    "lat":-27.4678,
+    "lng":153.0281,
+    "country":"Australia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Anshun",
+    "lat":26.2531,
+    "lng":105.9476,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Riverside",
+    "lat":33.9381,
+    "lng":-117.3949,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yingkou",
+    "lat":40.625,
+    "lng":122.219,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Colombo",
+    "lat":6.9344,
+    "lng":79.8428,
+    "country":"Sri Lanka",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yanjiang",
+    "lat":30.129,
+    "lng":104.627,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Baku",
+    "lat":40.3953,
+    "lng":49.8822,
+    "country":"Azerbaijan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Antananarivo",
+    "lat":-18.91,
+    "lng":47.525,
+    "country":"Madagascar",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mudanjiang",
+    "lat":44.5514,
+    "lng":129.6329,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Fukuoka",
+    "lat":33.59,
+    "lng":130.4017,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Yan\u2019an",
+    "lat":36.65,
+    "lng":109.494,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Jincheng",
+    "lat":35.491,
+    "lng":112.852,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Nantong",
+    "lat":31.981,
+    "lng":120.894,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Lincang",
+    "lat":23.884,
+    "lng":100.089,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Yuxi",
+    "lat":24.347,
+    "lng":102.527,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Las Vegas",
+    "lat":36.2333,
+    "lng":-115.2654,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Caracas",
+    "lat":10.4806,
+    "lng":-66.9036,
+    "country":"Venezuela",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tangerang",
+    "lat":-6.1703,
+    "lng":106.6403,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Laibin",
+    "lat":23.7501,
+    "lng":109.2212,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Konya",
+    "lat":37.8667,
+    "lng":32.4833,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Supaul",
+    "lat":26.126,
+    "lng":86.605,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Vienna",
+    "lat":48.2083,
+    "lng":16.3725,
+    "country":"Austria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"E\u015ffah\u0101n",
+    "lat":32.6447,
+    "lng":51.6675,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Baltimore",
+    "lat":39.3051,
+    "lng":-76.6144,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shengli",
+    "lat":37.434,
+    "lng":118.6746,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Dandong",
+    "lat":40.1167,
+    "lng":124.3833,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Qinbaling",
+    "lat":35.7278,
+    "lng":107.64,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Gaoping",
+    "lat":30.7824,
+    "lng":106.1281,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Awka",
+    "lat":6.2069,
+    "lng":7.0678,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ma\u2019anshan",
+    "lat":31.669,
+    "lng":118.507,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Harare",
+    "lat":-17.8292,
+    "lng":31.0522,
+    "country":"Zimbabwe",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Perth",
+    "lat":-31.9559,
+    "lng":115.8606,
+    "country":"Australia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"St. Louis",
+    "lat":38.6359,
+    "lng":-90.2451,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Phnom Penh",
+    "lat":11.5694,
+    "lng":104.9211,
+    "country":"Cambodia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Depok",
+    "lat":-6.394,
+    "lng":106.8225,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Stockholm",
+    "lat":59.3294,
+    "lng":18.0686,
+    "country":"Sweden",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Puning",
+    "lat":23.298,
+    "lng":116.166,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Huaibei",
+    "lat":33.956,
+    "lng":116.798,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Kowloon",
+    "lat":22.3167,
+    "lng":114.1833,
+    "country":"Hong Kong",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"C\u00f3rdoba",
+    "lat":-31.4167,
+    "lng":-64.1833,
+    "country":"Argentina",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Haiphong",
+    "lat":20.8651,
+    "lng":106.6838,
+    "country":"Vietnam",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zamboanga City",
+    "lat":6.9042,
+    "lng":122.0761,
+    "country":"Philippines",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Chongzuo",
+    "lat":22.377,
+    "lng":107.365,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Rawalpindi",
+    "lat":33.6,
+    "lng":73.0333,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Portland",
+    "lat":45.5371,
+    "lng":-122.65,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kano",
+    "lat":12.0,
+    "lng":8.5167,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yushan",
+    "lat":31.322,
+    "lng":120.985,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Havana",
+    "lat":23.1367,
+    "lng":-82.3589,
+    "country":"Cuba",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Hezhou",
+    "lat":24.4042,
+    "lng":111.5672,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Pingliang",
+    "lat":35.5424,
+    "lng":106.6649,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Vadodara",
+    "lat":22.3,
+    "lng":73.2,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Manaus",
+    "lat":-3.1189,
+    "lng":-60.0217,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Qingyang",
+    "lat":24.7816,
+    "lng":118.5517,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"San Antonio",
+    "lat":29.4632,
+    "lng":-98.5238,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"R\u0101jkot",
+    "lat":22.3,
+    "lng":70.7833,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Shangzhou",
+    "lat":33.868,
+    "lng":109.9244,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Vish\u0101khapatnam",
+    "lat":17.7042,
+    "lng":83.2978,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Sanmenxia",
+    "lat":34.7732,
+    "lng":111.2004,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Gujranwala",
+    "lat":32.1567,
+    "lng":74.19,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Aleppo",
+    "lat":36.2,
+    "lng":37.16,
+    "country":"Syria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tijuana",
+    "lat":32.525,
+    "lng":-117.0333,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Bamenda",
+    "lat":5.9614,
+    "lng":10.1517,
+    "country":"Cameroon",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Minsk",
+    "lat":53.9,
+    "lng":27.5667,
+    "country":"Belarus",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Indore",
+    "lat":22.7167,
+    "lng":75.8472,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Karaj",
+    "lat":35.8272,
+    "lng":50.9489,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kananga",
+    "lat":-5.897,
+    "lng":22.4488,
+    "country":"Congo (Kinshasa)",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Peshawar",
+    "lat":34.0144,
+    "lng":71.5675,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Sapporo",
+    "lat":43.0619,
+    "lng":141.3544,
+    "country":"Japan",
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+  },
+  {
+    "city":"Sacramento",
+    "lat":38.5677,
+    "lng":-121.4685,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tilburg",
+    "lat":51.55,
+    "lng":5.0833,
+    "country":"Netherlands",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pingxiang",
+    "lat":27.659,
+    "lng":113.887,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ecatepec",
+    "lat":19.6097,
+    "lng":-99.06,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Almaty",
+    "lat":43.24,
+    "lng":76.915,
+    "country":"Kazakhstan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Austin",
+    "lat":30.3005,
+    "lng":-97.7522,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yinchuan",
+    "lat":38.485,
+    "lng":106.225,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Santos",
+    "lat":-23.9369,
+    "lng":-46.325,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"Blantyre",
+    "lat":-15.7861,
+    "lng":35.0058,
+    "country":"Malawi",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Th\u0101ne",
+    "lat":19.1972,
+    "lng":72.9722,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Orlando",
+    "lat":28.4773,
+    "lng":-81.337,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Tainan",
+    "lat":22.9833,
+    "lng":120.1833,
+    "country":"Taiwan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Xiping",
+    "lat":40.082,
+    "lng":113.2981,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Multan",
+    "lat":30.1978,
+    "lng":71.4697,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Santa Cruz",
+    "lat":-17.8,
+    "lng":-63.1833,
+    "country":"Bolivia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Port Harcourt",
+    "lat":4.8242,
+    "lng":7.0336,
+    "country":"Nigeria",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Jixi",
+    "lat":45.295,
+    "lng":130.969,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Fushun",
+    "lat":41.881,
+    "lng":123.957,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Warsaw",
+    "lat":52.23,
+    "lng":21.0111,
+    "country":"Poland",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Beihai",
+    "lat":21.481,
+    "lng":109.12,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Fuxin",
+    "lat":42.022,
+    "lng":121.67,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Wuwei",
+    "lat":37.929,
+    "lng":102.638,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Siping",
+    "lat":43.1668,
+    "lng":124.3506,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"San Juan",
+    "lat":18.3985,
+    "lng":-66.061,
+    "country":"Puerto Rico",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Mersin",
+    "lat":36.8,
+    "lng":34.6333,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Bhop\u0101l",
+    "lat":23.2599,
+    "lng":77.4126,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Mosul",
+    "lat":36.34,
+    "lng":43.13,
+    "country":"Iraq",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Lubumbashi",
+    "lat":-11.6647,
+    "lng":27.4794,
+    "country":"Congo (Kinshasa)",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Davao",
+    "lat":7.07,
+    "lng":125.6,
+    "country":"Philippines",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Curitiba",
+    "lat":-25.4297,
+    "lng":-49.2711,
+    "country":"Brazil",
+    "features":"Street Soul, Night Ambience, Nature Connection"
+  },
+  {
+    "city":"San Jose",
+    "lat":37.3012,
+    "lng":-121.848,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shuyangzha",
+    "lat":34.1299,
+    "lng":118.7734,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Adana",
+    "lat":37.0,
+    "lng":35.3213,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Quito",
+    "lat":-0.22,
+    "lng":-78.5125,
+    "country":"Ecuador",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pittsburgh",
+    "lat":40.4397,
+    "lng":-79.9763,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Brazzaville",
+    "lat":-4.2694,
+    "lng":15.2711,
+    "country":"Congo (Brazzaville)",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Hyderabad City",
+    "lat":25.3792,
+    "lng":68.3683,
+    "country":"Pakistan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Diyarbak\u0131r",
+    "lat":37.91,
+    "lng":40.24,
+    "country":"Turkey",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Indianapolis",
+    "lat":39.7771,
+    "lng":-86.1458,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Pimpri-Chinchwad",
+    "lat":18.6186,
+    "lng":73.8037,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Masqa\u0163",
+    "lat":23.5889,
+    "lng":58.4083,
+    "country":"Oman",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Montevideo",
+    "lat":-34.8836,
+    "lng":-56.1819,
+    "country":"Uruguay",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Shuozhou",
+    "lat":39.3317,
+    "lng":112.4329,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Manhattan",
+    "lat":40.7834,
+    "lng":-73.9662,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Cincinnati",
+    "lat":39.1413,
+    "lng":-84.506,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kansas City",
+    "lat":39.1238,
+    "lng":-94.5541,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Patna",
+    "lat":25.594,
+    "lng":85.1376,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Tegucigalpa",
+    "lat":14.1058,
+    "lng":-87.2047,
+    "country":"Honduras",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Kampala",
+    "lat":0.3136,
+    "lng":32.5811,
+    "country":"Uganda",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Cleveland",
+    "lat":41.4764,
+    "lng":-81.6805,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Sanzhou",
+    "lat":30.82,
+    "lng":108.4,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Changshu",
+    "lat":31.656,
+    "lng":120.753,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Heihe",
+    "lat":50.2401,
+    "lng":127.521,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Conakry",
+    "lat":9.5092,
+    "lng":-13.7122,
+    "country":"Guinea",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Ximeicun",
+    "lat":24.9612,
+    "lng":118.3849,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Caloocan City",
+    "lat":14.65,
+    "lng":120.97,
+    "country":"Philippines",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Masvingo",
+    "lat":-20.0744,
+    "lng":30.8328,
+    "country":"Zimbabwe",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Zhongli",
+    "lat":24.965,
+    "lng":121.2168,
+    "country":"Taiwan",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Novosibirsk",
+    "lat":55.05,
+    "lng":82.95,
+    "country":"Russia",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Bil\u0101spur",
+    "lat":22.09,
+    "lng":82.15,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Semarang",
+    "lat":-6.99,
+    "lng":110.4225,
+    "country":"Indonesia",
+    "features":"Nature Connection, Cultural Immersion, Local Hospitality"
+  },
+  {
+    "city":"Jingdezhen",
+    "lat":29.2917,
+    "lng":117.1986,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Ludhi\u0101na",
+    "lat":30.91,
+    "lng":75.85,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Liaoyang",
+    "lat":41.279,
+    "lng":123.176,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Chengtangcun",
+    "lat":35.0833,
+    "lng":117.15,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"R\u0101jsh\u0101hi",
+    "lat":24.3667,
+    "lng":88.6,
+    "country":"Bangladesh",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Balandougou",
+    "lat":13.3558,
+    "lng":-9.5517,
+    "country":"Mali",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Jiangyin",
+    "lat":31.839,
+    "lng":120.295,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Valencia",
+    "lat":39.47,
+    "lng":-0.3764,
+    "country":"Spain",
+    "features":"Night Ambience, Artistic Vibe, Food Adventure"
+  },
+  {
+    "city":"\u0100gra",
+    "lat":27.18,
+    "lng":78.02,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Le\u00f3n de los Aldama",
+    "lat":21.1167,
+    "lng":-101.6833,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Puebla",
+    "lat":19.0333,
+    "lng":-98.1833,
+    "country":"Mexico",
+    "features":"Cultural Immersion, Food Adventure, Soundscape"
+  },
+  {
+    "city":"Columbus",
+    "lat":39.9862,
+    "lng":-82.9855,
+    "country":"United States",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Yopougon",
+    "lat":5.3167,
+    "lng":-4.0667,
+    "country":"C\u00f4te d\u2019Ivoire",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Hebi",
+    "lat":35.748,
+    "lng":114.297,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Sh\u012br\u0101z",
+    "lat":29.61,
+    "lng":52.5425,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Madurai",
+    "lat":9.9252,
+    "lng":78.1198,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  },
+  {
+    "city":"Huzhou",
+    "lat":30.8925,
+    "lng":120.0875,
+    "country":"China",
+    "features":"Sense of History, Urban Energy, Architectural Awe"
+  },
+  {
+    "city":"Tabr\u012bz",
+    "lat":38.0814,
+    "lng":46.3006,
+    "country":"Iran",
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+  },
+  {
+    "city":"Jamshedpur",
+    "lat":22.7925,
+    "lng":86.1842,
+    "country":"India",
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+  }
+]
