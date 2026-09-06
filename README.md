@@ -8,9 +8,12 @@ Describe the trip you want in plain language and hit **Let's Plan**. The left ra
 
 ![Home screen of the planner, showing the free-text trip input and the live agent graph](docs/images/ui-home.png)
 
-Once the graph completes, the app shows the persona it inferred, the destination it settled on, and — importantly — the weather reasoning behind that choice. Here Madrid was ranked highly but **skipped as too cold**, so Barcelona was selected instead:
+
 
 ![Results view showing inferred preferences, the final destination pick, and a weather table](docs/images/ui-results.png)
+
+<img width="1881" height="836" alt="ChatGPT Image Sep 6, 2026, 01_42_46 PM" src="https://github.com/user-attachments/assets/ebad7013-aa81-4bc5-b9f7-b1c07f4179ca" />
+
 
 ## ✨ What It Does
 
