@@ -47,7 +47,12 @@ If every candidate is rejected on weather, the graph routes to its failure branc
 
 ### Human in the loop
 
-The weather gate is deliberately strict, so a summer query can have all three candidates skipped. When that happens the app surfaces the rejected shortlist and a **"Plan this destination anyway"** control. Picking a city re-runs the itinerary, culture and packing agents for it and labels the result as your choice, so the automated verdict stays visible and overridable instead of final.
+The weather gate is deliberately strict, so a summer query can have all three candidates skipped. Rather than dead-end, the app hands the decision back to you with two options:
+
+- **Plan one of these anyway** — overrule the gate and build the trip for a rejected city regardless of the temperature.
+- **Find cooler alternatives** — keep walking down the ranked list, checking live weather further into the top 25 matches, and surface the ones that *do* pass.
+
+Either way, picking a city re-runs the itinerary, culture and packing agents for it and labels which route produced the result, so the automated verdict stays visible and overridable instead of final.
 
 ## Tech Stack
 

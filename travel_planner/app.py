@@ -625,6 +625,7 @@ if start_button:
             result = result_container["result"]
 
         st.session_state["result"] = result
+        st.session_state.pop("cooler", None)
 
 
 # ---- Result rendering ----
@@ -705,8 +706,48 @@ def all_candidates_rejected(result):
     return bool(log) and all(entry.get("skipped") for entry in log)
 
 
-def plan_for_city(result, city):
-    """Re-run the downstream agents for a city the user picked by hand."""
+def find_cooler_alternatives(result, wanted=5, scan=25):
+    """Look further down the ranking for cities that pass the weather gate.
+
+    The shortlist only ever holds the top few matches, so when all of them
+    are too hot the next best thing is to keep walking the ranked list
+    rather than make the traveller accept bad weather.
+    """
+    from agents import destination_agent
+    from langgraph_setup.nodes import HARSH_CONDITIONS
+    from utils.weather_api import fetch_apparent_temperature
+    from utils.weather_utils import get_current_weather
+
+    already = {e["city"] for e in result.get("weather_log", [])}
+    passing = []
+
+    for candidate in destination_agent.rank(result.get("persona", []), top_n=scan):
+        if candidate["name"] in already:
+            continue
+        try:
+            temp = fetch_apparent_temperature(candidate["lat"], candidate["lng"])
+        except Exception:
+            continue
+        condition = get_current_weather(temp)
+        if condition not in HARSH_CONDITIONS:
+            passing.append({
+                "city": candidate["name"],
+                "country": candidate.get("country", ""),
+                "temperature": temp,
+                "condition": condition,
+            })
+            if len(passing) >= wanted:
+                break
+
+    return passing
+
+
+def plan_for_city(result, city, passed_check=False):
+    """Re-run the downstream agents for a city the user picked by hand.
+
+    passed_check distinguishes overruling the weather gate from picking a
+    cooler city that actually cleared it, so the result can say which.
+    """
     from agents import culture_agent, itinerary_agent, packing_agent
 
     persona = result.get("persona", [])
@@ -719,6 +760,7 @@ def plan_for_city(result, city):
     updated["culture_tips"] = culture_agent.cultural_tips(city)
     updated["packing_list"] = packing_agent.generate_packing_list(city, persona)
     updated["human_override"] = city
+    updated["override_passed"] = passed_check
     return updated
 
 
@@ -738,18 +780,66 @@ if result:
             "Pick one anyway and we'll plan the trip for it."
         )
 
-        options = {
-            f"{e['city']} — {e['temperature']:.1f} °C ({e['condition']})": e["city"]
-            for e in result.get("weather_log", [])
-        }
-        if options:
-            choice = st.selectbox("Choose a destination", list(options.keys()), key="override_choice")
-            if st.button("Plan this destination anyway", key="override_go"):
-                with st.spinner(f"Planning your trip to {options[choice]}..."):
-                    st.session_state["result"] = plan_for_city(result, options[choice])
-                st.rerun()
+        # A radio rather than st.tabs: any button below triggers a Streamlit
+        # rerun, and tabs reset to the first one on rerun, which would hide
+        # the results the user just asked for.
+        mode = st.radio(
+            "What would you like to do?",
+            ["Plan one of these anyway", "Find cooler alternatives"],
+            key="fallback_mode",
+            horizontal=True,
+        )
+
+        if mode == "Plan one of these anyway":
+            options = {
+                f"{e['city']} — {e['temperature']:.1f} °C ({e['condition']})": e["city"]
+                for e in result.get("weather_log", [])
+            }
+            if options:
+                choice = st.selectbox("Choose a destination", list(options.keys()), key="override_choice")
+                if st.button("Plan this destination anyway", key="override_go"):
+                    with st.spinner(f"Planning your trip to {options[choice]}..."):
+                        st.session_state["result"] = plan_for_city(result, options[choice])
+                    st.rerun()
+
+        else:
+            st.caption(
+                "Keeps walking down the ranked list, checking live weather, "
+                "until it finds matches that do pass the check."
+            )
+            if st.button("Search for cooler cities", key="cooler_search"):
+                with st.spinner("Checking weather further down the ranking..."):
+                    st.session_state["cooler"] = find_cooler_alternatives(result)
+
+            cooler = st.session_state.get("cooler")
+            if cooler is not None:
+                if not cooler:
+                    st.warning(
+                        "No city in the top 25 matches passed the weather check either. "
+                        "Try different preferences, or pick one of the originals anyway."
+                    )
+                else:
+                    cool_options = {
+                        f"{c['city']}, {c['country']} — {c['temperature']:.1f} °C ({c['condition']})": c["city"]
+                        for c in cooler
+                    }
+                    cool_choice = st.selectbox(
+                        "These passed the weather check", list(cool_options.keys()), key="cooler_choice"
+                    )
+                    if st.button("Plan this destination", key="cooler_go"):
+                        with st.spinner(f"Planning your trip to {cool_options[cool_choice]}..."):
+                            st.session_state["result"] = plan_for_city(
+                                result, cool_options[cool_choice], passed_check=True
+                            )
+                        st.rerun()
 
     elif result.get("human_override"):
-        st.caption(
-            f"Planned for {result['human_override']}, chosen by you despite the weather check."
-        )
+        if result.get("override_passed"):
+            st.caption(
+                f"Planned for {result['human_override']}, which you chose from the "
+                "cooler alternatives that passed the weather check."
+            )
+        else:
+            st.caption(
+                f"Planned for {result['human_override']}, chosen by you despite the weather check."
+            )
