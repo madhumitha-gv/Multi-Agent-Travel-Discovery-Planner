@@ -16,7 +16,7 @@ Your persona becomes the search signal.
 
 And the destination is discovered from there.
 
-## 🖥️ The Interface
+## The Interface
 
 Describe the trip you want in plain language and hit **Let's Plan**. The left rail streams the current step and an activity log as each agent runs, while the right panel renders the agent graph live.
 
@@ -59,12 +59,12 @@ If every candidate has harsh weather, the graph routes to a failure branch and t
 
 ## The Agents
 
-- **Persona Agent** 👤 — Zero-shot classifies your input across 12 labels (`beach`, `adventure`, `history`, `food`, `budget`, `luxury`, `nature`, `nightlife`, …) and keeps the top 3.
-- **Destination Agent** 🌍 — Embeds your persona and every city's feature string, then ranks all 500 cities by cosine similarity and returns the top 3.
-- **Weather Agent** 🌦️ — Fetches apparent temperature from Open-Meteo and buckets it (`freezing` / `cold` / `chilly` / `warm` / `hot` / `very hot`). Only `chilly` and `warm` pass, so a city is skipped unless it currently sits between **15 °C and 28 °C**; the graph then advances to the next candidate.
-- **Itinerary Agent** 🗓️ — Generates a day-by-day plan for the selected destination.
-- **Culture Agent** 🍲 — Provides local customs, food, and etiquette notes.
-- **Packing Agent** 🧳 — Produces a packing list tailored to the destination and persona.
+- **Persona Agent**  — Zero-shot classifies your input across 12 labels (`beach`, `adventure`, `history`, `food`, `budget`, `luxury`, `nature`, `nightlife`, …) and keeps the top 3.
+- **Destination Agent**  — Embeds your persona and every city's feature string, then ranks all 500 cities by cosine similarity and returns the top 3.
+- **Weather Agent**  — Fetches apparent temperature from Open-Meteo and buckets it (`freezing` / `cold` / `chilly` / `warm` / `hot` / `very hot`). Only `chilly` and `warm` pass, so a city is skipped unless it currently sits between **15 °C and 28 °C**; the graph then advances to the next candidate.
+- **Itinerary Agent** — Generates a day-by-day plan for the selected destination.
+- **Culture Agent**  — Provides local customs, food, and etiquette notes.
+- **Packing Agent**  — Produces a packing list tailored to the destination and persona.
 
 ## 🔄 How the Flow Works
 
@@ -123,7 +123,7 @@ travel_planner/
   "features": "Sense of History, Architectural Awe, Spiritual or Reflective Mood" }
 ```
 
-## 🛠️ How to Run the Project
+## How to Run the Project
 
 ### **1. Create a Virtual Environment**
 ```bash
