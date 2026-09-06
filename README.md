@@ -39,7 +39,7 @@ You type something like *"a relaxed beach trip with good food, nothing too expen
 
 1. Infers your travel persona from that sentence
 2. Ranks 500 cities by how well they match it
-3. Checks the current apparent temperature at the top candidates and **skips any with harsh weather**
+3. Checks the current apparent temperature at the top candidates and **skips any outside 15–28 °C**
 4. Builds a day-by-day itinerary for the first city that passes
 5. Adds local cultural tips and a personalized packing list
 
@@ -61,7 +61,7 @@ If every candidate has harsh weather, the graph routes to a failure branch and t
 
 - **Persona Agent** 👤 — Zero-shot classifies your input across 12 labels (`beach`, `adventure`, `history`, `food`, `budget`, `luxury`, `nature`, `nightlife`, …) and keeps the top 3.
 - **Destination Agent** 🌍 — Embeds your persona and every city's feature string, then ranks all 500 cities by cosine similarity and returns the top 3.
-- **Weather Agent** 🌦️ — Fetches apparent temperature from Open-Meteo, buckets it (`freezing` → `very hot`), and rejects `freezing` and `very hot` cities, advancing to the next candidate.
+- **Weather Agent** 🌦️ — Fetches apparent temperature from Open-Meteo and buckets it (`freezing` / `cold` / `chilly` / `warm` / `hot` / `very hot`). Only `chilly` and `warm` pass, so a city is skipped unless it currently sits between **15 °C and 28 °C**; the graph then advances to the next candidate.
 - **Itinerary Agent** 🗓️ — Generates a day-by-day plan for the selected destination.
 - **Culture Agent** 🍲 — Provides local customs, food, and etiquette notes.
 - **Packing Agent** 🧳 — Produces a packing list tailored to the destination and persona.
