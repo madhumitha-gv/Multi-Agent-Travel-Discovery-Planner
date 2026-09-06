@@ -12,6 +12,10 @@ Describe the trip you want in plain language and hit **Let's Plan**. The left ra
 
 ![Results view showing inferred preferences, the final destination pick, and a weather table](docs/images/ui-results.png)
 
+
+<img width="1879" height="837" alt="ChatGPT Image Sep 6, 2026, 01_52_24 PM" src="https://github.com/user-attachments/assets/56767f67-d24b-4b4a-85b5-8024a4bf2fb0" />
+
+
 <img width="1881" height="836" alt="ChatGPT Image Sep 6, 2026, 01_42_46 PM" src="https://github.com/user-attachments/assets/ebad7013-aa81-4bc5-b9f7-b1c07f4179ca" />
 
 
