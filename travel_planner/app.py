@@ -654,31 +654,40 @@ if start_button:
             packing_list = result.get("packing_list", "")
             if packing_list:
                 lines = [line.strip() for line in packing_list.split("\n") if line.strip()]
-                has_colon = any(":" in line for line in lines)
 
-                if has_colon:
-                    for line in lines:
-                        try:
-                            category, items = line.split(":", 1)
-                            category = category.strip()
-                            items = [item.strip() for item in items.split(",") if item.strip()]
-                            with st.container():
-                                st.markdown(f"""
-                                    <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                                        <strong>{category}</strong><br>
-                                        {"<br>".join(f"• {item}" for item in items)}
-                                    </div>
-                                """, unsafe_allow_html=True)
-                        except ValueError:
-                            st.warning(f"Skipping malformed line: {line}")
-                else:
-                    with st.container():
-                        st.markdown(f"""
-                            <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                                <strong>Items to Pack</strong><br>
-                                {"<br>".join(f"• {item}" for item in lines)}
-                            </div>
-                        """, unsafe_allow_html=True)
+                # The model is asked for "Category:" headers followed by "- item"
+                # bullets, but it sometimes inlines them as "Category: a, b, c".
+                # Accept both shapes.
+                groups = []
+                current = None
+                for line in lines:
+                    is_bullet = line[:1] in ("-", "\u2022", "*")
+                    if ":" in line and not is_bullet:
+                        category, inline = line.split(":", 1)
+                        current = (category.strip(), [])
+                        groups.append(current)
+                        for item in inline.split(","):
+                            item = item.strip().lstrip("-\u2022 ").strip()
+                            if item:
+                                current[1].append(item)
+                    else:
+                        item = line.lstrip("-\u2022* ").strip()
+                        if not item:
+                            continue
+                        if current is None:
+                            current = ("Items to Pack", [])
+                            groups.append(current)
+                        current[1].append(item)
+
+                for category, items in groups:
+                    if not items:
+                        continue
+                    st.markdown(f"""
+                        <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
+                            <strong>{category}</strong><br>
+                            {"<br>".join(f"\u2022 {item}" for item in items)}
+                        </div>
+                    """, unsafe_allow_html=True)
             else:
                 st.info("No packing list generated.")
         else:

@@ -53,8 +53,7 @@ If every candidate has harsh weather, the graph routes to a failure branch and t
 | Orchestration | LangGraph (`StateGraph`) |
 | Persona classification | `MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli` (zero-shot) |
 | Destination matching | `sentence-transformers/all-MiniLM-L6-v2` (cosine similarity) |
-| Itinerary & packing | `mistralai/Mistral-7B-Instruct-v0.3` via HF Inference API |
-| Cultural tips | `EleutherAI/gpt-neo-1.3B` (local pipeline) |
+| Itinerary, packing & culture | `mistralai/Mistral-7B-Instruct-v0.2` via the Hugging Face router |
 | Weather | [Open-Meteo](https://open-meteo.com/) API, cached 1h with retries |
 
 ## The Agents
@@ -170,7 +169,7 @@ cd travel_planner
 streamlit run app.py
 ```
 
-> **Note:** the first run downloads the DeBERTa, MiniLM, and GPT-Neo models, so expect a few minutes and several GB of disk.
+> **Note:** the first run downloads the DeBERTa and MiniLM models, so expect a few minutes and a couple of GB of disk. Text generation runs remotely against Mistral, so no 7B weights are downloaded.
 
 ### **Optional: the LangChain ReAct agent**
 `langchain_agents/agent_controller.py` is a separate conversational variant that exposes the same tools through a LangChain ReAct agent. It uses `gpt-3.5-turbo`, so it needs an `OPENAI_API_KEY` in your `.env` as well:

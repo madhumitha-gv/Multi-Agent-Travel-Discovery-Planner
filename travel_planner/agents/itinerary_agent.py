@@ -1,44 +1,27 @@
-# # agents/itinerary_agent.py
-# from transformers import pipeline
+# agents/itinerary_agent.py
+from utils.mistral import MistralError, generate
 
-# generator = pipeline("text-generation", model="gpt2")
 
-# def run(state, num_days=2):
-#     if "top_destination" not in state or not state["top_destination"]:
-#         return "No destination selected."
-
-#     destination = state["top_destination"]
-#     preferences = ", ".join(state.get("persona", []))
-
-#     prompt = f"A detailed {num_days}-day itinerary for a {preferences} trip to {destination}:"
-#     output = generator(prompt, max_length=150, num_return_sequences=1)[0]['generated_text']
-#     return output
-from dotenv import load_dotenv
-import os
-load_dotenv() 
-
-from huggingface_hub import InferenceClient
-client = InferenceClient(
-    model="mistralai/Mistral-7B-Instruct-v0.3",
-    token= os.getenv("HUGGINGFACEHUB_API_TOKEN") # Replace with your token if needed
-)
 def run(state, num_days=2):
     if "top_destination" not in state or not state["top_destination"]:
         return "No destination selected."
 
     destination = state["top_destination"]
-    preferences = ", ".join(state.get("persona", []))  # ✅ FIXED HERE
+    preferences = ", ".join(state.get("persona", []))
 
-    prompt = f"""[INST] You are a travel expert. Create a {num_days}-day itinerary for a trip to {destination}.
+    prompt = f"""You are a travel expert. Create a {num_days}-day itinerary for a trip to {destination}.
 Preferences: {preferences}
+
 Format:
 Day 1:
 - Morning:
 - Afternoon:
 - Evening:
 ...
-No links, just cultural and food recommendations. [/INST]
-"""
 
-    output = client.text_generation(prompt, max_new_tokens=500, temperature=0.7)
-    return output
+No links, just cultural and food recommendations."""
+
+    try:
+        return generate(prompt, max_tokens=500, temperature=0.7)
+    except MistralError as e:
+        return f"Error generating itinerary: {e}"
