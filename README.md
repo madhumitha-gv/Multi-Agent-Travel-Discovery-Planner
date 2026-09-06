@@ -76,8 +76,8 @@ flowchart TD
     P --> R["<b>recommend_destinations</b><br/><i>rank 500 cities by similarity</i>"]
     R --> W{"<b>check_weather</b><br/><i>apparent temp</i>"}
 
-    W -- "15–28 °C" --> IT["<b>generate_itinerary</b>"]
-    W -- "out of range<br/>index += 1" --> MORE{"candidates<br/>remaining?"}
+    W -- "weather ok" --> IT["<b>generate_itinerary</b>"]
+    W -- "harsh<br/>index += 1" --> MORE{"candidates<br/>remaining?"}
     MORE -- "yes" --> W
     MORE -- "no" --> FAIL["<b>fail</b><br/><i>no itinerary</i>"]
 
