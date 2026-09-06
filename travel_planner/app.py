@@ -456,7 +456,7 @@ from logger import log, log_queue
 from langgraph_setup.run_graph import run_trip_planner
 
 # Page setup
-st.set_page_config(page_title="Nomads Nest", layout="wide")
+st.set_page_config(page_title="Multi-Agent Travel Planner", layout="wide")
 
 # ---- CSS for Pastel Theme ----
 st.markdown("""
@@ -554,7 +554,7 @@ def render_weather_table(weather_log):
     st.markdown("<div style='margin-top: -15px;'></div>", unsafe_allow_html=True)
 
 # ---- Header ----
-st.markdown("<p class='title'>Nomads Nest</p>", unsafe_allow_html=True)
+st.markdown("<p class='title'>Multi-Agent Travel Planner</p>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; font-size: 18px;'>Let us take you to your next adventure</div>", unsafe_allow_html=True)
 
 # ---- Layout ----

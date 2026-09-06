@@ -55,4 +55,4 @@ Do not include links, explanations, or repeated items. Avoid generic phrases lik
         return output.strip()
 
     except Exception as e:
-        return f"Error generating packing list: {e}""
+        return f"Error generating packing list: {e}"

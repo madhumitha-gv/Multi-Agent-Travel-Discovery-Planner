@@ -53,14 +53,14 @@ cp .env.example .env
 `.env` is gitignored — never commit your token.
 
 ### **5. Run the Backend**
-The modules import each other by top-level name, so run from inside `nomads_nest/`:
+The modules import each other by top-level name, so run from inside `travel_planner/`:
 ```bash
-cd nomads_nest
+cd travel_planner
 python -m langchain_agents.agent_controller
 ```
 
 ### **6. Run the Frontend**
-From the same `nomads_nest/` directory:
+From the same `travel_planner/` directory:
 ```bash
 streamlit run app.py
 ```
