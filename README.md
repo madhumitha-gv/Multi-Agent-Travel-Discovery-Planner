@@ -1,13 +1,9 @@
-# ✈️ Nomads Nest - Agentic Travel Buddy
+# ✈️ Multi-Agent Travel Planner
 
-Nomads Nest is a **multi-agent travel assistant** that intelligently understands user preferences and suggests top destinations tailored to their tastes. It evaluates weather conditions, plans detailed itineraries, provides cultural insights, and even generates a personalized packing list — all automatically. 🌍✈️
+A **multi-agent travel assistant** that intelligently understands user preferences and suggests top destinations tailored to their tastes. It evaluates weather conditions, plans detailed itineraries, provides cultural insights, and even generates a personalized packing list — all automatically. 🌍✈️
 
-### 🎬 Video Demo 
-https://www.youtube.com/watch?v=7fO3230ZSuw 
-## 👥 Team members
-- **Anmol Munnolli** 👨‍💻
-- **Vishwajyothi Reshmi** 👩‍💻
-- **Madhumitha Gannavaram** 👩‍💻
+### 🎬 Video Demo
+https://www.youtube.com/watch?v=7fO3230ZSuw
 
 ## 💡 Architecture
 
@@ -16,7 +12,7 @@ The architecture consists of:
 ### UI/UX Design 🎨
 - **Streamlit** (Python-based web app) to interact with users.
 
-### Backend Design🔧
+### Backend Design 🔧
 - **Agents** powered by **Hugging Face**, **LangGraph** for agent communication and logic flow.
 
 ### Agents:
@@ -33,27 +29,38 @@ The architecture consists of:
 ```bash
 python -m venv venv
 ```
+
 ### **2. Activate the Virtual Environment**
+macOS / Linux:
 ```bash
-.\\env\Scripts\activate
+source venv/bin/activate
 ```
+Windows:
+```bash
+venv\Scripts\activate
+```
+
 ### **3. Install Dependencies**
-- Install the required packages listed in `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
+
 ### **4. Set Up Environment Variables**
-- Copy `.env.example` to `.env` and add your own [Hugging Face token](https://huggingface.co/settings/tokens):
+Copy `.env.example` to `.env` and add your own [Hugging Face token](https://huggingface.co/settings/tokens):
 ```bash
 cp .env.example .env
 ```
-- `.env` is gitignored — never commit your token.
+`.env` is gitignored — never commit your token.
 
 ### **5. Run the Backend**
-- After setting up the virtual environment and installing the dependencies, run the `agent_controller.py` file.
+The modules import each other by top-level name, so run from inside `nomads_nest/`:
+```bash
+cd nomads_nest
+python -m langchain_agents.agent_controller
+```
 
 ### **6. Run the Frontend**
-- To start the frontend using Streamlit, run the `app.py` file:
+From the same `nomads_nest/` directory:
 ```bash
 streamlit run app.py
 ```
