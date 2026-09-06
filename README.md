@@ -1,6 +1,18 @@
-# Multi-Agent Travel Planner
+Are you a travel enthusiast who wants to explore somewhere new but has no idea where to go?
 
-A **multi-agent travel assistant** that turns a free-text description of the trip you want into a complete plan. It reads your preferences, matches them against 500 world cities, checks live weather at each candidate, and then writes an itinerary, cultural notes, and a packing list — all automatically. 🌍✈️
+Maybe you know the kind of trip you want — beaches, food, nature, nightlife, history, something relaxing, something adventurous — but not the destination.
+
+That is exactly what this project is built for.
+
+The **Multi-Agent Travel Planner** takes a simple free-text description of your ideal trip, understands your travel persona, matches it against 500 cities, checks live weather for the best candidates, and builds a complete travel plan around the destination that fits you best. 🌍✈️
+
+Instead of asking you to choose a city first, the planner starts with **you**.
+
+Your preferences become the input.
+
+Your persona becomes the search signal.
+
+And the destination is discovered from there.
 
 ## 🖥️ The Interface
 
