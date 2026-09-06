@@ -2,7 +2,7 @@
 
 Are you a travel enthusiast who wants to explore somewhere new but has no idea where to go?
 
-Maybe you know the kind of trip you want — beaches, food, nature, nightlife, history, something relaxing, something adventurous — but not the destination.
+Maybe you know the kind of trip you want beaches, food, nature, nightlife, history, something relaxing, something adventurous — but confused about the destination and planning
 
 That is exactly what this project is built for.
 
