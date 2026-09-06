@@ -1,4 +1,17 @@
 #import streamlit as st
+import os
+
+# Hosted Streamlit supplies configuration through st.secrets rather than a
+# local .env file. Mirror those values into the environment so the agents
+# can keep reading them with os.getenv either way.
+try:
+    for _key in ("HUGGINGFACEHUB_API_TOKEN", "OPENAI_API_KEY"):
+        if not os.getenv(_key) and _key in st.secrets:
+            os.environ[_key] = str(st.secrets[_key])
+except Exception:
+    # No secrets file locally is normal; .env covers that case.
+    pass
+
 # import pandas as pd
 # import time
 # import threading
