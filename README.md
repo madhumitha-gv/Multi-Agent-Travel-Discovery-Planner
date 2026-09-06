@@ -66,23 +66,35 @@ If every candidate has harsh weather, the graph routes to a failure branch and t
 - **Culture Agent**  — Provides local customs, food, and etiquette notes.
 - **Packing Agent**  — Produces a packing list tailored to the destination and persona.
 
-## 🔄 How the Flow Works
+## How the Flow Works
 
-The agents are wired as a LangGraph `StateGraph` with a retry loop on weather:
+The agents are wired as a LangGraph `StateGraph`. The interesting part is `check_weather`: it is a gate with three outcomes that walks down the ranked candidate list, advancing the cursor each time a city is rejected, until one passes or the list runs out.
 
-```
-analyze_persona → recommend_destinations → check_weather
-                                                │
-                          ┌─────────────────────┼─────────────────────┐
-                       weather ok        harsh, more left       none left
-                          │                     │                     │
-                          ▼                     ▼                     ▼
-                 generate_itinerary      check_weather ⟲            fail
-                          │                                           │
-                          └──────────► provide_cultural_tips ◄────────┘
-                                                │
-                                                ▼
-                                     generate_packing_list
+```mermaid
+flowchart TD
+    IN(["Free-text trip description"]) --> P["<b>analyze_persona</b><br/><i>top 3 preference labels</i>"]
+    P --> R["<b>recommend_destinations</b><br/><i>rank 500 cities by similarity</i>"]
+    R --> W{"<b>check_weather</b><br/><i>apparent temp</i>"}
+
+    W -- "15–28 °C" --> IT["<b>generate_itinerary</b>"]
+    W -- "out of range<br/>index += 1" --> MORE{"candidates<br/>remaining?"}
+    MORE -- "yes" --> W
+    MORE -- "no" --> FAIL["<b>fail</b><br/><i>no itinerary</i>"]
+
+    IT --> CU["<b>provide_cultural_tips</b>"]
+    FAIL --> CU
+    CU --> PK["<b>generate_packing_list</b>"]
+    PK --> OUT(["Trip plan"])
+
+    classDef ok fill:#d7f0dc,stroke:#3f9153,color:#10240f
+    classDef gate fill:#fdf0cd,stroke:#c99a1e,color:#3a2c05
+    classDef bad fill:#fadcdc,stroke:#c0504d,color:#3d0f0f
+    classDef io fill:#e6e9ef,stroke:#7d8698,color:#1b2130
+
+    class P,R,IT,CU,PK ok
+    class W,MORE gate
+    class FAIL bad
+    class IN,OUT io
 ```
 
 The app renders this same graph live while the plan is being built:
@@ -91,7 +103,7 @@ The app renders this same graph live while the plan is being built:
 
 Shared state is a `TripState` TypedDict passed between nodes, carrying the persona, the ranked recommendations, a cursor into that list, the weather verdict, and each agent's output.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 travel_planner/
