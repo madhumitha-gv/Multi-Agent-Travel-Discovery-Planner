@@ -162,7 +162,6 @@ Copy `.env.example` to `.env` and add your [Hugging Face token](https://huggingf
 ```bash
 cp .env.example .env
 ```
-`.env` is gitignored — never commit your token.
 
 ### **5. Run the App**
 The modules import each other by top-level name, so run from inside `travel_planner/`:
