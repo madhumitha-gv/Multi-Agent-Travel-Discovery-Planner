@@ -624,71 +624,132 @@ if start_button:
             thread.join()
             result = result_container["result"]
 
-        # ---- Display Result ----
-        if result:
-            st.success("Here’s your personalized trip plan!")
-            display_colored_preferences(result.get("persona", []))
+        st.session_state["result"] = result
 
-            st.markdown(f"<p class='section-title'>Final Pick: {result.get('top_destination', 'No destination')}</p>", unsafe_allow_html=True)
-            render_weather_table(result.get("weather_log", []))
 
-            st.markdown("<p class='section-title'>Suggested Itinerary</p>", unsafe_allow_html=True)
-            itinerary = result.get("itinerary", "")
-            if itinerary:
-                itinerary_lines = [line.strip("-• ") for line in itinerary.strip().split("\n") if line.strip()]
-                for item in itinerary_lines:
-                    st.markdown(f"- {item}")
-            else:
-                st.info("No itinerary generated.")
+# ---- Result rendering ----
+def render_result(result):
+    st.success("Here’s your personalized trip plan!")
+    display_colored_preferences(result.get("persona", []))
 
-            st.markdown("<p class='section-title'>Cultural Tips</p>", unsafe_allow_html=True)
-            culture_tips = result.get("culture_tips", "")
-            if culture_tips:
-                culture_lines = [line.strip("-• ") for line in culture_tips.strip().split("\n") if line.strip()]
-                for tip in culture_lines:
-                    st.markdown(f"- {tip}")
-            else:
-                st.info("No cultural information available.")
+    if all_candidates_rejected(result) and not result.get("human_override"):
+        st.markdown("<p class='section-title'>No destination passed the weather check</p>", unsafe_allow_html=True)
+    else:
+        st.markdown(f"<p class='section-title'>Final Pick: {result.get('top_destination', 'No destination')}</p>", unsafe_allow_html=True)
+    render_weather_table(result.get("weather_log", []))
 
-            st.markdown("<p class='section-title'>Packing List</p>", unsafe_allow_html=True)
-            packing_list = result.get("packing_list", "")
-            if packing_list:
-                lines = [line.strip() for line in packing_list.split("\n") if line.strip()]
+    st.markdown("<p class='section-title'>Suggested Itinerary</p>", unsafe_allow_html=True)
+    itinerary = result.get("itinerary", "")
+    if itinerary:
+        itinerary_lines = [line.strip("-• ") for line in itinerary.strip().split("\n") if line.strip()]
+        for item in itinerary_lines:
+            st.markdown(f"- {item}")
+    else:
+        st.info("No itinerary generated.")
 
-                # The model is asked for "Category:" headers followed by "- item"
-                # bullets, but it sometimes inlines them as "Category: a, b, c".
-                # Accept both shapes.
-                groups = []
-                current = None
-                for line in lines:
-                    is_bullet = line[:1] in ("-", "\u2022", "*")
-                    if ":" in line and not is_bullet:
-                        category, inline = line.split(":", 1)
-                        current = (category.strip(), [])
-                        groups.append(current)
-                        for item in inline.split(","):
-                            item = item.strip().lstrip("-\u2022 ").strip()
-                            if item:
-                                current[1].append(item)
-                    else:
-                        item = line.lstrip("-\u2022* ").strip()
-                        if not item:
-                            continue
-                        if current is None:
-                            current = ("Items to Pack", [])
-                            groups.append(current)
+    st.markdown("<p class='section-title'>Cultural Tips</p>", unsafe_allow_html=True)
+    culture_tips = result.get("culture_tips", "")
+    if culture_tips:
+        culture_lines = [line.strip("-• ") for line in culture_tips.strip().split("\n") if line.strip()]
+        for tip in culture_lines:
+            st.markdown(f"- {tip}")
+    else:
+        st.info("No cultural information available.")
+
+    st.markdown("<p class='section-title'>Packing List</p>", unsafe_allow_html=True)
+    packing_list = result.get("packing_list", "")
+    if packing_list:
+        lines = [line.strip() for line in packing_list.split("\n") if line.strip()]
+
+        # The model is asked for "Category:" headers followed by "- item"
+        # bullets, but it sometimes inlines them as "Category: a, b, c".
+        # Accept both shapes.
+        groups = []
+        current = None
+        for line in lines:
+            is_bullet = line[:1] in ("-", "\u2022", "*")
+            if ":" in line and not is_bullet:
+                category, inline = line.split(":", 1)
+                current = (category.strip(), [])
+                groups.append(current)
+                for item in inline.split(","):
+                    item = item.strip().lstrip("-\u2022 ").strip()
+                    if item:
                         current[1].append(item)
-
-                for category, items in groups:
-                    if not items:
-                        continue
-                    st.markdown(f"""
-                        <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                            <strong>{category}</strong><br>
-                            {"<br>".join(f"\u2022 {item}" for item in items)}
-                        </div>
-                    """, unsafe_allow_html=True)
             else:
-                st.info("No packing list generated.")
-        else:
-            st.error("Something went wrong — no result returned.")
+                item = line.lstrip("-\u2022* ").strip()
+                if not item:
+                    continue
+                if current is None:
+                    current = ("Items to Pack", [])
+                    groups.append(current)
+                current[1].append(item)
+
+        for category, items in groups:
+            if not items:
+                continue
+            st.markdown(f"""
+                <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
+                    <strong>{category}</strong><br>
+                    {"<br>".join(f"\u2022 {item}" for item in items)}
+                </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.info("No packing list generated.")
+
+
+
+def all_candidates_rejected(result):
+    """True when the weather gate skipped every candidate it looked at."""
+    log = result.get("weather_log", [])
+    return bool(log) and all(entry.get("skipped") for entry in log)
+
+
+def plan_for_city(result, city):
+    """Re-run the downstream agents for a city the user picked by hand."""
+    from agents import culture_agent, itinerary_agent, packing_agent
+
+    persona = result.get("persona", [])
+    state = dict(result)
+    state["top_destination"] = city
+
+    updated = dict(result)
+    updated["top_destination"] = city
+    updated["itinerary"] = itinerary_agent.run(state)
+    updated["culture_tips"] = culture_agent.cultural_tips(city)
+    updated["packing_list"] = packing_agent.generate_packing_list(city, persona)
+    updated["human_override"] = city
+    return updated
+
+
+result = st.session_state.get("result")
+
+if result:
+    render_result(result)
+
+    # ---- Human in the loop ----
+    # The weather gate can reject every candidate, which leaves the traveller
+    # with no plan at all. Rather than dead-end, show what was found and let
+    # them overrule the gate.
+    if all_candidates_rejected(result) and not result.get("human_override"):
+        st.markdown("<p class='section-title'>Not happy with the weather?</p>", unsafe_allow_html=True)
+        st.info(
+            "Every match was outside the comfortable range, so no itinerary was built. "
+            "Pick one anyway and we'll plan the trip for it."
+        )
+
+        options = {
+            f"{e['city']} — {e['temperature']:.1f} °C ({e['condition']})": e["city"]
+            for e in result.get("weather_log", [])
+        }
+        if options:
+            choice = st.selectbox("Choose a destination", list(options.keys()), key="override_choice")
+            if st.button("Plan this destination anyway", key="override_go"):
+                with st.spinner(f"Planning your trip to {options[choice]}..."):
+                    st.session_state["result"] = plan_for_city(result, options[choice])
+                st.rerun()
+
+    elif result.get("human_override"):
+        st.caption(
+            f"Planned for {result['human_override']}, chosen by you despite the weather check."
+        )

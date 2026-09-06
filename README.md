@@ -43,7 +43,11 @@ You type something like *"a relaxed beach trip with good food, nothing too expen
 4. Builds a day-by-day itinerary for the first city that passes
 5. Adds local cultural tips and a personalized packing list
 
-If every candidate has harsh weather, the graph routes to a failure branch and tells you to try different preferences rather than returning a bad plan.
+If every candidate is rejected on weather, the graph routes to its failure branch rather than returning a bad plan — but the app does not dead-end there. It shows you the cities it found with their temperatures and lets you **overrule the weather check** and plan one anyway.
+
+### Human in the loop
+
+The weather gate is deliberately strict, so a summer query can have all three candidates skipped. When that happens the app surfaces the rejected shortlist and a **"Plan this destination anyway"** control. Picking a city re-runs the itinerary, culture and packing agents for it and labels the result as your choice, so the automated verdict stays visible and overridable instead of final.
 
 ## Tech Stack
 
