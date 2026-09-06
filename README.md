@@ -2,6 +2,15 @@
 
 A **multi-agent travel assistant** that turns a free-text description of the trip you want into a complete plan. It reads your preferences, matches them against 500 world cities, checks live weather at each candidate, and then writes an itinerary, cultural notes, and a packing list — all automatically. 🌍✈️
 
+## 🖥️ The Interface
+
+Describe the trip you want in plain language and hit **Let's Plan**. The left rail streams the current step and an activity log as each agent runs, while the right panel renders the agent graph live.
+
+![Home screen of the planner, showing the free-text trip input and the live agent graph](docs/images/ui-home.png)
+
+Once the graph completes, the app shows the persona it inferred, the destination it settled on, and — importantly — the weather reasoning behind that choice. Here Madrid was ranked highly but **skipped as too cold**, so Barcelona was selected instead:
+
+![Results view showing inferred preferences, the final destination pick, and a weather table](docs/images/ui-results.png)
 
 ## ✨ What It Does
 
@@ -54,6 +63,10 @@ analyze_persona → recommend_destinations → check_weather
                                                 ▼
                                      generate_packing_list
 ```
+
+The app renders this same graph live while the plan is being built:
+
+![The agent graph as rendered in the app](docs/images/agent-graph.png)
 
 Shared state is a `TripState` TypedDict passed between nodes, carrying the persona, the ranked recommendations, a cursor into that list, the weather verdict, and each agent's output.
 
