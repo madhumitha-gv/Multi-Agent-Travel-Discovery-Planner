@@ -2,8 +2,6 @@
 
 A **multi-agent travel assistant** that turns a free-text description of the trip you want into a complete plan. It reads your preferences, matches them against 500 world cities, checks live weather at each candidate, and then writes an itinerary, cultural notes, and a packing list — all automatically. 🌍✈️
 
-### 🎬 Video Demo
-https://www.youtube.com/watch?v=7fO3230ZSuw
 
 ## ✨ What It Does
 
