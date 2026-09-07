@@ -97,16 +97,30 @@ flowchart TD
     CU --> PK["<b>generate_packing_list</b>"]
     PK --> OUT(["Trip plan"])
 
+    FAIL -. "nothing passed" .-> ASK{{"<b>traveller decides</b>"}}
+    ASK -- "overrule the gate" --> ANY["plan a rejected city"]
+    ASK -- "find cooler" --> COOL["weather-filter all 500 cities<br/><i>one per country</i>"]
+    ANY --> RE["<b>re-run</b> itinerary, culture, packing"]
+    COOL --> RE
+    RE --> OUT
+
     classDef ok fill:#d7f0dc,stroke:#3f9153,color:#10240f
     classDef gate fill:#fdf0cd,stroke:#c99a1e,color:#3a2c05
     classDef bad fill:#fadcdc,stroke:#c0504d,color:#3d0f0f
     classDef io fill:#e6e9ef,stroke:#7d8698,color:#1b2130
+    classDef human fill:#dbe7fb,stroke:#3f6fb5,color:#0d1c33
 
     class P,R,IT,CU,PK ok
     class W,MORE gate
     class FAIL bad
     class IN,OUT io
+    class ASK,ANY,COOL,RE human
 ```
+
+
+The blue steps are not graph nodes. The `StateGraph` always finishes; when it
+ends in `fail` the app offers those choices and re-runs the three generative
+agents for whichever city you pick.
 
 The app renders this same graph live while the plan is being built:
 
