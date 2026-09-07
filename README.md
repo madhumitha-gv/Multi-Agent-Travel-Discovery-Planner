@@ -444,22 +444,14 @@ az containerapp update -n travel-planner -g travel-planner-rg \
   --image <registry-name>.azurecr.io/travel-planner:v2
 ```
 
-### Gotchas
 
-- **Azure for Students restricts regions.** `eastus`, `eastus2` and `westus2` were all
-  rejected with `RequestDisallowedByAzure`; `centralus` worked.
-- **A fresh subscription may need a tenant-scoped login.** If every call returns
-  `AuthorizationFailed` even for reads, re-authenticate against the tenant directly:
-  `az login --tenant <tenant-id>`.
-- **The deployed app is public with no authentication.** Anyone with the link can run plans
-  against the configured token. Container Apps has built-in auth if that needs locking down.
 
-## What I'd Do Differently at Scale
+## Further enhancements (Building in progress)
 
 **Enrich the city descriptions.** This is the single highest-value fix. With only 12 distinct
 feature strings across 500 cities, the ranking cannot meaningfully separate most of the
-catalogue. Per-city descriptions — generated from travel content, or derived from structured
-attributes — would make the similarity score mean something and make the country cap
+catalogue. Per-city descriptions, generated from travel content, or derived from structured
+attributes would make the similarity score mean something and make the country cap
 unnecessary.
 
 **Move the local models to remote inference.** Persona classification and embeddings are the
