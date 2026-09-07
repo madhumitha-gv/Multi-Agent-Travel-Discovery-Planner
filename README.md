@@ -1,12 +1,7 @@
 # Multi-Agent Travel Planner
 
-**Live demo:** https://travel-planner.gentlemushroom-48179c71.centralus.azurecontainerapps.io
 
-_Hosted on Azure Container Apps and scaled to zero, so the first request after an idle period takes up to a minute to wake up._
-
-Are you a travel enthusiast who wants to explore somewhere new but has no idea where to go?
-
-Maybe you know the kind of trip you want beaches, food, nature, nightlife, history, something relaxing, something adventurous — but confused about the destination and planning
+Maybe you know the kind of trip you want beaches, food, nature, nightlife, history, something relaxing, something adventurous, but confused about the destination and planning
 
 That is exactly what this project is built for.
 
@@ -20,9 +15,12 @@ Your persona becomes the search signal.
 
 And the destination is discovered from there.
 
-## The Interface
+**Live demo:** https://travel-planner.gentlemushroom-48179c71.centralus.azurecontainerapps.io
 
-Describe the trip you want in plain language and hit **Let's Plan**. The left rail streams the current step and an activity log as each agent runs, while the right panel renders the agent graph live.
+
+## Interface
+
+Describe the trip you want in plain language and hit **Let's Plan**. The left rail streams the current step and an activity log as each agent runs, while the right panel renders the agent graph live and show logs.
 
 ![Home screen of the planner, showing the free-text trip input and the live agent graph](docs/images/ui-home.png)
 
@@ -46,8 +44,9 @@ You type something like *"a relaxed beach trip with good food, nothing too expen
 3. Checks the current apparent temperature at the top candidates and **skips any outside 15–28 °C**
 4. Builds a day-by-day itinerary for the first city that passes
 5. Adds local cultural tips and a personalized packing list
+6. Includes a human in loop step for customized planning
 
-If every candidate is rejected on weather, the graph routes to its failure branch rather than returning a bad plan — but the app does not dead-end there. It shows you the cities it found with their temperatures and lets you **overrule the weather check** and plan one anyway.
+If every city is rejected on weather, the graph routes to its failure branch rather than returning a bad plan — but the app does not dead-end there. It shows you the cities it found with their temperatures and lets you **overrule the weather check** and plan one anyway.
 
 ### Human in the loop
 
