@@ -2,8 +2,8 @@
 
 A multi-agent travel planning system that starts from **who you are**, not from a city you
 already picked. Describe the trip you want in plain language and six specialised agents infer
-your travel persona, rank 500 world cities against it, check live weather at each candidate,
-and build a complete plan — itinerary, cultural notes and packing list — for the destination
+your travel persona, rank cities against it, check live weather at each candidate,
+and build a complete plan - itinerary, cultural notes and packing list for the destination
 that actually fits.
 
 **Live demo:** https://travel-planner.gentlemushroom-48179c71.centralus.azurecontainerapps.io
