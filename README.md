@@ -190,3 +190,38 @@ streamlit run app.py
 cd travel_planner
 python -m langchain_agents.agent_controller
 ```
+
+## Deployment
+
+The app is containerised and runs on **Azure Container Apps** in Central US. The
+`Dockerfile` bakes the DeBERTa and MiniLM weights into the image, so a cold start
+does not have to download several hundred MB or keep a writable model cache.
+
+Sizing is 1 vCPU / 2 GB, which leaves headroom over the ~1.3 GB the app uses with
+both models loaded. It runs with `--min-replicas 0`, so it costs nothing while
+idle — at the price of a cold start of roughly 30 seconds for the first visitor
+after a quiet period.
+
+The Hugging Face token is stored as a Container Apps secret and injected as an
+environment variable, so it is never baked into the image and can be rotated
+without a rebuild.
+
+### Run the container locally
+```bash
+docker build -t travel-planner .
+docker run -p 8501:8501 -e HUGGINGFACEHUB_API_TOKEN=your_token travel-planner
+```
+
+### Redeploy after a change
+Container Apps runs on amd64, so build for that platform explicitly if you are on
+an ARM machine such as an Apple Silicon Mac:
+```bash
+docker buildx build --platform linux/amd64 -t <registry>.azurecr.io/travel-planner:v2 --load .
+docker push <registry>.azurecr.io/travel-planner:v2
+az containerapp update -n travel-planner -g travel-planner-rg \
+  --image <registry>.azurecr.io/travel-planner:v2
+```
+
+> **Note:** the deployed app is publicly reachable with no authentication, so
+> anyone with the link can run plans against the configured token. Container Apps
+> has built-in auth if that needs locking down.
