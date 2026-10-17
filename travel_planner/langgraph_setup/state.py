@@ -13,3 +13,8 @@ class TripState(TypedDict, total=False):
     itinerary: str
     culture_tips: str
     packing_list: str
+
+    final_destination: dict
+    message: str
+    generation_errors: List[str]
+    generation_message: str

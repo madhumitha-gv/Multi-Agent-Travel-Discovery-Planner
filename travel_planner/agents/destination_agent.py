@@ -65,4 +65,13 @@ def rank(persona, top_n=3):
 def run(state, top_n=3):
     if "persona" not in state:
         return []
-    return rank(state["persona"], top_n=top_n)
+    ranked = rank(state["persona"], top_n=None)
+    diverse, countries = [], set()
+    for city in ranked:
+        if city["country"] in countries:
+            continue
+        countries.add(city["country"])
+        diverse.append(city)
+        if len(diverse) >= top_n:
+            break
+    return diverse

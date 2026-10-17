@@ -1,9 +1,18 @@
-# logger.py
-import queue
+"""Request-local progress events propagated through LangGraph's context."""
+from contextvars import ContextVar
 
-# Shared queue for log messages
-log_queue = queue.Queue()
+_progress = ContextVar("trip_progress", default=None)
+
+
+def bind_progress(callback):
+    return _progress.set(callback)
+
+
+def reset_progress(token):
+    _progress.reset(token)
+
 
 def log(message: str):
-    """Push a log message to the queue for streaming."""
-    log_queue.put(message)
+    callback = _progress.get()
+    if callback:
+        callback(str(message))

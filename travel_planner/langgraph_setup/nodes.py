@@ -68,10 +68,10 @@ def check_weather(state: dict) -> dict:
         "city": destination["name"],
         "temperature": temp,
         "condition": condition,
-        "skipped": condition in HARSH_CONDITIONS
+        "skipped": condition in HARSH_CONDITIONS or condition == "unavailable"
     })
 
-    if condition in HARSH_CONDITIONS:
+    if condition in HARSH_CONDITIONS or condition == "unavailable":
         state["current_rec_index"] += 1
         state["weather_check_result"] = "harsh"
     else:

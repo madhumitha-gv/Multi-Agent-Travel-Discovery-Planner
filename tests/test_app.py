@@ -1,0 +1,47 @@
+from pathlib import Path
+from streamlit.testing.v1 import AppTest
+
+APP=Path(__file__).resolve().parents[1] / 'travel_planner' / 'app.py'
+
+
+def test_landing_and_validation():
+    app=AppTest.from_file(str(APP)).run(timeout=30)
+    assert not app.exception
+    assert app.title[0].value=='Start with a feeling. Find your next trip.'
+    app.button[0].click().run()
+    assert 'at least 10 characters' in app.warning[0].value
+    assert not app.exception
+
+
+def test_example_prompt_populates_input():
+    app=AppTest.from_file(str(APP)).run(timeout=30)
+    app.selectbox[0].select('Food & history').run()
+    assert 'local food' in app.text_area[0].value
+    assert not app.exception
+
+
+def test_partial_result_and_unavailable_weather_render():
+    app=AppTest.from_file(str(APP))
+    app.session_state['result']={
+        'persona':['food'], 'top_destination':'Tokyo', 'weather_check_result':'ok',
+        'final_destination':{'country':'Japan'},
+        'weather_log':[{'city':'Tokyo','temperature':None,'condition':'unavailable','skipped':True}],
+        'itinerary':'', 'culture_tips':'Etiquette tips', 'packing_list':'',
+        'generation_errors':['itinerary','packing_list'],
+    }
+    app.run(timeout=30)
+    assert not app.exception
+    assert 'Tokyo' in app.subheader[0].value
+    assert app.warning
+    assert any(b.label=='Retry missing sections' for b in app.button)
+
+
+def test_all_rejected_with_missing_temperature_renders_choice():
+    app=AppTest.from_file(str(APP))
+    app.session_state['result']={
+        'persona':['food'], 'top_destination':'Tokyo','weather_check_result':'fail',
+        'weather_log':[{'city':'Tokyo','temperature':None,'condition':'unavailable','skipped':True}],
+    }
+    app.run(timeout=30)
+    assert not app.exception
+    assert any(b.label=='Build this travel guide' for b in app.button)

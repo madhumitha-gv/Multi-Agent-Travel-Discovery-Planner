@@ -1,60 +1,101 @@
-# utils/mistral.py
-"""Single entry point for Mistral text generation.
-
-Every generative agent goes through here so the model, endpoint and
-error handling are defined in exactly one place.
-
-Mistral-7B-Instruct is served through the Hugging Face router rather
-than a local pipeline. Note that the plain `hf-inference` provider no
-longer serves it, so the request is routed to a provider that does.
-"""
-
+"""Bounded Hugging Face client. Only user-safe errors cross this boundary."""
+import logging
 import os
-
+import re
+import threading
+import time
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-
-MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
-PROVIDER = "featherless-ai"
-ENDPOINT = f"https://router.huggingface.co/{PROVIDER}/v1/chat/completions"
-
-TIMEOUT = 120
+log = logging.getLogger(__name__)
+ENDPOINT = "https://router.huggingface.co/v1/chat/completions"
+DEFAULT_CANDIDATES = "auto|Qwen/Qwen3-4B-Instruct-2507,auto|meta-llama/Llama-3.1-8B-Instruct"
+FRIENDLY = "Text generation is temporarily unavailable. Please try again in a minute."
+_cooldown_until = {}
+_lock = threading.Lock()
+_RETRY_STATUS = {408, 429, 500, 502, 503, 504}
 
 
 class MistralError(RuntimeError):
-    """Raised when the model could not be reached or returned no text."""
+    """str(error) is safe to display to a visitor."""
+
+
+def _number(name, default, low, high):
+    try:
+        return max(low, min(high, float(os.getenv(name, default))))
+    except (ValueError, TypeError):
+        return float(default)
+
+
+def _candidates():
+    result = []
+    for item in os.getenv("GEN_CANDIDATES", DEFAULT_CANDIDATES).split(","):
+        provider, sep, model = item.strip().partition("|")
+        if (sep and re.fullmatch(r"[a-z0-9-]+", provider)
+                and re.fullmatch(r"[\w.-]+/[\w.-]+", model)):
+            pair = (provider, model)
+            if pair not in result:
+                result.append(pair)
+    return result[:4]
 
 
 def generate(prompt, max_tokens=500, temperature=0.7):
-    """Send a single-turn prompt to Mistral and return the reply text."""
-    token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-    if not token:
-        raise MistralError(
-            "HUGGINGFACEHUB_API_TOKEN is not set. Copy .env.example to .env "
-            "and add your Hugging Face token."
-        )
+    """Try healthy candidates with bounded retry scheduling.
 
-    try:
-        response = requests.post(
-            ENDPOINT,
-            headers={"Authorization": f"Bearer {token}"},
-            json={
-                "model": MODEL,
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": max_tokens,
-                "temperature": temperature,
-            },
-            timeout=TIMEOUT,
-        )
-    except requests.RequestException as e:
-        raise MistralError(f"Could not reach {PROVIDER}: {e}") from e
-
-    if not response.ok:
-        raise MistralError(f"{response.status_code} from {PROVIDER}: {response.text[:200]}")
-
-    try:
-        return response.json()["choices"][0]["message"]["content"].strip()
-    except (KeyError, IndexError, ValueError) as e:
-        raise MistralError(f"Unexpected response shape: {response.text[:200]}") from e
+    GEN_TIMEOUT bounds socket inactivity per request. GEN_TOTAL_TIMEOUT
+    limits retry scheduling across candidates; an active socket can overrun it.
+    Credentials, prompts and provider response bodies are never logged.
+    """
+    token = os.getenv("HUGGINGFACEHUB_API_TOKEN", "").strip()
+    candidates = _candidates()
+    if not token or token == "your_token_here" or not candidates:
+        log.error("Generation configuration is missing or invalid")
+        raise MistralError(FRIENDLY)
+    deadline = time.monotonic() + _number("GEN_TOTAL_TIMEOUT", 45, 5, 120)
+    with _lock:
+        live = [c for c in candidates if _cooldown_until.get(c, 0) <= time.monotonic()]
+    if not live:
+        raise MistralError(FRIENDLY)
+    for provider, model in live:
+        for attempt in range(2):
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise MistralError(FRIENDLY)
+            try:
+                response = requests.post(
+                    ENDPOINT,
+                    headers={"Authorization": f"Bearer {token}"},
+                    json={
+                        "model": model if provider == "auto" else f"{model}:{provider}",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "max_tokens": max_tokens,
+                        "temperature": temperature,
+                    },
+                    timeout=min(_number("GEN_TIMEOUT", 18, 2, 60), remaining),
+                )
+                if response.ok:
+                    try:
+                        content = response.json()["choices"][0]["message"]["content"]
+                        if isinstance(content, str) and content.strip():
+                            return content.strip()
+                    except (KeyError, IndexError, TypeError, ValueError):
+                        pass
+                    log.warning("Generation candidate %s returned invalid content", model)
+                    break
+                log.warning("Generation candidate %s status=%s", model, response.status_code)
+                if response.status_code in {401, 402}:
+                    with _lock:
+                        for candidate in candidates:
+                            _cooldown_until[candidate] = time.monotonic() + 60
+                    raise MistralError(FRIENDLY)
+                # A 403 may be model-specific; fallback can still succeed.
+                if response.status_code not in _RETRY_STATUS:
+                    break
+            except requests.RequestException as exc:
+                log.warning("Generation candidate %s failed (%s)", model, type(exc).__name__)
+            if attempt == 0:
+                time.sleep(min(0.5, max(0, deadline - time.monotonic())))
+        with _lock:
+            _cooldown_until[(provider, model)] = time.monotonic() + 60
+    raise MistralError(FRIENDLY)

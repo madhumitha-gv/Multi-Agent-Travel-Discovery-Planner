@@ -6,6 +6,10 @@ classifier = pipeline(
     model="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
 )
 
+# DeBERTa supports 512 tokens; the pipeline truncates the input side.
+classifier.tokenizer.model_max_length = 512
+
+
 def run(state, user_input):
     preferences = analyze_preferences(user_input)
     state["persona"] = preferences

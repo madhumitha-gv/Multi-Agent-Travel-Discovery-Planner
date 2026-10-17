@@ -1,8 +1,16 @@
 # langgraph_setup/run_graph.py
 from langgraph_setup.trip_flow_graph import build_trip_graph
-from logger import log
+from logger import log, bind_progress, reset_progress
 
-def run_trip_planner(user_input: str):
+def run_trip_planner(user_input: str, progress=None):
+    token = bind_progress(progress)
+    try:
+        return _run(user_input)
+    finally:
+        reset_progress(token)
+
+
+def _run(user_input):
     graph = build_trip_graph()
     initial_state = {"user_input": user_input}
     final_state = {}
@@ -12,7 +20,7 @@ def run_trip_planner(user_input: str):
             # Each step is {step_name: state_dict}, extract the value
             values = list(step.values())
             if values:
-                final_state = values[0]  # extract just the state
+                final_state.update(values[0])  # merge partial node updates
                 log(f"🤖 Step output captured: {list(step.keys())[0]}")
             else:
                 log("⚠️ No values in step")
