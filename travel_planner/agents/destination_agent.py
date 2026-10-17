@@ -16,6 +16,7 @@ with data_path.open() as f:
 _usable = [
     d for d in destinations
     if d.get("features") and "lat" in d and "lng" in d
+    and not d.get("duplicate_of") and d.get("catalogue_status") != "needs_review"
 ]
 
 # Encoded once on first use and reused for every later query. The city
@@ -27,7 +28,7 @@ def _embeddings():
     global _city_embeddings
     if _city_embeddings is None:
         _city_embeddings = model.encode(
-            [f"{d['city']}, {d.get('country', '')}. {d['features']}" for d in _usable],
+            [f"{d['city']}, {d.get('country', '')}. {d['features']}. {d.get('description', '')}" for d in _usable],
             normalize_embeddings=True,
             batch_size=64,
         )
@@ -52,6 +53,8 @@ def rank(persona, top_n=3, coastal_only=False, query_text=""):
                 "lng": d["lng"],
                 "country": d.get("country", "Unknown"),
                 "features": d["features"],
+                "description": d.get("description", ""),
+                "description_source": d.get("description_source", ""),
             }
             for d, score in zip(_usable, scores)
             if not coastal_only or d.get("coastal") is True

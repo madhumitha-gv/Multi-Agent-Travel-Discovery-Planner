@@ -18,8 +18,11 @@ def test_merged_catalogue_preserves_cities_and_coastal_features():
     assert len(cities)==500
     assert len({(c['city'],c['country']) for c in cities})==500
     coast={c['city']:c for c in cities if c.get('coastal') is True}
-    assert len(coast)==19
+    assert len(coast)==61
     assert 'Delhi' not in coast
+    assert 'Kumasi' not in coast  # Mentioning Ivory Coast does not imply coastline.
+    assert 'Pittsburgh' not in coast
+    assert 'Valencia' in coast
     assert 'Pacific Ocean' in coast['Sydney']['features']
     assert 'Urban Energy, Local Hospitality, Photogenic Charm' in coast['Sydney']['features']
     assert all('lat' in c and 'lng' in c and c['features'] for c in cities)
