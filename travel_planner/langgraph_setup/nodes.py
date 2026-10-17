@@ -21,6 +21,7 @@ def analyze_persona(state: dict) -> dict:
     log("🧠 Analyzing persona...")
     preferences = persona_agent.run(state, state["user_input"])
     state["persona"] = preferences
+    log("Persona: " + ", ".join(preferences))
     return state
 
 # Step 2: Recommend destinations based on persona
@@ -35,6 +36,7 @@ def recommend_destinations(state: dict) -> dict:
         state["all_recommendations"] = []
         return state
 
+    log("Destination shortlist: " + ", ".join(d["name"] for d in matches))
     state["all_recommendations"] = matches
     state["current_rec_index"] = 0
     state["top_destination"] = matches[0]["name"]
@@ -57,7 +59,8 @@ def check_weather(state: dict) -> dict:
     temp = fetch_apparent_temperature(lat, lng)
     condition = get_current_weather(temp)
 
-    print(f"Checking weather at {destination['name']}: {condition}")
+    display_temp = f"{temp:.1f} °C" if temp is not None else "unavailable"
+    log(f"Weather: {destination['name']} — {display_temp}, {condition}")
 
     # ✅ Ensure weather_log is initialized
     if "weather_log" not in state:
@@ -66,10 +69,21 @@ def check_weather(state: dict) -> dict:
     # ✅ Log this destination's weather outcome
     state["weather_log"].append({
         "city": destination["name"],
+        "country": destination.get("country", ""),
         "temperature": temp,
         "condition": condition,
         "skipped": condition in HARSH_CONDITIONS or condition == "unavailable"
     })
+
+    if state.get("require_approval"):
+        state["current_rec_index"] = index + 1
+        if condition in {"chilly", "warm"} and not state.get("final_destination"):
+            state["final_destination"] = destination
+            state["top_destination"] = destination["name"]
+            state["weather_check_result"] = "ok"
+        elif not state.get("final_destination"):
+            state["weather_check_result"] = "harsh"
+        return state
 
     if condition in HARSH_CONDITIONS or condition == "unavailable":
         state["current_rec_index"] += 1

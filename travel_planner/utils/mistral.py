@@ -11,6 +11,7 @@ import time
 
 import requests
 from dotenv import load_dotenv
+from logger import log as progress
 
 load_dotenv()
 log = logging.getLogger(__name__)
@@ -115,6 +116,7 @@ def generate(prompt, max_tokens=500, temperature=0.7):
         if remaining <= 0:
             break
         candidate_deadline = time.monotonic() + remaining / (len(live) - index)
+        progress(f"Writing agent: trying {provider}/{model}")
         for attempt in range(2):
             remaining = candidate_deadline - time.monotonic()
             if remaining <= 0:
@@ -127,10 +129,12 @@ def generate(prompt, max_tokens=500, temperature=0.7):
                 if response.ok:
                     content = _content(provider, response)
                     if content:
+                        progress(f"Writing agent: completed with {provider}/{model}")
                         return content
                     log.warning("Generation candidate %s returned invalid content", model)
                     break
                 log.warning("Generation candidate %s status=%s", model, response.status_code)
+                progress(f"Writing agent: {provider} returned HTTP {response.status_code}; checking fallback")
                 if response.status_code not in _RETRY_STATUS:
                     # Includes 429: do not waste quota or hold up the fallback.
                     break

@@ -3,6 +3,7 @@ import logging
 import os
 import queue
 import threading
+import time
 
 import pandas as pd
 import streamlit as st
@@ -51,23 +52,31 @@ with st.form("trip_form"):
 st.caption("Plans cover two days. Weather is current apparent temperature, not a forecast for future travel dates. Please avoid entering personal or sensitive details.")
 
 
-def execute(job):
+def execute(job, consumes_quota=True):
     """All expensive paths share the same session and process admission gate."""
     try:
-        st.session_state["starts"] = admit(st.session_state.get("starts", []))
+        st.session_state["starts"] = admit(st.session_state.get("starts", []), consumes_quota=consumes_quota)
     except LimitError as exc:
         st.warning(str(exc))
         return None
     events = queue.Queue()
     outcome = {}
+    trace = []
+    started = time.monotonic()
+
+    def record(event):
+        trace.append({"Operation": "Guide generation" if consumes_quota else "Discovery", "Elapsed (s)": round(time.monotonic() - started, 2), "Event": str(event)})
 
     def worker():
+        from logger import bind_progress, reset_progress
+        token = bind_progress(events.put)
         try:
             outcome["result"] = job(events.put)
         except Exception:
             logging.getLogger(__name__).exception("Trip planning failed")
             outcome["failed"] = True
         finally:
+            reset_progress(token)
             release()
 
     with st.status("Finding your next adventure…", expanded=True) as status:
@@ -76,10 +85,15 @@ def execute(job):
         thread.start()
         while thread.is_alive():
             try:
-                progress.write(events.get(timeout=0.25))
+                event = events.get(timeout=0.25)
+                record(event)
+                progress.write(event)
             except queue.Empty:
                 pass
         thread.join()
+        while not events.empty():
+            record(events.get_nowait())
+        st.session_state["trace_events"] = st.session_state.get("trace_events", []) + trace
         if outcome.get("failed"):
             status.update(label="We couldn't finish this request", state="error", expanded=False)
             st.error("The planner is temporarily unavailable. Please try again shortly. Your previous result is still available below.")
@@ -91,28 +105,31 @@ def execute(job):
 def discover(text, progress):
     progress("Loading the travel agents…")
     from langgraph_setup.run_graph import run_trip_planner
-    return run_trip_planner(text, progress=progress)
+    return run_trip_planner(text, progress=progress, require_approval=True)
 
 
 if submitted:
     if len(user_input.strip()) < 10:
         st.warning("Describe your trip in at least 10 characters so we can find a useful match.")
     else:
-        updated = execute(lambda progress: discover(user_input.strip(), progress))
+        st.session_state["trace_events"] = []
+        updated = execute(lambda progress: discover(user_input.strip(), progress), consumes_quota=False)
         if updated:
             st.session_state["result"] = updated
             st.session_state.pop("alternatives", None)
 
 
 def needs_choice(result):
-    return result.get("weather_check_result") != "ok" and not result.get("human_override")
+    return (result.get("awaiting_approval") or result.get("weather_check_result") != "ok") and not result.get("human_override")
 
 
 def plan_for_city(result, candidate, passed_check=False):
     from utils.plan_generation import generate_sections
+    from logger import log
+    log(f"Human approval: {candidate['city']}; building the guide")
     updated = dict(result)
     updated.update(top_destination=candidate["city"], final_destination=candidate,
-                   human_override=candidate["city"], override_passed=passed_check)
+                   human_override=candidate["city"], override_passed=passed_check, awaiting_approval=False)
     updated.update(generate_sections(updated))
     return updated
 
@@ -121,7 +138,8 @@ def find_alternatives(result):
     from agents.destination_agent import rank
     from utils.weather_api import fetch_apparent_temperatures
     from utils.weather_utils import get_current_weather
-    ranked = rank(result.get("persona", []), top_n=None)
+    from utils.preferences import wants_coast
+    ranked = rank(result.get("persona", []), top_n=None, coastal_only=wants_coast(result.get("user_input", "")))
     already = {entry["city"] for entry in result.get("weather_log", [])}
     ranked = [c for c in ranked if c["name"] not in already]
     temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
@@ -146,14 +164,33 @@ def export_plan(result):
     return "\n\n".join(parts)
 
 
+st.subheader("Agent workflow")
+st.graphviz_chart("""digraph {
+    rankdir=LR; node [shape=box, style="rounded,filled", fillcolor="#eef5f0", fontname="Arial"];
+    P [label="1. Persona"]; D [label="2. Destinations"]; W [label="3. Live weather"];
+    H [label="Your approval", fillcolor="#dceaff"];
+    I [label="4. Itinerary"]; C [label="5. Culture"]; K [label="6. Packing"]; O [label="Travel guide"];
+    P -> D -> W -> H; W -> W [label="next city"];
+    H -> I [label="approve"]; H -> C; H -> K; I -> O; C -> O; K -> O;
+}""", use_container_width=True)
+traces = st.session_state.get("trace_events", [])
+if traces:
+    st.subheader("Agent activity trace")
+    st.dataframe(pd.DataFrame(traces), hide_index=True, use_container_width=True)
+    st.caption("Execution events and provider outcomes. No credentials or private model reasoning are shown.")
+
 result = st.session_state.get("result")
 if result:
     st.divider()
     preferences = result.get("persona", [])
     st.caption("YOUR TRAVEL STYLE · " + " · ".join(preferences).upper())
     if needs_choice(result):
-        st.subheader("A few possibilities, with a weather tradeoff")
-        st.info("None of the shortlisted cities could be confirmed within our 15–28 °C comfort range. Choose one anyway, or search the catalogue for alternatives.")
+        if result.get("awaiting_approval"):
+            st.subheader(f"Recommended: {result.get('top_destination', 'Choose a destination')}")
+            st.info("You decide. Review the shortlist and weather below, then approve a destination before the writing agents start.")
+        else:
+            st.subheader("A few possibilities, with a weather tradeoff")
+            st.info("None of the shortlisted cities could be confirmed within our 15–28 °C comfort range. Choose one anyway, or search the catalogue for alternatives.")
     else:
         city = result.get("top_destination", "Your destination")
         country = result.get("final_destination", {}).get("country", "")
@@ -177,7 +214,7 @@ if result:
             options = weather
         else:
             if st.button("Check alternatives across the catalogue"):
-                alternatives = execute(lambda progress: find_alternatives(result))
+                alternatives = execute(lambda progress: find_alternatives(result), consumes_quota=False)
                 if alternatives is not None:
                     st.session_state["alternatives"] = alternatives["cities"]
             options = st.session_state.get("alternatives", [])
@@ -188,9 +225,11 @@ if result:
                 c = options[i]
                 temp = c.get("temperature")
                 return c["city"] + (f" · {temp:.1f} °C" if temp is not None else " · weather unavailable")
-            choice = st.selectbox("Destination", range(len(options)), format_func=label)
-            if st.button("Build this travel guide", type="primary"):
-                updated = execute(lambda progress: plan_for_city(result, options[choice], passed_check=mode != "Choose a shortlisted city"))
+            default = next((i for i, c in enumerate(options) if c["city"] == result.get("top_destination")), 0)
+            choice = st.selectbox("Destination", range(len(options)), index=default, format_func=label)
+            if st.button("Approve destination & build guide", type="primary"):
+                selected = options[choice]
+                updated = execute(lambda progress: plan_for_city(result, selected, passed_check=selected.get("condition") in {"chilly", "warm"}))
                 if updated:
                     st.session_state["result"] = updated
                     st.rerun()
@@ -230,6 +269,6 @@ if result:
 
 with st.expander("How the agents work"):
     st.markdown("**1. Understand your style** → **2. Rank destinations** → **3. Check current weather** → **4–6. Write itinerary, cultural tips and packing list**")
-    st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; three independent writing agents call one shared generation client, trying Gemini first and Hugging Face when Gemini cannot respond. If no city passes, you make the final decision.")
+    st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; three independent writing agents call one shared generation client, trying Gemini first and Hugging Face when Gemini cannot respond. Every discovery pauses for your approval. If no city passes the weather preference check, you can override it or search alternatives.")
     st.caption("Discovery uses a curated 500-city catalogue with broad travel categories. It does not search flights, verify availability or make bookings.")
     st.link_button("Explore the source on GitHub", "https://github.com/madhumitha-gv/Multi-Agent-Travel-Discovery-Planner")

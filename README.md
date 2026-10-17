@@ -8,11 +8,11 @@ Example: *I love local food, historic neighborhoods and architecture. I'd like a
 
 ## How it works
 
-1. **Persona:** local DeBERTa zero-shot classification identifies three travel preferences.
-2. **Discovery:** local MiniLM embeddings rank a 500-city catalogue, with one city per country in the shortlist.
+1. **Persona:** local DeBERTa zero-shot classification identifies three travel preferences. Explicit beach/ocean language is preserved as a coastal requirement.
+2. **Discovery:** local MiniLM embeddings rank a 500-city catalogue, with one city per country in the shortlist. Ocean/beach requests are restricted to the 19 curated coastal destinations in `data/coastal_destinations.json`; alternative searches preserve that requirement. This subset is deliberately limited and is not an exhaustive coastline database.
 3. **Weather:** LangGraph checks current apparent temperature and advances through the shortlist until a city passes the 15–28 °C comfort range.
 4. **Writing:** itinerary, cultural guide and packing instructions produce the travel guide. All three agents call the unchanged `generate(prompt, max_tokens, temperature)` interface in `utils/mistral.py`. That single file tries Gemini first and Hugging Face second. The three agents run independently in parallel, using up to three primary requests per full guide, plus retries/fallbacks.
-5. **Your decision:** if no city passes, choose a shortlisted city anyway or search the full catalogue for weather-checked alternatives.
+5. **Your decision:** every UI discovery pauses before writing. Review all shortlisted cities and their weather, then approve your choice. If no city passes, override the weather preference or search for alternatives. Discovery and alternative searches do not consume generation quota; approved guides and writing retries do.
 
 ```mermaid
 flowchart LR
@@ -22,7 +22,7 @@ flowchart LR
   Weather -->|Outside range or unavailable| Next{More candidates?}
   Next -->|Yes| Weather
   Next -->|No| Choice[Traveller chooses]
-  Weather -->|Within range| Guide[Itinerary / Culture / Packing]
+  Weather -->|Within range| Choice
   Choice --> Guide
   Guide --> Download[Downloadable guide]
 ```
@@ -31,14 +31,14 @@ The app uses Streamlit and LangGraph. It does not expose a FastAPI service.
 
 ## Reliability and public-demo controls
 
-- Progress messages belong to the current request; visitors do not share an activity queue.
+- Progress messages belong to the current request; visitors do not share an activity queue. A persistent activity trace shows persona labels, shortlist, weather, approval, individual writing-agent activity and provider/fallback outcomes. An always-visible workflow diagram shows the approval gate.
 - Failed writing preserves preferences, destination matches and weather observations.
 - Missing writing sections can be retried without replacing successful sections.
 - Weather failures are shown as unavailable, never accepted as comfortable weather.
 - Model credentials and provider response bodies are not displayed to visitors.
 - The container runs as a non-root user. Streamlit's XSRF protection stays enabled.
 - A process-wide gate allows one expensive operation at a time.
-- Default caps: one operation per minute, five per browser session per hour, five globally per hour and five globally per rolling day. Alternative searches and retries also count.
+- Default caps: one guide-generation operation per minute, five per browser session per hour, five globally per hour and five globally per rolling day. Writing retries also count; discovery and alternative searches share the concurrency gate without consuming model-generation quota.
 - Gemini HTTP 429 responses immediately fall through to Hugging Face and cool only the failed candidate.
 - Both providers use the same ordered-candidate policy, bounded retries and per-candidate cooldowns. The retry budget reserves time for the fallback. Provider-specific request encoding lives in the same client file.
 - A missing, rejected or exhausted credential does not disable candidates using the other provider. The Hugging Face token still needs available credits for the fallback to succeed.

@@ -64,3 +64,15 @@ def test_partial_generation_retains_successes(graph,monkeypatch):
     assert result['packing_list']=='Packing'
     assert result['culture_tips']==''
     assert result['generation_errors']==['culture_tips']
+
+
+def test_approval_gate_checks_all_candidates_and_does_not_generate(graph,monkeypatch):
+    nodes,runner,agents=graph
+    monkeypatch.setattr(nodes,'fetch_apparent_temperature',lambda *args:23)
+    result=runner.run_trip_planner('food and history',require_approval=True)
+    assert result['awaiting_approval']
+    assert result['weather_check_result']=='ok'
+    assert len(result['weather_log'])==3
+    assert result['itinerary']==''
+    agents.itinerary_agent.run.assert_not_called()
+    agents.culture_agent.cultural_tips.assert_not_called()

@@ -31,7 +31,7 @@ def test_partial_result_and_unavailable_weather_render():
     }
     app.run(timeout=30)
     assert not app.exception
-    assert 'Tokyo' in app.subheader[0].value
+    assert any('Tokyo' in s.value for s in app.subheader)
     assert app.warning
     assert any(b.label=='Retry missing sections' for b in app.button)
 
@@ -44,4 +44,20 @@ def test_all_rejected_with_missing_temperature_renders_choice():
     }
     app.run(timeout=30)
     assert not app.exception
-    assert any(b.label=='Build this travel guide' for b in app.button)
+    assert any(b.label=='Approve destination & build guide' for b in app.button)
+
+
+def test_approval_and_trace_are_visible_before_generation():
+    app=AppTest.from_file(str(APP))
+    app.session_state['result']={
+        'persona':['beach'], 'top_destination':'Miami', 'weather_check_result':'ok',
+        'awaiting_approval':True,
+        'weather_log':[{'city':'Miami','temperature':23,'condition':'warm','skipped':False}],
+    }
+    app.session_state['trace_events']=[{'Operation':'Discovery','Elapsed (s)':1.0,'Event':'Destination shortlist: Miami'}]
+    app.run(timeout=30)
+    assert not app.exception
+    assert any(b.label=='Approve destination & build guide' for b in app.button)
+    assert any(s.value=='Agent workflow' for s in app.subheader)
+    assert any(s.value=='Agent activity trace' for s in app.subheader)
+    assert any('You decide' in i.value for i in app.info)

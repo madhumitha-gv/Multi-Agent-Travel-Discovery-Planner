@@ -17,12 +17,17 @@ class LimitError(RuntimeError):
     pass
 
 
-def admit(session_starts):
+def admit(session_starts, consumes_quota=True):
     global _active
     now = time.monotonic()
     with _lock:
         while _starts and now - _starts[0] >= 86400:
             _starts.popleft()
+        if _active:
+            raise LimitError("Another trip is being planned. Please try again in a moment.")
+        if not consumes_quota:
+            _active = True
+            return session_starts
         recent = [t for t in session_starts if now - t < 3600]
         if len(recent) >= int(_number("SESSION_PLANS_PER_HOUR", 5, 1, 50)):
             raise LimitError("You've reached the demo limit for this hour. Please return later.")

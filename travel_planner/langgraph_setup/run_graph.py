@@ -2,17 +2,17 @@
 from langgraph_setup.trip_flow_graph import build_trip_graph
 from logger import log, bind_progress, reset_progress
 
-def run_trip_planner(user_input: str, progress=None):
+def run_trip_planner(user_input: str, progress=None, require_approval=False):
     token = bind_progress(progress)
     try:
-        return _run(user_input)
+        return _run(user_input, require_approval)
     finally:
         reset_progress(token)
 
 
-def _run(user_input):
+def _run(user_input, require_approval):
     graph = build_trip_graph()
-    initial_state = {"user_input": user_input}
+    initial_state = {"user_input": user_input, "require_approval": require_approval}
     final_state = {}
 
     for step in graph.stream(initial_state):

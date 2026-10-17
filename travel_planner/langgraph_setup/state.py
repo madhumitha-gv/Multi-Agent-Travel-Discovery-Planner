@@ -18,3 +18,5 @@ class TripState(TypedDict, total=False):
     message: str
     generation_errors: List[str]
     generation_message: str
+    require_approval: bool
+    awaiting_approval: bool

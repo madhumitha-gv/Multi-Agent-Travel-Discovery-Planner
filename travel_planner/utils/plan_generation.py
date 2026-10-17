@@ -1,5 +1,6 @@
 """Generate writing sections and preserve partial successes."""
 from concurrent.futures import ThreadPoolExecutor
+from contextvars import copy_context
 import logging
 from agents import itinerary_agent, culture_agent, packing_agent
 from logger import log
@@ -20,8 +21,12 @@ def generate_sections(state, only=None):
     jobs = {key: job for key, job in jobs.items() if key in wanted}
     log("Writing your itinerary, cultural guide and packing list...")
     outputs, errors = {}, []
+    def invoke(key, job):
+        log(f"{key}: started")
+        return job()
+
     with ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {key: pool.submit(job) for key, job in jobs.items()}
+        futures = {key: pool.submit(copy_context().run, invoke, key, job) for key, job in jobs.items()}
         for key, future in futures.items():
             try:
                 text = future.result()
@@ -32,5 +37,6 @@ def generate_sections(state, only=None):
                 errors.append(key)
                 text = ""
             outputs[key] = text
+            log(f"{key}: " + ("completed" if text else "unavailable; partial results preserved"))
     outputs.update(generation_errors=errors, generation_message="")
     return outputs

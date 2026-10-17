@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from utils.preferences import wants_coast
 
 from sentence_transformers import SentenceTransformer, util
 
@@ -17,6 +18,9 @@ _usable = [
     if d.get("features") and "lat" in d and "lng" in d
 ]
 
+with (data_path.parent / "coastal_destinations.json").open() as f:
+    _coastal = json.load(f)
+
 # Encoded once on first use and reused for every later query. The city
 # features never change, so re-encoding them per request just burns time.
 _city_embeddings = None
@@ -26,14 +30,14 @@ def _embeddings():
     global _city_embeddings
     if _city_embeddings is None:
         _city_embeddings = model.encode(
-            [d["features"] for d in _usable],
+            [_coastal.get(d["city"], d["features"]) for d in _usable],
             normalize_embeddings=True,
             batch_size=64,
         )
     return _city_embeddings
 
 
-def rank(persona, top_n=3):
+def rank(persona, top_n=3, coastal_only=False):
     """Return the top_n cities whose features best match the persona."""
     if not persona:
         return []
@@ -49,9 +53,10 @@ def rank(persona, top_n=3):
                 "lat": d["lat"],
                 "lng": d["lng"],
                 "country": d.get("country", "Unknown"),
-                "features": d["features"],
+                "features": _coastal.get(d["city"], d["features"]),
             }
             for d, score in zip(_usable, scores)
+            if not coastal_only or d["city"] in _coastal
         ),
         key=lambda x: x["score"],
         reverse=True,
@@ -65,7 +70,8 @@ def rank(persona, top_n=3):
 def run(state, top_n=3):
     if "persona" not in state:
         return []
-    ranked = rank(state["persona"], top_n=None)
+    coastal_only = wants_coast(state.get("user_input", ""))
+    ranked = rank(state["persona"], top_n=None, coastal_only=coastal_only)
     diverse, countries = [], set()
     for city in ranked:
         if city["country"] in countries:

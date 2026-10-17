@@ -15,6 +15,10 @@ def build_trip_graph():
         "message": "Choose a destination to continue; none passed the current weather check.",
         "itinerary": "", "culture_tips": "", "packing_list": "",
     })
+    builder.add_node("await_approval", lambda state: {
+        "awaiting_approval": True, "itinerary": "", "culture_tips": "", "packing_list": "",
+    })
+    builder.add_edge("await_approval", END)
     builder.set_entry_point("analyze_persona")
     builder.add_edge("analyze_persona", "recommend_destinations")
     builder.add_edge("recommend_destinations", "check_weather")
@@ -25,6 +29,10 @@ def build_trip_graph():
 
 
 def route_weather(state: TripState) -> str:
+    if state.get("require_approval"):
+        if state.get("current_rec_index", 0) < len(state.get("all_recommendations", [])):
+            return "check_weather"
+        return "await_approval" if state.get("final_destination") else "choose_destination"
     if state.get("weather_check_result") == "ok":
         return "generate_plan"
     if state.get("current_rec_index", 0) < len(state.get("all_recommendations", [])):
