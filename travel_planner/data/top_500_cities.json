@@ -32,7 +32,8 @@
     "lat":19.0761,
     "lng":72.8775,
     "country":"India",
-    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure. Arabian Sea coast, seaside promenades and urban beaches",
+    "coastal":true
   },
   {
     "city":"Manila",
@@ -49,7 +50,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"S\u00e3o Paulo",
+    "city":"São Paulo",
     "lat":-23.55,
     "lng":-46.6333,
     "country":"Brazil",
@@ -98,7 +99,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Kolk\u0101ta",
+    "city":"Kolkāta",
     "lat":22.5675,
     "lng":88.37,
     "country":"India",
@@ -168,7 +169,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"\u014csaka",
+    "city":"Ōsaka",
     "lat":34.6939,
     "lng":135.5022,
     "country":"Japan",
@@ -200,17 +201,19 @@
     "lat":-22.9111,
     "lng":-43.2056,
     "country":"Brazil",
-    "features":"Street Soul, Night Ambience, Nature Connection"
+    "features":"Street Soul, Night Ambience, Nature Connection. Atlantic Ocean beaches, Copacabana and Ipanema, coastal scenery",
+    "coastal":true
   },
   {
     "city":"Chennai",
     "lat":13.0825,
     "lng":80.275,
     "country":"India",
-    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure. Bay of Bengal coast, Marina Beach and Tamil culture",
+    "coastal":true
   },
   {
-    "city":"Xi\u2019an",
+    "city":"Xi’an",
     "lat":34.2611,
     "lng":108.9422,
     "country":"China",
@@ -273,7 +276,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Hyder\u0101b\u0101d",
+    "city":"Hyderābād",
     "lat":17.3617,
     "lng":78.4747,
     "country":"India",
@@ -434,7 +437,7 @@
     "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
   },
   {
-    "city":"Bogot\u00e1",
+    "city":"Bogotá",
     "lat":4.7111,
     "lng":-74.0722,
     "country":"Colombia",
@@ -567,7 +570,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"S\u016brat",
+    "city":"Sūrat",
     "lat":21.1702,
     "lng":72.8311,
     "country":"India",
@@ -620,14 +623,16 @@
     "lat":25.784,
     "lng":-80.2101,
     "country":"United States",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Atlantic Ocean beaches, South Beach, coastal walks and local food",
+    "coastal":true
   },
   {
     "city":"Singapore",
     "lat":1.3,
     "lng":103.8,
     "country":"Singapore",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Coastal island city, Sentosa beaches and local food",
+    "coastal":true
   },
   {
     "city":"Houston",
@@ -655,7 +660,8 @@
     "lat":38.9,
     "lng":121.6,
     "country":"China",
-    "features":"Sense of History, Urban Energy, Architectural Awe"
+    "features":"Sense of History, Urban Energy, Architectural Awe. Yellow Sea coast, beaches and seaside walks",
+    "coastal":true
   },
   {
     "city":"Dallas",
@@ -669,7 +675,8 @@
     "lat":36.0669,
     "lng":120.3827,
     "country":"China",
-    "features":"Sense of History, Urban Energy, Architectural Awe"
+    "features":"Sense of History, Urban Energy, Architectural Awe. Yellow Sea beaches, coastal scenery and local seafood",
+    "coastal":true
   },
   {
     "city":"Yulin",
@@ -777,7 +784,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Tai\u2019an",
+    "city":"Tai’an",
     "lat":36.202,
     "lng":117.087,
     "country":"China",
@@ -913,11 +920,11 @@
     "city":"Abidjan",
     "lat":5.3167,
     "lng":-4.0333,
-    "country":"C\u00f4te d\u2019Ivoire",
+    "country":"Côte d’Ivoire",
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Ji\u2019an",
+    "city":"Ji’an",
     "lat":27.0912,
     "lng":114.9668,
     "country":"China",
@@ -963,7 +970,8 @@
     "lat":-33.8678,
     "lng":151.21,
     "country":"Australia",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Pacific Ocean beaches, Bondi and coastal walking trails",
+    "coastal":true
   },
   {
     "city":"Huanglongsi",
@@ -977,7 +985,8 @@
     "lat":41.3828,
     "lng":2.1769,
     "country":"Spain",
-    "features":"Night Ambience, Artistic Vibe, Food Adventure"
+    "features":"Night Ambience, Artistic Vibe, Food Adventure. Mediterranean Sea beaches, architecture and local food",
+    "coastal":true
   },
   {
     "city":"Yuncheng",
@@ -991,7 +1000,8 @@
     "lat":-33.9253,
     "lng":18.4239,
     "country":"South Africa",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Atlantic Ocean beaches, coastal scenery and mountain walks",
+    "coastal":true
   },
   {
     "city":"Changsha",
@@ -1092,7 +1102,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Lu\u2019an",
+    "city":"Lu’an",
     "lat":31.736,
     "lng":116.52,
     "country":"China",
@@ -1113,7 +1123,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"\u00dcr\u00fcmqi",
+    "city":"Ürümqi",
     "lat":43.8225,
     "lng":87.6125,
     "country":"China",
@@ -1127,7 +1137,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"\u0130zmir",
+    "city":"İzmir",
     "lat":38.42,
     "lng":27.14,
     "country":"Turkey",
@@ -1194,7 +1204,8 @@
     "lat":-3.7275,
     "lng":-38.5275,
     "country":"Brazil",
-    "features":"Street Soul, Night Ambience, Nature Connection"
+    "features":"Street Soul, Night Ambience, Nature Connection. Atlantic Ocean beaches, seaside promenades and regional food",
+    "coastal":true
   },
   {
     "city":"Anqing",
@@ -1390,7 +1401,8 @@
     "lat":24.4796,
     "lng":118.0889,
     "country":"China",
-    "features":"Sense of History, Urban Energy, Architectural Awe"
+    "features":"Sense of History, Urban Energy, Architectural Awe. Coastal islands, beaches and seaside walks",
+    "coastal":true
   },
   {
     "city":"Neijiang",
@@ -1400,7 +1412,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Montr\u00e9al",
+    "city":"Montréal",
     "lat":45.5089,
     "lng":-73.5617,
     "country":"Canada",
@@ -1666,7 +1678,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Guang\u2019an",
+    "city":"Guang’an",
     "lat":30.4564,
     "lng":106.6326,
     "country":"China",
@@ -1754,7 +1766,8 @@
     "lat":32.8313,
     "lng":-117.1222,
     "country":"United States",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Pacific Ocean beaches, surfing and coastal nature",
+    "coastal":true
   },
   {
     "city":"Addis Ababa",
@@ -1960,7 +1973,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Bras\u00edlia",
+    "city":"Brasília",
     "lat":-15.7939,
     "lng":-47.8828,
     "country":"Brazil",
@@ -2072,7 +2085,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"G\u0101zipura",
+    "city":"Gāzipura",
     "lat":23.9889,
     "lng":90.375,
     "country":"Bangladesh",
@@ -2107,7 +2120,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Huai\u2019an",
+    "city":"Huai’an",
     "lat":33.551,
     "lng":119.113,
     "country":"China",
@@ -2198,7 +2211,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Medell\u00edn",
+    "city":"Medellín",
     "lat":6.2308,
     "lng":-75.5906,
     "country":"Colombia",
@@ -2254,7 +2267,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Mirz\u0101pur",
+    "city":"Mirzāpur",
     "lat":25.146,
     "lng":82.569,
     "country":"India",
@@ -2317,7 +2330,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Yaound\u00e9",
+    "city":"Yaoundé",
     "lat":3.8667,
     "lng":11.5167,
     "country":"Cameroon",
@@ -2377,7 +2390,8 @@
     "lat":-12.9747,
     "lng":-38.4767,
     "country":"Brazil",
-    "features":"Street Soul, Night Ambience, Nature Connection"
+    "features":"Street Soul, Night Ambience, Nature Connection. Atlantic coast beaches, Afro-Brazilian culture and local food",
+    "coastal":true
   },
   {
     "city":"Bucharest",
@@ -2394,7 +2408,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"N\u0101gpur",
+    "city":"Nāgpur",
     "lat":21.1497,
     "lng":79.0806,
     "country":"India",
@@ -2450,7 +2464,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Gh\u0101zi\u0101b\u0101d",
+    "city":"Ghāziābād",
     "lat":28.67,
     "lng":77.42,
     "country":"India",
@@ -2531,10 +2545,11 @@
     "lat":33.59,
     "lng":130.4017,
     "country":"Japan",
-    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood"
+    "features":"Sense of History, Architectural Awe, Spiritual or Reflective Mood. Hakata Bay, Momochi beach and local food",
+    "coastal":true
   },
   {
-    "city":"Yan\u2019an",
+    "city":"Yan’an",
     "lat":36.65,
     "lng":109.494,
     "country":"China",
@@ -2618,7 +2633,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"E\u015ffah\u0101n",
+    "city":"Eşfahān",
     "lat":32.6447,
     "lng":51.6675,
     "country":"Iran",
@@ -2667,7 +2682,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Ma\u2019anshan",
+    "city":"Ma’anshan",
     "lat":31.669,
     "lng":118.507,
     "country":"China",
@@ -2685,7 +2700,8 @@
     "lat":-31.9559,
     "lng":115.8606,
     "country":"Australia",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Indian Ocean beaches, coastal sunsets and outdoor activities",
+    "coastal":true
   },
   {
     "city":"St. Louis",
@@ -2737,7 +2753,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"C\u00f3rdoba",
+    "city":"Córdoba",
     "lat":-31.4167,
     "lng":-64.1833,
     "country":"Argentina",
@@ -2797,7 +2813,8 @@
     "lat":23.1367,
     "lng":-82.3589,
     "country":"Cuba",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Caribbean coast, nearby beaches and cultural history",
+    "coastal":true
   },
   {
     "city":"Hezhou",
@@ -2842,7 +2859,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"R\u0101jkot",
+    "city":"Rājkot",
     "lat":22.3,
     "lng":70.7833,
     "country":"India",
@@ -2856,11 +2873,12 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Vish\u0101khapatnam",
+    "city":"Vishākhapatnam",
     "lat":17.7042,
     "lng":83.2978,
     "country":"India",
-    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
+    "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure. Bay of Bengal beaches, coastal hills and nature",
+    "coastal":true
   },
   {
     "city":"Sanmenxia",
@@ -3003,7 +3021,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Th\u0101ne",
+    "city":"Thāne",
     "lat":19.1972,
     "lng":72.9722,
     "country":"India",
@@ -3105,7 +3123,8 @@
     "lat":18.3985,
     "lng":-66.061,
     "country":"Puerto Rico",
-    "features":"Urban Energy, Local Hospitality, Photogenic Charm"
+    "features":"Urban Energy, Local Hospitality, Photogenic Charm. Atlantic coast and Caribbean island beaches, historic neighborhoods",
+    "coastal":true
   },
   {
     "city":"Mersin",
@@ -3115,7 +3134,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Bhop\u0101l",
+    "city":"Bhopāl",
     "lat":23.2599,
     "lng":77.4126,
     "country":"India",
@@ -3199,7 +3218,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Diyarbak\u0131r",
+    "city":"Diyarbakır",
     "lat":37.91,
     "lng":40.24,
     "country":"Turkey",
@@ -3220,7 +3239,7 @@
     "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
   },
   {
-    "city":"Masqa\u0163",
+    "city":"Masqaţ",
     "lat":23.5889,
     "lng":58.4083,
     "country":"Oman",
@@ -3353,7 +3372,7 @@
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
-    "city":"Bil\u0101spur",
+    "city":"Bilāspur",
     "lat":22.09,
     "lng":82.15,
     "country":"India",
@@ -3374,7 +3393,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Ludhi\u0101na",
+    "city":"Ludhiāna",
     "lat":30.91,
     "lng":75.85,
     "country":"India",
@@ -3395,7 +3414,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"R\u0101jsh\u0101hi",
+    "city":"Rājshāhi",
     "lat":24.3667,
     "lng":88.6,
     "country":"Bangladesh",
@@ -3423,14 +3442,14 @@
     "features":"Night Ambience, Artistic Vibe, Food Adventure"
   },
   {
-    "city":"\u0100gra",
+    "city":"Āgra",
     "lat":27.18,
     "lng":78.02,
     "country":"India",
     "features":"Cultural Immersion, Spiritual or Reflective Mood, Food Adventure"
   },
   {
-    "city":"Le\u00f3n de los Aldama",
+    "city":"León de los Aldama",
     "lat":21.1167,
     "lng":-101.6833,
     "country":"Mexico",
@@ -3454,7 +3473,7 @@
     "city":"Yopougon",
     "lat":5.3167,
     "lng":-4.0667,
-    "country":"C\u00f4te d\u2019Ivoire",
+    "country":"Côte d’Ivoire",
     "features":"Urban Energy, Local Hospitality, Photogenic Charm"
   },
   {
@@ -3465,7 +3484,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Sh\u012br\u0101z",
+    "city":"Shīrāz",
     "lat":29.61,
     "lng":52.5425,
     "country":"Iran",
@@ -3486,7 +3505,7 @@
     "features":"Sense of History, Urban Energy, Architectural Awe"
   },
   {
-    "city":"Tabr\u012bz",
+    "city":"Tabrīz",
     "lat":38.0814,
     "lng":46.3006,
     "country":"Iran",

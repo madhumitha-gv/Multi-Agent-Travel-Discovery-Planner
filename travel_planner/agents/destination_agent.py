@@ -18,9 +18,6 @@ _usable = [
     if d.get("features") and "lat" in d and "lng" in d
 ]
 
-with (data_path.parent / "coastal_destinations.json").open() as f:
-    _coastal = json.load(f)
-
 # Encoded once on first use and reused for every later query. The city
 # features never change, so re-encoding them per request just burns time.
 _city_embeddings = None
@@ -30,7 +27,7 @@ def _embeddings():
     global _city_embeddings
     if _city_embeddings is None:
         _city_embeddings = model.encode(
-            [f"{d['city']}, {d.get('country', '')}. {d['features']}. {_coastal.get(d['city'], '')}" for d in _usable],
+            [f"{d['city']}, {d.get('country', '')}. {d['features']}" for d in _usable],
             normalize_embeddings=True,
             batch_size=64,
         )
@@ -54,10 +51,10 @@ def rank(persona, top_n=3, coastal_only=False, query_text=""):
                 "lat": d["lat"],
                 "lng": d["lng"],
                 "country": d.get("country", "Unknown"),
-                "features": _coastal.get(d["city"], d["features"]),
+                "features": d["features"],
             }
             for d, score in zip(_usable, scores)
-            if not coastal_only or d["city"] in _coastal
+            if not coastal_only or d.get("coastal") is True
         ),
         key=lambda x: x["score"],
         reverse=True,
