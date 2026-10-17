@@ -30,19 +30,20 @@ def _embeddings():
     global _city_embeddings
     if _city_embeddings is None:
         _city_embeddings = model.encode(
-            [_coastal.get(d["city"], d["features"]) for d in _usable],
+            [f"{d['city']}, {d.get('country', '')}. {d['features']}. {_coastal.get(d['city'], '')}" for d in _usable],
             normalize_embeddings=True,
             batch_size=64,
         )
     return _city_embeddings
 
 
-def rank(persona, top_n=3, coastal_only=False):
+def rank(persona, top_n=3, coastal_only=False, query_text=""):
     """Return the top_n cities whose features best match the persona."""
     if not persona:
         return []
 
-    user_embedding = model.encode(", ".join(persona), normalize_embeddings=True)
+    query = f"{query_text.strip()} Travel preferences: {', '.join(persona)}".strip()
+    user_embedding = model.encode(query, normalize_embeddings=True)
     scores = util.cos_sim(user_embedding, _embeddings())[0]
 
     ranked = sorted(
@@ -71,7 +72,7 @@ def run(state, top_n=3):
     if "persona" not in state:
         return []
     coastal_only = wants_coast(state.get("user_input", ""))
-    ranked = rank(state["persona"], top_n=None, coastal_only=coastal_only)
+    ranked = rank(state["persona"], top_n=None, coastal_only=coastal_only, query_text=state.get("user_input", ""))
     diverse, countries = [], set()
     for city in ranked:
         if city["country"] in countries:

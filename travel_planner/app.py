@@ -139,7 +139,7 @@ def find_alternatives(result):
     from utils.weather_api import fetch_apparent_temperatures
     from utils.weather_utils import get_current_weather
     from utils.preferences import wants_coast
-    ranked = rank(result.get("persona", []), top_n=None, coastal_only=wants_coast(result.get("user_input", "")))
+    ranked = rank(result.get("persona", []), top_n=None, coastal_only=wants_coast(result.get("user_input", "")), query_text=result.get("user_input", ""))
     already = {entry["city"] for entry in result.get("weather_log", [])}
     ranked = [c for c in ranked if c["name"] not in already]
     temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
