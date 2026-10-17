@@ -1,7 +1,6 @@
 """Generate writing sections and preserve partial successes."""
 from concurrent.futures import ThreadPoolExecutor
 import logging
-import os
 from agents import itinerary_agent, culture_agent, packing_agent
 from logger import log
 
@@ -13,14 +12,6 @@ def generate_sections(state, only=None):
     wanted = [key for key in KEYS if only is None or key in only]
     if not city or city == "Unknown":
         return {**{key: "" for key in wanted}, "generation_errors": []}
-    if os.getenv("GEN_BACKEND", "huggingface") == "gemini":
-        from utils.gemini import generate_guide
-        from utils.mistral import MistralError
-        try:
-            return {**generate_guide(state, only=only), "generation_message": ""}
-        except MistralError as exc:
-            return {**{key: "" for key in wanted}, "generation_errors": wanted,
-                    "generation_message": str(exc)}
     jobs = {
         "itinerary": lambda: itinerary_agent.run(state, num_days=2),
         "culture_tips": lambda: culture_agent.cultural_tips(city),

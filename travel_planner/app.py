@@ -26,7 +26,7 @@ st.caption("NOMAD'S NEST  /  MULTI-AGENT TRAVEL DISCOVERY")
 st.title("Start with a feeling. Find your next trip.")
 st.write("Describe what you love. Six specialized agents discover a destination, check its weather, and create your two-day travel guide.")
 st.caption("Public demo · No login required · First plan may take a minute while models warm up")
-if os.getenv("GEN_BACKEND") == "gemini":
+if "gemini|" in os.getenv("GEN_CANDIDATES", "gemini|"):
     st.caption("Writing uses Gemini's free API tier. Requests are limited; avoid sharing personal or sensitive information. Google may use free-tier inputs and outputs to improve its products.")
 
 EXAMPLES = {
@@ -230,6 +230,6 @@ if result:
 
 with st.expander("How the agents work"):
     st.markdown("**1. Understand your style** → **2. Rank destinations** → **3. Check current weather** → **4–6. Write itinerary, cultural tips and packing list**")
-    st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; the three writing tasks share one structured Gemini request to conserve free-tier quota (the Hugging Face backend runs them separately). If no city passes, you make the final decision.")
+    st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; three independent writing agents call one shared generation client, trying Gemini first and Hugging Face when Gemini cannot respond. If no city passes, you make the final decision.")
     st.caption("Discovery uses a curated 500-city catalogue with broad travel categories. It does not search flights, verify availability or make bookings.")
     st.link_button("Explore the source on GitHub", "https://github.com/madhumitha-gv/Multi-Agent-Travel-Discovery-Planner")

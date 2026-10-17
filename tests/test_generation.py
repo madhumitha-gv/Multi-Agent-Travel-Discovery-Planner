@@ -41,10 +41,10 @@ def test_auth_error_never_exposes_body(monkeypatch):
     monkeypatch.setattr(mistral.requests,'post',post)
     with pytest.raises(mistral.MistralError,match='temporarily unavailable'):
         mistral.generate('private prompt')
-    assert post.call_count == 1
+    assert post.call_count == 2
     with pytest.raises(mistral.MistralError):
         mistral.generate('trip')
-    assert post.call_count == 1
+    assert post.call_count == 2
 
 
 def test_network_outage_and_cooldown(monkeypatch):
@@ -66,9 +66,9 @@ def test_bad_settings_are_safe(monkeypatch):
         mistral.generate('trip')
 
 
-def test_credit_exhaustion_skips_retry_and_fallback(monkeypatch):
+def test_credit_exhaustion_skips_retry(monkeypatch):
     post=Mock(return_value=response(402))
     monkeypatch.setattr(mistral.requests,'post',post)
     with pytest.raises(mistral.MistralError):
         mistral.generate('trip')
-    assert post.call_count == 1
+    assert post.call_count == 2

@@ -11,7 +11,7 @@ Example: *I love local food, historic neighborhoods and architecture. I'd like a
 1. **Persona:** local DeBERTa zero-shot classification identifies three travel preferences.
 2. **Discovery:** local MiniLM embeddings rank a 500-city catalogue, with one city per country in the shortlist.
 3. **Weather:** LangGraph checks current apparent temperature and advances through the shortlist until a city passes the 15–28 °C comfort range.
-4. **Writing:** itinerary, cultural guide and packing instructions produce the travel guide. Gemini combines these three writing tasks into one structured request to conserve free-tier quota. The optional Hugging Face backend runs three independent requests in parallel.
+4. **Writing:** itinerary, cultural guide and packing instructions produce the travel guide. All three agents call the unchanged `generate(prompt, max_tokens, temperature)` interface in `utils/mistral.py`. That single file tries Gemini first and Hugging Face second. The three agents run independently in parallel, using up to three primary requests per full guide, plus retries/fallbacks.
 5. **Your decision:** if no city passes, choose a shortlisted city anyway or search the full catalogue for weather-checked alternatives.
 
 ```mermaid
@@ -38,9 +38,10 @@ The app uses Streamlit and LangGraph. It does not expose a FastAPI service.
 - Model credentials and provider response bodies are not displayed to visitors.
 - The container runs as a non-root user. Streamlit's XSRF protection stays enabled.
 - A process-wide gate allows one expensive operation at a time.
-- Default caps: one operation per minute, five per browser session per hour, ten globally per hour and ten globally per rolling day. Alternative searches and retries also count.
-- Gemini HTTP 429 responses trigger a cooldown rather than immediate repeated requests.
-- Hugging Face supports ordered candidates, bounded retries and per-candidate cooldowns.
+- Default caps: one operation per minute, five per browser session per hour, five globally per hour and five globally per rolling day. Alternative searches and retries also count.
+- Gemini HTTP 429 responses immediately fall through to Hugging Face and cool only the failed candidate.
+- Both providers use the same ordered-candidate policy, bounded retries and per-candidate cooldowns. The retry budget reserves time for the fallback. Provider-specific request encoding lives in the same client file.
+- A missing, rejected or exhausted credential does not disable candidates using the other provider. The Hugging Face token still needs available credits for the fallback to succeed.
 
 **Limits are process-local and reset on restart.** Keep one replica. These controls are demo safeguards, not authentication, a durable quota system or a billing guarantee. A shared limiter and persistence are required before broader public traffic or multiple replicas.
 
@@ -55,7 +56,7 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Set `GEN_BACKEND=gemini` and `GEMINI_API_KEY` in `.env`. Then:
+Set `GEMINI_API_KEY` and `HUGGINGFACEHUB_API_TOKEN` in `.env`. The default candidate order is Gemini followed by Hugging Face. Then:
 
 ```bash
 cd travel_planner
@@ -68,19 +69,17 @@ The first local run downloads the DeBERTa and MiniLM models. Production images b
 
 | Variable | Purpose |
 |---|---|
-| `GEN_BACKEND` | `gemini` or `huggingface` |
 | `GEMINI_API_KEY` | Gemini credential; never commit it |
-| `GEMINI_MODEL` | Defaults to `gemini-2.5-flash` |
 | `GEN_TIMEOUT` | Socket inactivity timeout per request in seconds |
-| `HUGGINGFACEHUB_API_TOKEN` | Credential for the optional Hugging Face backend |
-| `GEN_CANDIDATES` | Ordered `provider\|organization/model` pairs; use `auto` for router selection |
-| `GEN_TOTAL_TIMEOUT` | Hugging Face retry scheduling budget; active network requests may overrun it |
+| `HUGGINGFACEHUB_API_TOKEN` | Credential for the Hugging Face fallback; requires available credits |
+| `GEN_CANDIDATES` | Ordered `provider\|model` pairs; default `gemini\|gemini-2.5-flash,auto\|meta-llama/Llama-3.1-8B-Instruct` |
+| `GEN_TOTAL_TIMEOUT` | Shared retry scheduling budget; active network requests may overrun it |
 | `SESSION_PLANS_PER_HOUR` | Per-browser-session hourly cap |
 | `GLOBAL_PLANS_PER_MINUTE` | Per-process per-minute cap |
 | `GLOBAL_PLANS_PER_HOUR` | Per-process rolling hourly cap |
 | `GLOBAL_PLANS_PER_DAY` | Per-process rolling 24-hour cap |
 
-Gemini quotas vary by model, project and account. Check the project's actual limits in [AI Studio](https://ai.google.dev/gemini-api/docs/rate-limits). A free-tier key is not unlimited. Google may use free-tier inputs and outputs to improve its products; do not submit sensitive information. See [Gemini pricing and data use](https://ai.google.dev/gemini-api/docs/pricing).
+The configured Gemini model was verified by a real API call with this project’s credential. AI Studio quota values require an authenticated Google session; they have not been independently read here. Gemini quotas vary by model, project and account. Check the project's actual limits in [AI Studio](https://ai.google.dev/gemini-api/docs/rate-limits). A free-tier key is not unlimited. Google may use free-tier inputs and outputs to improve its products; do not submit sensitive information. See [Gemini pricing and data use](https://ai.google.dev/gemini-api/docs/pricing).
 
 ## Validation
 
@@ -89,7 +88,18 @@ pip install pytest==9.1.1
 python -m pytest -q
 ```
 
-Tests exercise real LangGraph routing with deterministic model boundaries, provider fallback and authentication errors, Gemini JSON parsing and quota cooldowns, partial generation, weather failure handling, request-local logging and usage admission. UI tests use Streamlit's AppTest. Live smoke checks are separate and require working model credentials.
+Tests exercise real LangGraph routing with deterministic model boundaries, provider fallback and authentication errors, both response formats and quota cooldowns, partial generation, weather failure handling, request-local logging and usage admission. UI tests use Streamlit's AppTest. Live smoke checks are separate and require working model credentials.
+
+### Live fallback smoke test
+
+With credentials loaded from environment variables or a gitignored `.env`:
+
+```bash
+GEN_CANDIDATES='bogus|fake/model,gemini|gemini-2.5-flash' \
+  python -c 'import sys; sys.path.insert(0, "travel_planner"); from utils.mistral import generate; assert generate("Say hello in one sentence.", max_tokens=32); print("Fallback passed")'
+```
+
+Then run a full plan with the default candidates. An exhausted Hugging Face account cannot serve fallback traffic even when the routing logic is correct.
 
 ## Azure deployment
 
@@ -109,9 +119,10 @@ After setting the `gemini-api-key` Container Apps secret through a secure channe
 az containerapp update -n travel-planner -g travel-planner-rg \
   --image tpacr10229.azurecr.io/travel-planner:<unique-tag> \
   --min-replicas 1 --max-replicas 1 \
-  --set-env-vars GEN_BACKEND=gemini GEMINI_API_KEY=secretref:gemini-api-key \
-    GEMINI_MODEL=gemini-2.5-flash GEN_TIMEOUT=35 \
-    GLOBAL_PLANS_PER_MINUTE=1 GLOBAL_PLANS_PER_HOUR=10 GLOBAL_PLANS_PER_DAY=10
+  --set-env-vars GEMINI_API_KEY=secretref:gemini-api-key \
+    'GEN_CANDIDATES=gemini|gemini-2.5-flash,auto|meta-llama/Llama-3.1-8B-Instruct' \
+    GEN_TIMEOUT=20 GEN_TOTAL_TIMEOUT=75 \
+    GLOBAL_PLANS_PER_MINUTE=1 GLOBAL_PLANS_PER_HOUR=5 GLOBAL_PLANS_PER_DAY=5
 ```
 
 One warm replica reduces cold starts but consumes Azure resources while idle. Set `--min-replicas 0` when the review window ends if scale-to-zero is preferred. That reintroduces cold starts.
