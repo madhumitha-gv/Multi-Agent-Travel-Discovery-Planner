@@ -61,3 +61,27 @@ def test_approval_and_trace_are_visible_before_generation():
     assert any(s.value=='Agent workflow' for s in app.subheader)
     assert any(s.value=='Agent activity trace' for s in app.subheader)
     assert any('You decide' in i.value for i in app.info)
+
+
+def test_approval_button_generates_and_records_human_decision(monkeypatch):
+    from utils import limits, plan_generation
+    limits._starts.clear()
+    limits.release()
+    monkeypatch.setattr(plan_generation, 'generate_sections', lambda state: {
+        'itinerary':'Day 1: Beach walk', 'culture_tips':'Local etiquette',
+        'packing_list':'Clothing and essentials', 'generation_errors':[],
+    })
+    app=AppTest.from_file(str(APP))
+    app.session_state['result']={
+        'user_input':'I love oceans', 'persona':['beach'], 'top_destination':'Miami',
+        'weather_check_result':'ok', 'awaiting_approval':True,
+        'weather_log':[{'city':'Miami','temperature':23,'condition':'warm','skipped':False}],
+    }
+    app.run(timeout=30)
+    next(b for b in app.button if b.label=='Approve destination & build guide').click().run(timeout=30)
+    assert not app.exception
+    result=app.session_state['result']
+    assert not result['awaiting_approval']
+    assert result['itinerary']=='Day 1: Beach walk'
+    assert any('Human approval: Miami' in event['Event'] for event in app.session_state['trace_events'])
+    limits._starts.clear()
