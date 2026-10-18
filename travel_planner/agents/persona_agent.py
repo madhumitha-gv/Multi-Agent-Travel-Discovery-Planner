@@ -1,10 +1,15 @@
 # agents/persona_agent.py
 from transformers import pipeline
+from utils.preferences import wants_coast
 
 classifier = pipeline(
     "zero-shot-classification",
     model="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
 )
+
+# DeBERTa supports 512 tokens; the pipeline truncates the input side.
+classifier.tokenizer.model_max_length = 512
+
 
 def run(state, user_input):
     preferences = analyze_preferences(user_input)
@@ -22,4 +27,7 @@ def analyze_preferences(user_text):
         key=lambda x: x[1],
         reverse=True
     )
-    return [label for label, score in sorted_preferences[:3]]
+    preferences = [label for label, score in sorted_preferences[:3]]
+    if wants_coast(user_text):
+        preferences = ["beach"] + [p for p in preferences if p != "beach"]
+    return preferences[:3]

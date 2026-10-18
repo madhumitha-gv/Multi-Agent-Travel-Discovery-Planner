@@ -21,10 +21,14 @@ def analyze_persona(state: dict) -> dict:
     log("🧠 Analyzing persona...")
     preferences = persona_agent.run(state, state["user_input"])
     state["persona"] = preferences
+    log("Persona: " + ", ".join(preferences))
     return state
 
 # Step 2: Recommend destinations based on persona
 def recommend_destinations(state: dict) -> dict:
+    from utils.preferences import extract_requirements
+    needs = extract_requirements(state.get("user_input", ""))
+    state["matching_requirements"] = needs
     matches = destination_agent.run(state)
 
     if not matches or not isinstance(matches, list):
@@ -33,13 +37,20 @@ def recommend_destinations(state: dict) -> dict:
         state["destination_scores"] = {}
         state["destinations"] = []
         state["all_recommendations"] = []
+        state["matching_message"] = (
+            "Your request contains conflicting requirements. Please clarify which you prefer."
+            if needs["conflicts"] else
+            "No sufficiently supported destinations meet all your requirements in this catalogue. Try allowing a city base with nearby excursions, or broaden one preference."
+        )
         return state
 
+    log("Destination shortlist: " + ", ".join(d["name"] for d in matches))
     state["all_recommendations"] = matches
     state["current_rec_index"] = 0
     state["top_destination"] = matches[0]["name"]
     state["destination_scores"] = {d["name"]: d["score"] for d in matches}
     state["destinations"] = [d["name"] for d in matches]
+    state["matching_message"] = "Only " + str(len(matches)) + " supported match(es) found; requirements were not relaxed." if len(matches) < 3 else ""
 
     return state
 
@@ -57,7 +68,8 @@ def check_weather(state: dict) -> dict:
     temp = fetch_apparent_temperature(lat, lng)
     condition = get_current_weather(temp)
 
-    print(f"Checking weather at {destination['name']}: {condition}")
+    display_temp = f"{temp:.1f} °C" if temp is not None else "unavailable"
+    log(f"Weather: {destination['name']} — {display_temp}, {condition}")
 
     # ✅ Ensure weather_log is initialized
     if "weather_log" not in state:
@@ -65,13 +77,25 @@ def check_weather(state: dict) -> dict:
 
     # ✅ Log this destination's weather outcome
     state["weather_log"].append({
+        **{key: destination[key] for key in ("lat", "lng", "match_reasons", "match_sources", "match_area", "match_limits", "score_components") if key in destination},
         "city": destination["name"],
+        "country": destination.get("country", ""),
         "temperature": temp,
         "condition": condition,
-        "skipped": condition in HARSH_CONDITIONS
+        "skipped": condition in HARSH_CONDITIONS or condition == "unavailable"
     })
 
-    if condition in HARSH_CONDITIONS:
+    if state.get("require_approval"):
+        state["current_rec_index"] = index + 1
+        if condition in {"chilly", "warm"} and not state.get("final_destination"):
+            state["final_destination"] = destination
+            state["top_destination"] = destination["name"]
+            state["weather_check_result"] = "ok"
+        elif not state.get("final_destination"):
+            state["weather_check_result"] = "harsh"
+        return state
+
+    if condition in HARSH_CONDITIONS or condition == "unavailable":
         state["current_rec_index"] += 1
         state["weather_check_result"] = "harsh"
     else:

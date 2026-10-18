@@ -1,46 +1,40 @@
-
-# langgraph_setup/trip_flow_graph.py
-from langgraph.graph import StateGraph
-from langgraph_setup.nodes import (
-    analyze_persona, recommend_destinations, check_weather,
-    generate_itinerary, provide_cultural_tips, generate_packing_list
-)
-
+from langgraph.graph import StateGraph, END
+from langgraph_setup.nodes import analyze_persona, recommend_destinations, check_weather
 from langgraph_setup.state import TripState
+from utils.plan_generation import generate_sections
+
 
 def build_trip_graph():
     builder = StateGraph(state_schema=TripState)
-
     builder.add_node("analyze_persona", analyze_persona)
     builder.add_node("recommend_destinations", recommend_destinations)
     builder.add_node("check_weather", check_weather)
-    builder.add_node("generate_itinerary", generate_itinerary)
-    builder.add_node("provide_cultural_tips", provide_cultural_tips)
-    builder.add_node("generate_packing_list", generate_packing_list)
-    builder.add_node("fail", lambda state: {
-    **state,
-    "message": "❌ All destinations had harsh weather. Try again with different preferences.",
-    "itinerary": "Could not generate itinerary due to poor weather.",
-    "culture_tips": "No tips available.",
-    "packing_list": "No packing list generated."
-})
-
+    builder.add_node("generate_plan", generate_sections)
+    builder.add_node("choose_destination", lambda state: {
+        "weather_check_result": "fail",
+        "message": "Choose a destination to continue; none passed the current weather check.",
+        "itinerary": "", "culture_tips": "", "packing_list": "",
+    })
+    builder.add_node("await_approval", lambda state: {
+        "awaiting_approval": True, "itinerary": "", "culture_tips": "", "packing_list": "",
+    })
+    builder.add_edge("await_approval", END)
     builder.set_entry_point("analyze_persona")
     builder.add_edge("analyze_persona", "recommend_destinations")
     builder.add_edge("recommend_destinations", "check_weather")
     builder.add_conditional_edges("check_weather", route_weather)
-    builder.add_edge("generate_itinerary", "provide_cultural_tips")
-    builder.add_edge("provide_cultural_tips", "generate_packing_list")
-    builder.add_edge("fail", "provide_cultural_tips")  # or end the graph
-
+    builder.add_edge("generate_plan", END)
+    builder.add_edge("choose_destination", END)
     return builder.compile()
 
 
 def route_weather(state: TripState) -> str:
-    if state["weather_check_result"] == "ok":
-        return "generate_itinerary"
-    elif state["current_rec_index"] < len(state["all_recommendations"]):
+    if state.get("require_approval"):
+        if state.get("current_rec_index", 0) < len(state.get("all_recommendations", [])):
+            return "check_weather"
+        return "await_approval" if state.get("final_destination") else "choose_destination"
+    if state.get("weather_check_result") == "ok":
+        return "generate_plan"
+    if state.get("current_rec_index", 0) < len(state.get("all_recommendations", [])):
         return "check_weather"
-    else:
-        return "fail"
-
+    return "choose_destination"

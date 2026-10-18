@@ -1,6 +1,11 @@
 # utils/weather_utils.py
 
+import math
+
+
 def get_current_weather(temp_celsius):
+    if temp_celsius is None or not math.isfinite(temp_celsius):
+        return "unavailable"
     temp_ranges = {
         (float('-inf'), 5): "freezing",
         (5, 15): "cold",

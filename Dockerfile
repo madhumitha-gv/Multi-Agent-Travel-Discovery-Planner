@@ -29,6 +29,11 @@ SentenceTransformer('all-MiniLM-L6-v2')"
 
 COPY travel_planner/ ./travel_planner/
 
+# Run without root privileges; model files remain readable.
+RUN useradd --create-home --uid 10001 traveler \
+ && chown -R traveler:traveler /app
+USER traveler
+
 # Imports are top-level within the package directory.
 WORKDIR /app/travel_planner
 

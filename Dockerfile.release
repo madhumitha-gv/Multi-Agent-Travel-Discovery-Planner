@@ -1,0 +1,9 @@
+# Reuse the exact deployed runtime and baked-in models for a quick release.
+# The normal Dockerfile remains the source for clean builds.
+FROM tpacr10229.azurecr.io/travel-planner@sha256:bb67230ba3217d8dca399f7ea3c34feee716ff801219d951e2ffd9a0bb3bc7f9
+USER root
+COPY travel_planner/ /app/travel_planner/
+RUN useradd --create-home --uid 10001 traveler \
+ && chown -R traveler:traveler /app
+USER traveler
+WORKDIR /app/travel_planner

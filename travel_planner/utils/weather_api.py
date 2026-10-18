@@ -13,16 +13,20 @@ BATCH_SIZE = 100
 # Built once. The session caches for an hour and retries on failure, so
 # rebuilding it per call just threw that away.
 _cache_session = requests_cache.CachedSession(".cache", expire_after=3600)
-_client = openmeteo_requests.Client(session=retry(_cache_session, retries=5, backoff_factor=0.2))
+_client = openmeteo_requests.Client(session=retry(_cache_session, retries=1, backoff_factor=0.2))
 
 
 def fetch_apparent_temperature(latitude, longitude):
     """Apparent temperature in Celsius for a single location."""
-    responses = _client.weather_api(
-        URL,
-        params={"latitude": latitude, "longitude": longitude, "current": "apparent_temperature"},
-    )
-    return responses[0].Current().Variables(0).Value()
+    try:
+        responses = _client.weather_api(
+            URL,
+            params={"latitude": latitude, "longitude": longitude, "current": "apparent_temperature"},
+            timeout=8,
+        )
+        return responses[0].Current().Variables(0).Value()
+    except Exception:
+        return None
 
 
 def fetch_apparent_temperatures(coordinates):
@@ -45,8 +49,12 @@ def fetch_apparent_temperatures(coordinates):
                     "longitude": [lng for _, lng in batch],
                     "current": "apparent_temperature",
                 },
+                timeout=8,
             )
-            temperatures.extend(r.Current().Variables(0).Value() for r in responses)
+            batch_values = [r.Current().Variables(0).Value() for r in responses]
+            if len(batch_values) != len(batch):
+                raise ValueError("Weather response count mismatch")
+            temperatures.extend(batch_values)
         except Exception:
             temperatures.extend([None] * len(batch))
 

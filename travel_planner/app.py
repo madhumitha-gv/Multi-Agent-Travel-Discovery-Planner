@@ -1,875 +1,283 @@
-#import streamlit as st
+"""Public travel discovery demo with isolated progress and partial results."""
+import logging
 import os
+import queue
+import threading
+import time
 
-# Hosted Streamlit supplies configuration through st.secrets rather than a
-# local .env file. Mirror those values into the environment so the agents
-# can keep reading them with os.getenv either way.
+import pandas as pd
+import streamlit as st
+from utils.limits import admit, release, LimitError
+
+st.set_page_config(page_title="Nomad's Nest · Travel Discovery", page_icon="🌍", layout="wide")
 try:
-    for _key in ("HUGGINGFACEHUB_API_TOKEN", "OPENAI_API_KEY"):
-        if not os.getenv(_key) and _key in st.secrets:
-            os.environ[_key] = str(st.secrets[_key])
-except Exception:
-    # No secrets file locally is normal; .env covers that case.
+    for key in ("HUGGINGFACEHUB_API_TOKEN", "GEMINI_API_KEY"):
+        if not os.getenv(key) and key in st.secrets:
+            os.environ[key] = str(st.secrets[key])
+except (FileNotFoundError, st.errors.StreamlitSecretNotFoundError):
     pass
 
-# import pandas as pd
-# import time
-# import threading
-# import queue
-# import matplotlib.pyplot as plt
-# from logger import log, log_queue
-# from langgraph_setup.run_graph import run_trip_planner
+st.markdown("""<style>
+.block-container {max-width:1200px; padding-top:2.5rem; padding-bottom:3rem;}
+h1 {letter-spacing:-.04em;}
+[data-testid="stMetric"] {background:#f0f5f2; border:1px solid #dce8df; border-radius:12px; padding:16px;}
+.stButton>button[kind="primary"] {background:#246249; border-color:#246249;}
+</style>""", unsafe_allow_html=True)
+st.caption("NOMAD'S NEST  /  MULTI-AGENT TRAVEL DISCOVERY")
+st.title("Start with a feeling. Find your next trip.")
+st.write("Describe what you love. Six specialized agents discover a destination, check its weather, and create your two-day travel guide.")
 
-# # Set the page configuration for the title and layout
-# st.set_page_config(page_title="Nomads Nest", layout="wide")
-
-# # 💜 Lavender-Themed CSS
-# st.markdown("""
-#     <style>
-#         body {
-#             background-color: #f8f4ff;
-#             font-family: 'Arial', sans-serif;
-#         }
-#         .block-container {
-#             padding-top: 2rem;
-#         }
-#         .stButton > button {
-#             background-color: #b39ddb;
-#             color: white;
-#             font-weight: bold;
-#             border: none;
-#             border-radius: 8px;
-#             padding: 10px 16px;
-#         }
-#         .stButton > button:hover {
-#             background-color: #9575cd;
-#         }
-#         .stTextArea > label, .stDataFrame > label {
-#             color: #5e35b1;
-#         }
-#         .log-box {
-#             background-color: #f0e6ff;
-#             border: 1px solid #d1c4e9;
-#             border-radius: 10px;
-#             padding: 10px;
-#             font-family: monospace;
-#             white-space: pre-wrap;
-#             height: 200px;
-#             overflow-y: auto;
-#         }
-#         .current-step-box {
-#             height: 100px;  /* Reduced height of the current step box */
-#         }
-#         .left-column {
-#             background-color: #d1c4e9;  /* Light Purple for Left Sidebar */
-#             padding: 20px;
-#             border-radius: 12px;
-#             width: 25%;
-#         }
-#         .middle-column {
-#             padding: 20px;
-#             width: 40%;
-#         }
-#         .right-column {
-#             background-color: #b39ddb;  /* Purple background for Right Column */
-#             padding: 20px;
-#             width: 30%;
-#             border-radius: 12px;
-#         }
-#         .headline {
-#             color: #5e35b1;
-#             font-size: 32px;
-#             font-weight: bold;
-#             margin-bottom: 10px;
-#         }
-#         .subheadline {
-#             color: #9575cd;
-#             font-size: 11px;
-#             margin-bottom: 20px;
-#         }
-#     </style>
-# """, unsafe_allow_html=True)
-
-# # 🔠 Title
-# st.markdown("""
-#     <style>
-#         .title {
-#             text-align: center;
-#             font-size: 20px;
-#             font-weight: bold;
-#             color: #5e35b1;
-#         }
-#     </style>
-#     <p class="title">NOMADS NEST</p>
-# """, unsafe_allow_html=True)
-
-
-# st.markdown("""
-#     <style>
-#         .title {
-#             text-align: center;
-#             font-size: 30px;
-#             font-weight: bold;
-#             color: #5e35b1;
-#         }
-#     </style>
-#     <p class="title">Let us take you to your destination</p>
-# """, unsafe_allow_html=True)
-
-# # Layout: Three Columns: Left for Logs, Middle for User Input, Right for Graph
-# left_col, middle_col, right_col = st.columns([1.5, 2, 1.5], gap="large")
-
-# # Left Column: Activity Log and Current Step
-# with left_col:
-#     # Current Step and Activity Log containers
-#     st.markdown("### Current Step")
-#     current_step_log = st.empty()
-
-#     st.markdown("### Activity Log")
-#     activity_log = st.empty()
-
-# # Middle Column: User Input
-# with middle_col:
-#     # Headline and subheadline for the user input section
-
-#     # Input and Submit button
-#     st.markdown("### Whats your next destination?")
-#     user_input = st.text_area("", placeholder="e.g. A cozy mountain escape with hiking and stargazing.")
-#     start_button = st.button("Lets plan")
-
-# # Right Column: Display Graph in Purple Container
-# with right_col:
-#     st.markdown("### Multi AI Agent graph")
-#     # Example Graph in a Purple Container
-#     fig, ax = plt.subplots(figsize=(5, 4))
-#     ax.plot([1, 2, 3, 4], [10, 20, 25, 30], marker='o')
-#     ax.set_title("graph", fontsize=14)
-#     ax.set_xlabel("X Axis")
-#     ax.set_ylabel("Y Axis")
-#     st.pyplot(fig)
-
-# # 🧳 Start Planning Process if Submit Button is Pressed
-# if start_button:
-#     if not user_input.strip():
-#         st.warning("Please describe your trip preferences before generating a plan.")
-#     else:
-#         logs = []
-#         result_container = {"result": None}
-
-#         with st.spinner("Planning your adventure..."):
-
-#             def run_graph():
-#                 result_container["result"] = run_trip_planner(user_input)
-
-#             thread = threading.Thread(target=run_graph)
-#             thread.start()
-
-#             last_log_time = time.time()
-#             while thread.is_alive() or not log_queue.empty():
-#                 try:
-#                     msg = log_queue.get(timeout=0.2)
-#                     logs.append(msg)
-#                     current_step_log.markdown(f'<div class="log-box current-step-box">{msg}</div>', unsafe_allow_html=True)
-#                     activity_log.markdown(f'<div class="log-box">{"<br>".join(logs)}</div>', unsafe_allow_html=True)
-#                     last_log_time = time.time()
-#                 except queue.Empty:
-#                     if time.time() - last_log_time > 2 and not thread.is_alive():
-#                         break
-#                     time.sleep(0.1)
-
-#             thread.join()
-#             result = result_container["result"]
-
-#         # ✅ Display Final Results on the Middle Panel
-#         if result:
-#             st.success("Here’s your personalized trip plan!")
-
-#             st.markdown("### Your Travel Preferences")
-#             st.write(result.get("persona", "Not detected."))
-
-#             st.markdown("### Recommended Destination")
-#             st.markdown(f"**Final Pick:** {result.get('top_destination', 'No destination')}")
-
-#             st.markdown("### Weather Decisions (Backtracking Log)")
-#             weather_log = result.get("weather_log", [])
-#             if weather_log:
-#                 df = pd.DataFrame(weather_log)
-#                 df["Decision"] = df["skipped"].map({True: "Skipped", False: "Selected"})
-#                 df = df.rename(columns={
-#                     "city": "City",
-#                     "temperature": "Temp (°C)",
-#                     "condition": "Condition"
-#                 })[["City", "Temp (°C)", "Condition", "Decision"]]
-#                 st.dataframe(df)
-#             else:
-#                 st.write("No weather log available.")
-
-#             st.markdown("### Suggested Itinerary")
-#             st.text(result.get("itinerary", "No itinerary generated."))
-
-#             st.markdown("### Cultural Tips")
-#             st.write(result.get("culture_tips", "No cultural information available."))
-
-#             st.markdown("### Packing List")
-#             st.text(result.get("packing_list", "No packing list generated."))
-#         else:
-#             st.error("Something went wrong — no result returned.")
-
-
-
-
-
-
-
-# import streamlit as st
-# import pandas as pd
-# import time
-# import threading
-# import queue
-# import matplotlib.pyplot as plt
-# import networkx as nx
-# from logger import log, log_queue
-# from langgraph_setup.run_graph import run_trip_planner
-
-# # Set the page configuration for the title and layout
-# st.set_page_config(page_title="Nomads Nest", layout="wide")
-
-# # Pastel Color Scheme (Soft Greens and Purples)
-# st.markdown("""
-#     <style>
-#         body {
-#             background-color: #f4f8f6;  /* Light pastel background */
-#             font-family: 'Arial', sans-serif;
-#         }
-#         .block-container {
-#             padding-top: 2rem;
-#         }
-#         .stButton > button {
-#             background-color: #a5d6a7;  /* Pastel Green */
-#             color: black;
-#             font-weight: bold;
-#             border: none;
-#             border-radius: 8px;
-#             padding: 12px 20px;
-#         }
-#         .stButton > button:hover {
-#             background-color: #81c784;  /* Darker Green */
-#         }
-#         .stTextArea > label, .stDataFrame > label {
-#             color: black;
-#         }
-#         .log-box {
-#             background-color: #e8f5e9;  /* Light pastel green for logs */
-#             border: 1px solid #c8e6c9;
-#             border-radius: 10px;
-#             padding: 12px;
-#             font-family: monospace;
-#             white-space: pre-wrap;
-#             height: 200px;
-#             overflow-y: auto;
-#         }
-#         .current-step-box {
-#             height: 100px;
-#         }
-#         .left-column {
-#             background-color: #c8e6c9;  /* Pastel Green for Left Sidebar */
-#             padding: 20px;
-#             border-radius: 12px;
-#             width: 25%;
-#             height: 100%;
-#         }
-#         .middle-column {
-#             padding: 20px;
-#             width: 40%;
-#             background-color: #ffffff;  /* White background for user input */
-#             border-radius: 12px;
-#         }
-#         .right-column {
-#             background-color: #c5cae9;  /* Soft pastel purple for the graph section */
-#             padding: 20px;
-#             width: 30%;
-#             border-radius: 12px;
-#         }
-#         .headline {
-#             color: black;
-#             font-size: 32px;
-#             font-weight: bold;
-#             margin-bottom: 10px;
-#         }
-#         .subheadline {
-#             color: #388e3c;  /* Pastel Green accent for subheadline */
-#             font-size: 16px;
-#             margin-bottom: 20px;
-#         }
-#         .title {
-#             text-align: center;
-#             font-size: 40px;
-#             font-weight: bold;
-#             color: #388e3c;  /* Pastel Green for title */
-#         }
-#         .section-title {
-#             font-size: 24px;
-#             font-weight: bold;
-#             color: #388e3c;
-#             margin-top: 20px;
-#         }
-#     </style>
-# """, unsafe_allow_html=True)
-
-# # Set the local image as the background
-# image_path = "background_image.jpg"  # Replace with your image's file path
-# st.markdown(f"""
-#     <style>
-#         body {{
-#             background-image: url('{image_path}');
-#             background-size: cover;  /* Ensures the image covers the whole screen */
-#             background-position: center;  /* Centers the image */
-#             background-attachment: fixed;  /* Keeps the image fixed when scrolling */
-#             color: white;  /* Text color to contrast with background */
-#         }}
-#     </style>
-# """, unsafe_allow_html=True)
-
-# # Page Title
-# st.markdown("<p class='title'>Nomads Nest</p>", unsafe_allow_html=True)
-
-# # Subtitle with description
-# st.markdown("<p class='subheadline'>Let us take you to your next adventure</p>", unsafe_allow_html=True)
-
-# # Layout: Three Columns (Left for Logs, Middle for User Input, Right for Graph)
-# left_col, middle_col, right_col = st.columns([1.5, 2, 1.5], gap="large")
-
-# # Left Column: Activity Log and Current Step
-# with left_col:
-#     st.markdown("<p class='section-title'>Current Step</p>", unsafe_allow_html=True)
-#     current_step_log = st.empty()
-
-#     st.markdown("<p class='section-title'>Activity Log</p>", unsafe_allow_html=True)
-#     activity_log = st.empty()
-
-# # Middle Column: User Input
-# with middle_col:
-#     st.markdown("<p class='section-title'>What’s Your Next Destination?</p>", unsafe_allow_html=True)
-#     user_input = st.text_area("", placeholder="e.g. A cozy mountain escape with hiking and stargazing.", height=150)
-#     start_button = st.button("Let’s Plan")
-
-# # Right Column: Display AI Agent Graph
-# with right_col:
-#     st.markdown("<p class='section-title'>AI Agent Graph</p>", unsafe_allow_html=True)
-    
-#     # Build the directed graph for AI agents
-#     G = nx.DiGraph()
-
-#     # Add nodes (AI agents)
-#     agents = [
-#         "analyze_persona", 
-#         "recommend_destinations", 
-#         "check_weather", 
-#         "generate_itinerary", 
-#         "provide_cultural_tips", 
-#         "generate_packing_list", 
-#         "fail"
-#     ]
-#     G.add_nodes_from(agents)
-
-#     # Add edges (connections between AI agents)
-#     G.add_edge("analyze_persona", "recommend_destinations")
-#     G.add_edge("recommend_destinations", "check_weather")
-#     G.add_edge("check_weather", "generate_itinerary")
-#     G.add_edge("generate_itinerary", "provide_cultural_tips")
-#     G.add_edge("provide_cultural_tips", "generate_packing_list")
-#     G.add_edge("fail", "provide_cultural_tips")  # or end the graph
-
-#     # Visualize the graph
-#     plt.figure(figsize=(10, 8))
-#     pos = nx.spring_layout(G)  # positions for all nodes
-#     nx.draw(G, pos, with_labels=True, node_size=3000, node_color="#a5d6a7", font_size=10, font_weight='bold', edge_color="#388e3c", width=2, arrows=True)
-#     plt.title("AI Agent Network")
-#     st.pyplot(plt)
-
-# # 🧳 Start Planning Process if Submit Button is Pressed
-# if start_button:
-#     if not user_input.strip():
-#         st.warning("Please describe your trip preferences before generating a plan.")
-#     else:
-#         logs = []
-#         result_container = {"result": None}
-
-#         with st.spinner("Planning your adventure..."):
-
-#             def run_graph():
-#                 result_container["result"] = run_trip_planner(user_input)
-
-#             thread = threading.Thread(target=run_graph)
-#             thread.start()
-
-#             last_log_time = time.time()
-#             while thread.is_alive() or not log_queue.empty():
-#                 try:
-#                     msg = log_queue.get(timeout=0.2)
-#                     logs.append(msg)
-#                     current_step_log.markdown(f'<div class="log-box current-step-box">{msg}</div>', unsafe_allow_html=True)
-#                     activity_log.markdown(f'<div class="log-box">{"<br>".join(logs)}</div>', unsafe_allow_html=True)
-#                     last_log_time = time.time()
-#                 except queue.Empty:
-#                     if time.time() - last_log_time > 2 and not thread.is_alive():
-#                         break
-#                     time.sleep(0.1)
-
-#             thread.join()
-#             result = result_container["result"]
-
-#         # ✅ Display Final Results on the Middle Panel
-#         if result:
-#             st.success("Here’s your personalized trip plan!")
-
-#             st.markdown("<p class='section-title'>Your Travel Preferences</p>", unsafe_allow_html=True)
-#             st.write(result.get("persona", "Not detected."))
-
-#             st.markdown("<p class='section-title'>Recommended Destination</p>", unsafe_allow_html=True)
-#             st.markdown(f"**Final Pick:** {result.get('top_destination', 'No destination')}")
-
-#             st.markdown("<p class='section-title'>Weather Decisions (Backtracking Log)</p>", unsafe_allow_html=True)
-#             weather_log = result.get("weather_log", [])
-#             if weather_log:
-#                 df = pd.DataFrame(weather_log)
-#                 df["Decision"] = df["skipped"].map({True: "Skipped", False: "Selected"})
-#                 df = df.rename(columns={
-#                     "city": "City",
-#                     "temperature": "Temp (°C)",
-#                     "condition": "Condition"
-#                 })[["City", "Temp (°C)", "Condition", "Decision"]]
-#                 st.dataframe(df)
-#             else:
-#                 st.write("No weather log available.")
-
-#             st.markdown("<p class='section-title'>Suggested Itinerary</p>", unsafe_allow_html=True)
-#             st.text(result.get("itinerary", "No itinerary generated."))
-
-#             st.markdown("<p class='section-title'>Cultural Tips</p>", unsafe_allow_html=True)
-#             st.write(result.get("culture_tips", "No cultural information available."))
-
-#             st.markdown("<p class='section-title'>Packing List</p>", unsafe_allow_html=True)
-#             st.text(result.get("packing_list", "No packing list generated."))
-#         else:
-#             st.error("Something went wrong — no result returned.")
-
-import torch
-if not hasattr(torch, "__path__"):
-    torch.__path__ = []
-import streamlit as st
-import pandas as pd
-import time
-import threading
-import queue
-import matplotlib.pyplot as plt
-import networkx as nx
-import plotly.graph_objects as go
-from logger import log, log_queue
-from langgraph_setup.run_graph import run_trip_planner
-
-# Page setup
-st.set_page_config(page_title="Multi-Agent Travel Planner", layout="wide")
-
-# ---- CSS for Pastel Theme ----
-st.markdown("""
-    <style>
-        .pill {
-            display: inline-block;
-            padding: 0.4em 0.9em;
-            border-radius: 30px;
-            margin: 4px 6px;
-            font-size: 0.9em;
-            font-weight: 500;
-            color: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        .log-box {
-            background-color: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            border-radius: 10px;
-            padding: 12px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            height: 200px;
-            overflow-y: auto;
-        }
-        .current-step-box {
-            height: 100px;
-        }
-        .title {
-            text-align: center;
-            font-size: 40px;
-            font-weight: bold;
-            color: #388e3c;
-        }
-        .section-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #388e3c;
-            margin-top: 20px;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# ---- Category Definitions ----
-CATEGORY_COLORS = {
-    "Experience": "#FF7F50", "Nature": "#2ECC71", "Luxury & Budget": "#FFD700",
-    "Interests": "#6A5ACD", "Audience": "#FF69B4"
+EXAMPLES = {
+    "Choose an example…": "",
+    "Food & history": "I love local food, historic neighborhoods and architecture. I'd like a relaxed two-day city break with time to explore on foot.",
+    "Nature & adventure": "I want a two-day escape with hiking, mountain scenery and nature. I enjoy adventure and prefer a modest budget.",
+    "Family beach break": "A relaxing two-day beach break with family-friendly activities, local food and a little shopping.",
 }
-CATEGORY_GROUPS = {
-    "Experience": ["relaxation", "adventure", "cultural immersion", "spiritual retreat", "learning", "road trip"],
-    "Nature": ["mountains", "beach", "jungle", "desert", "wildlife", "national parks"],
-    "Luxury & Budget": ["luxury", "budget", "all-inclusive", "backpacking"],
-    "Interests": ["food", "history", "architecture", "nightlife", "shopping", "festivals", "art"],
-    "Audience": ["solo travel", "family-friendly", "romantic", "group travel"]
-}
-def get_category(label):
-    for category, items in CATEGORY_GROUPS.items():
-        if label in items:
-            return category
-    return "Interests"
+example = st.selectbox("Need inspiration?", list(EXAMPLES))
+if st.session_state.get("last_example") != example:
+    if EXAMPLES[example]:
+        st.session_state["trip_input"] = EXAMPLES[example]
+    st.session_state["last_example"] = example
 
-def display_colored_preferences(preferences):
-    st.markdown("<p class='section-title'>Your Travel Preferences</p>", unsafe_allow_html=True)
-    html_pills = ""
-    for pref in preferences:
-        category = get_category(pref)
-        color = CATEGORY_COLORS.get(category, "#888888")
-        html_pills += f"<span class='pill' style='background-color:{color}'>{pref}</span>"
-    st.markdown(html_pills, unsafe_allow_html=True)
-
-def render_weather_table(weather_log):
-    if not weather_log:
-        st.info("No weather data available.")
-        return
-
-    df = pd.DataFrame(weather_log)
-    df["Decision"] = df["skipped"].map({True: "Skipped", False: "Selected"})
-    df = df.rename(columns={"city": "City", "temperature": "Temp (°C)", "condition": "Condition"})[
-        ["City", "Temp (°C)", "Condition", "Decision"]
-    ]
-
-    fig = go.Figure(data=[go.Table(
-        columnwidth=[80, 80, 120, 80],
-        header=dict(values=list(df.columns),
-                    fill_color='#a5d6a7',
-                    align='center',
-                    font=dict(color='black', size=14)),
-        cells=dict(values=[df[col] for col in df.columns],
-                   fill_color=[['#ffffff' if i % 2 == 0 else '#f0f4f7'] * len(df) for i in range(len(df.columns))],
-                   align='center',
-                   font=dict(color='black', size=12))
-    )])
-    fig.update_layout(margin=dict(l=5, r=5, t=5, b=0))
-    st.markdown("<p class='section-title'>Weather Insights</p>", unsafe_allow_html=True)
-    st.plotly_chart(fig, use_container_width=True)
-    st.markdown("<div style='margin-top: -15px;'></div>", unsafe_allow_html=True)
-
-# ---- Header ----
-st.markdown("<p class='title'>Multi-Agent Travel Planner</p>", unsafe_allow_html=True)
-st.markdown("<div style='text-align: center; font-size: 18px;'>Let us take you to your next adventure</div>", unsafe_allow_html=True)
-
-# ---- Layout ----
-left_col, middle_col, right_col = st.columns([1.5, 2, 1.5], gap="large")
-
-with left_col:
-    st.markdown("<p class='section-title'>Current Step</p>", unsafe_allow_html=True)
-    current_step_log = st.empty()
-    st.markdown("<p class='section-title'>Activity Log</p>", unsafe_allow_html=True)
-    activity_log = st.empty()
-
-with middle_col:
-    st.markdown("<p class='section-title'>What’s Your Next Destination?</p>", unsafe_allow_html=True)
-    user_input = st.text_area("Trip preferences", placeholder="....", height=150, label_visibility="collapsed")
-    start_button = st.button("Let’s Plan")
-
-with right_col:
-    st.markdown("<p class='section-title'>AI Agent Graph</p>", unsafe_allow_html=True)
-    G = nx.DiGraph()
-    agents = ["analyze_persona", "recommend_destinations", "check_weather", "generate_itinerary", "provide_cultural_tips", "generate_packing_list", "fail"]
-    G.add_nodes_from(agents)
-    G.add_edge("analyze_persona", "recommend_destinations")
-    G.add_edge("recommend_destinations", "check_weather")
-    G.add_edge("check_weather", "generate_itinerary")
-    G.add_edge("generate_itinerary", "provide_cultural_tips")
-    G.add_edge("provide_cultural_tips", "generate_packing_list")
-    G.add_edge("fail", "provide_cultural_tips")
-
-    fig, ax = plt.subplots(figsize=(10, 8))  # Corrected here
-    pos = nx.spring_layout(G, seed=42)
-    nx.draw(
-        G, pos, ax=ax, with_labels=True,
-        node_size=3000, node_color="#a5d6a7",
-        font_size=10, font_weight='bold',
-        edge_color="#388e3c", width=2, arrows=True
+with st.form("trip_form"):
+    user_input = st.text_area(
+        "What would make this trip feel like you?", key="trip_input", height=120,
+        max_chars=1500,
+        placeholder="I love local food, historic streets and a relaxed pace. Help me discover a two-day escape.",
     )
-    st.pyplot(fig)
+    submitted = st.form_submit_button("Discover my trip", type="primary")
+st.caption("Plans cover two days. Weather is current apparent temperature, not a forecast for future travel dates. Please avoid entering personal or sensitive details.")
 
 
-# ---- Process on Button ----
-if start_button:
-    if not user_input.strip():
-        st.warning("Please describe your trip preferences before generating a plan.")
+def execute(job, consumes_quota=True):
+    """All expensive paths share the same session and process admission gate."""
+    try:
+        st.session_state["starts"] = admit(st.session_state.get("starts", []), consumes_quota=consumes_quota)
+    except LimitError as exc:
+        st.warning(str(exc))
+        return None
+    events = queue.Queue()
+    outcome = {}
+    trace = []
+    started = time.monotonic()
+
+    def record(event):
+        trace.append({"Operation": "Guide generation" if consumes_quota else "Discovery", "Elapsed (s)": round(time.monotonic() - started, 2), "Event": str(event)})
+
+    def worker():
+        from logger import bind_progress, reset_progress
+        token = bind_progress(events.put)
+        try:
+            outcome["result"] = job(events.put)
+        except Exception:
+            logging.getLogger(__name__).exception("Trip planning failed")
+            outcome["failed"] = True
+        finally:
+            reset_progress(token)
+            release()
+
+    with st.status("Finding your next adventure…", expanded=True) as status:
+        progress = st.empty()
+        thread = threading.Thread(target=worker, daemon=True)
+        thread.start()
+        while thread.is_alive():
+            try:
+                event = events.get(timeout=0.25)
+                record(event)
+                progress.write(event)
+            except queue.Empty:
+                pass
+        thread.join()
+        while not events.empty():
+            record(events.get_nowait())
+        st.session_state["trace_events"] = st.session_state.get("trace_events", []) + trace
+        if outcome.get("failed"):
+            status.update(label="We couldn't finish this request", state="error", expanded=False)
+            st.error("The planner is temporarily unavailable. Please try again shortly. Your previous result is still available below.")
+            return None
+        status.update(label="Your results are ready", state="complete", expanded=False)
+    return outcome.get("result")
+
+
+def discover(text, progress):
+    progress("Loading the travel agents…")
+    from langgraph_setup.run_graph import run_trip_planner
+    return run_trip_planner(text, progress=progress, require_approval=True)
+
+
+if submitted:
+    if len(user_input.strip()) < 10:
+        st.warning("Describe your trip in at least 10 characters so we can find a useful match.")
     else:
-        logs = []
-        result_container = {"result": None}
-
-        with st.spinner("Planning your adventure..."):
-            def run_graph():
-                result_container["result"] = run_trip_planner(user_input)
-
-            thread = threading.Thread(target=run_graph)
-            thread.start()
-
-            last_log_time = time.time()
-            while thread.is_alive() or not log_queue.empty():
-                try:
-                    msg = log_queue.get(timeout=0.2)
-                    logs.append(msg)
-                    current_step_log.markdown(f'<div class="log-box current-step-box">{msg}</div>', unsafe_allow_html=True)
-                    activity_log.markdown(f'<div class="log-box">{"<br>".join(logs)}</div>', unsafe_allow_html=True)
-                    last_log_time = time.time()
-                except queue.Empty:
-                    if time.time() - last_log_time > 2 and not thread.is_alive():
-                        break
-                    time.sleep(0.1)
-            thread.join()
-            result = result_container["result"]
-
-        st.session_state["result"] = result
-        st.session_state.pop("cooler", None)
+        st.session_state["trace_events"] = []
+        updated = execute(lambda progress: discover(user_input.strip(), progress), consumes_quota=False)
+        if updated:
+            st.session_state["result"] = updated
+            st.session_state.pop("alternatives", None)
 
 
-# ---- Result rendering ----
-def render_result(result):
-    st.success("Here’s your personalized trip plan!")
-    display_colored_preferences(result.get("persona", []))
-
-    if all_candidates_rejected(result) and not result.get("human_override"):
-        st.markdown("<p class='section-title'>No destination passed the weather check</p>", unsafe_allow_html=True)
-    else:
-        st.markdown(f"<p class='section-title'>Final Pick: {result.get('top_destination', 'No destination')}</p>", unsafe_allow_html=True)
-    render_weather_table(result.get("weather_log", []))
-
-    st.markdown("<p class='section-title'>Suggested Itinerary</p>", unsafe_allow_html=True)
-    itinerary = result.get("itinerary", "")
-    if itinerary:
-        itinerary_lines = [line.strip("-• ") for line in itinerary.strip().split("\n") if line.strip()]
-        for item in itinerary_lines:
-            st.markdown(f"- {item}")
-    else:
-        st.info("No itinerary generated.")
-
-    st.markdown("<p class='section-title'>Cultural Tips</p>", unsafe_allow_html=True)
-    culture_tips = result.get("culture_tips", "")
-    if culture_tips:
-        culture_lines = [line.strip("-• ") for line in culture_tips.strip().split("\n") if line.strip()]
-        for tip in culture_lines:
-            st.markdown(f"- {tip}")
-    else:
-        st.info("No cultural information available.")
-
-    st.markdown("<p class='section-title'>Packing List</p>", unsafe_allow_html=True)
-    packing_list = result.get("packing_list", "")
-    if packing_list:
-        lines = [line.strip() for line in packing_list.split("\n") if line.strip()]
-
-        # The model is asked for "Category:" headers followed by "- item"
-        # bullets, but it sometimes inlines them as "Category: a, b, c".
-        # Accept both shapes.
-        groups = []
-        current = None
-        for line in lines:
-            is_bullet = line[:1] in ("-", "\u2022", "*")
-            if ":" in line and not is_bullet:
-                category, inline = line.split(":", 1)
-                current = (category.strip(), [])
-                groups.append(current)
-                for item in inline.split(","):
-                    item = item.strip().lstrip("-\u2022 ").strip()
-                    if item:
-                        current[1].append(item)
-            else:
-                item = line.lstrip("-\u2022* ").strip()
-                if not item:
-                    continue
-                if current is None:
-                    current = ("Items to Pack", [])
-                    groups.append(current)
-                current[1].append(item)
-
-        for category, items in groups:
-            if not items:
-                continue
-            st.markdown(f"""
-                <div style="background-color:#f1f8e9; border: 1px solid #c5e1a5; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                    <strong>{category}</strong><br>
-                    {"<br>".join(f"\u2022 {item}" for item in items)}
-                </div>
-            """, unsafe_allow_html=True)
-    else:
-        st.info("No packing list generated.")
+def needs_choice(result):
+    return (result.get("awaiting_approval") or result.get("weather_check_result") != "ok") and not result.get("human_override")
 
 
-
-def all_candidates_rejected(result):
-    """True when the weather gate skipped every candidate it looked at."""
-    log = result.get("weather_log", [])
-    return bool(log) and all(entry.get("skipped") for entry in log)
-
-
-def find_cooler_alternatives(result, wanted=5, per_country=1):
-    """Find the best-matching cities that actually pass the weather check.
-
-    Weather for every candidate is fetched in a handful of batched
-    requests, so the whole catalogue can be filtered first and only the
-    survivors ranked. That beats ranking first and probing a short window,
-    which could only ever see the top few matches.
-
-    Most cities in the dataset share one of a dozen feature strings, so
-    similarity scores tie constantly and the winners would otherwise all
-    come from whichever country happens to sit first in the file.
-    `per_country` keeps the shortlist varied.
-    """
-    from agents import destination_agent
-    from langgraph_setup.nodes import HARSH_CONDITIONS
-    from utils.weather_api import fetch_apparent_temperatures
-    from utils.weather_utils import get_current_weather
-
-    ranked = destination_agent.rank(result.get("persona", []), top_n=None)
-    if not ranked:
-        return []
-
-    already = {e["city"] for e in result.get("weather_log", [])}
-    ranked = [c for c in ranked if c["name"] not in already]
-
-    temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
-
-    passing = []
-    seen_countries = {}
-    for candidate, temperature in zip(ranked, temperatures):
-        if temperature is None:
-            continue
-        condition = get_current_weather(temperature)
-        if condition in HARSH_CONDITIONS:
-            continue
-
-        country = candidate.get("country", "Unknown")
-        if seen_countries.get(country, 0) >= per_country:
-            continue
-        seen_countries[country] = seen_countries.get(country, 0) + 1
-
-        passing.append({
-            "city": candidate["name"],
-            "country": country,
-            "temperature": temperature,
-            "condition": condition,
-        })
-        if len(passing) >= wanted:
-            break
-
-    return passing
-
-
-def plan_for_city(result, city, passed_check=False):
-    """Re-run the downstream agents for a city the user picked by hand.
-
-    passed_check distinguishes overruling the weather gate from picking a
-    cooler city that actually cleared it, so the result can say which.
-    """
-    from agents import culture_agent, itinerary_agent, packing_agent
-
-    persona = result.get("persona", [])
-    state = dict(result)
-    state["top_destination"] = city
-
+def plan_for_city(result, candidate, passed_check=False):
+    from utils.plan_generation import generate_sections
+    from logger import log
+    log(f"Human approval: {candidate['city']}; building the guide")
     updated = dict(result)
-    updated["top_destination"] = city
-    updated["itinerary"] = itinerary_agent.run(state)
-    updated["culture_tips"] = culture_agent.cultural_tips(city)
-    updated["packing_list"] = packing_agent.generate_packing_list(city, persona)
-    updated["human_override"] = city
-    updated["override_passed"] = passed_check
+    updated.update(top_destination=candidate["city"], final_destination=candidate,
+                   human_override=candidate["city"], override_passed=passed_check, awaiting_approval=False)
+    updated.update(generate_sections(updated))
     return updated
 
 
+def find_alternatives(result):
+    from agents.destination_agent import rank
+    from utils.weather_api import fetch_apparent_temperatures
+    from utils.weather_utils import get_current_weather
+    ranked = rank(result.get("persona", []), top_n=None, query_text=result.get("user_input", ""))
+    already = {entry["city"] for entry in result.get("weather_log", [])}
+    ranked = [c for c in ranked if c["name"] not in already]
+    temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
+    passing, countries = [], set()
+    for city, temp in zip(ranked, temperatures):
+        condition = get_current_weather(temp)
+        if condition not in {"chilly", "warm"} or city["country"] in countries:
+            continue
+        countries.add(city["country"])
+        passing.append({**city, "city": city["name"], "temperature": temp, "condition": condition})
+        if len(passing) == 5:
+            break
+    return {"cities": passing}
+
+
+def export_plan(result):
+    parts = ["# Your two-day travel guide", f"Destination: {result.get('top_destination', 'Not selected')}",
+             "Preferences: " + ", ".join(result.get("persona", []))]
+    for title, key in [("Itinerary", "itinerary"), ("Culture & etiquette", "culture_tips"), ("Packing list", "packing_list")]:
+        parts.extend([f"## {title}", result.get(key) or "Not generated."])
+    parts.append("AI-generated suggestions. Verify opening hours, reservations, entry requirements and local conditions before traveling. Weather shown in the app is current, not a future forecast.")
+    return "\n\n".join(parts)
+
+
+st.subheader("Agent workflow")
+st.graphviz_chart("""digraph {
+    rankdir=LR; node [shape=box, style="rounded,filled", fillcolor="#eef5f0", fontname="Arial"];
+    P [label="1. Persona"]; D [label="2. Destinations"]; W [label="3. Live weather"];
+    H [label="Your approval", fillcolor="#dceaff"];
+    I [label="4. Itinerary"]; C [label="5. Culture"]; K [label="6. Packing"]; O [label="Travel guide"];
+    P -> D -> W -> H; W -> W [label="next city"];
+    H -> I [label="approve"]; H -> C; H -> K; I -> O; C -> O; K -> O;
+}""", use_container_width=True)
+traces = st.session_state.get("trace_events", [])
+if traces:
+    st.subheader("Agent activity trace")
+    st.dataframe(pd.DataFrame(traces), hide_index=True, use_container_width=True)
+    st.caption("Execution events and provider outcomes. No credentials or private model reasoning are shown.")
+
 result = st.session_state.get("result")
-
+if result and result.get("matching_message"):
+    st.info(result["matching_message"])
+if result and not result.get("all_recommendations") and result.get("matching_message"):
+    result = None
 if result:
-    render_result(result)
+    st.divider()
+    preferences = result.get("persona", [])
+    st.caption("YOUR TRAVEL STYLE · " + " · ".join(preferences).upper())
+    if needs_choice(result):
+        if result.get("awaiting_approval"):
+            st.subheader(f"Recommended: {result.get('top_destination', 'Choose a destination')}")
+            st.info("You decide. Review the shortlist and weather below, then approve a destination before the writing agents start.")
+        else:
+            st.subheader("A few possibilities, with a weather tradeoff")
+            st.info("None of the shortlisted cities could be confirmed within our 15–28 °C comfort range. Choose one anyway, or search the catalogue for alternatives.")
+    else:
+        city = result.get("top_destination", "Your destination")
+        country = result.get("final_destination", {}).get("country", "")
+        st.subheader(f"Your next stop: {city}" + (f", {country}" if country else ""))
+        if result.get("human_override"):
+            st.caption("Selected by you from weather-checked alternatives." if result.get("override_passed") else "Selected by you with a weather override. Check local conditions before traveling.")
 
-    # ---- Human in the loop ----
-    # The weather gate can reject every candidate, which leaves the traveller
-    # with no plan at all. Rather than dead-end, show what was found and let
-    # them overrule the gate.
-    if all_candidates_rejected(result) and not result.get("human_override"):
-        st.markdown("<p class='section-title'>Not happy with the weather?</p>", unsafe_allow_html=True)
-        st.info(
-            "Every match was outside the comfortable range, so no itinerary was built. "
-            "Pick one anyway and we'll plan the trip for it."
-        )
+    weather = result.get("weather_log", [])
+    with st.expander("See how the destination was chosen", expanded=needs_choice(result)):
+        if weather:
+            frame = pd.DataFrame(weather)
+            frame["decision"] = frame.apply(lambda row: "Weather unavailable" if row["condition"] == "unavailable" else ("Outside comfort range" if row["skipped"] else "Within comfort range"), axis=1)
+            st.dataframe(frame[["city", "temperature", "condition", "decision"]].rename(columns={"city":"City", "temperature":"Feels like (°C)", "condition":"Conditions", "decision":"Weather check"}), hide_index=True, use_container_width=True)
+        else:
+            st.info("No weather observations are available.")
+        st.caption("Current apparent temperature from Open-Meteo; cached for up to one hour. This is a temperature preference check, not a travel safety assessment.")
+        for candidate in result.get("all_recommendations", []):
+            if candidate.get("match_reasons"):
+                st.markdown("**" + candidate["name"] + "**")
+                for reason in candidate["match_reasons"]:
+                    st.write(reason)
+                for source in candidate.get("match_sources", []):
+                    st.markdown(f"[{source['label']} evidence]({source['url']})")
+                for note in candidate.get("match_limits", []):
+                    st.caption(note)
 
-        # A radio rather than st.tabs: any button below triggers a Streamlit
-        # rerun, and tabs reset to the first one on rerun, which would hide
-        # the results the user just asked for.
-        mode = st.radio(
-            "What would you like to do?",
-            ["Plan one of these anyway", "Find cooler alternatives"],
-            key="fallback_mode",
-            horizontal=True,
-        )
-
-        if mode == "Plan one of these anyway":
-            options = {
-                f"{e['city']} — {e['temperature']:.1f} °C ({e['condition']})": e["city"]
-                for e in result.get("weather_log", [])
-            }
-            if options:
-                choice = st.selectbox("Choose a destination", list(options.keys()), key="override_choice")
-                if st.button("Plan this destination anyway", key="override_go"):
-                    with st.spinner(f"Planning your trip to {options[choice]}..."):
-                        st.session_state["result"] = plan_for_city(result, options[choice])
+    if needs_choice(result):
+        mode = st.radio("How would you like to continue?", ["Choose a shortlisted city", "Find comfortable alternatives"], horizontal=True)
+        if mode == "Choose a shortlisted city":
+            options = weather
+        else:
+            if st.button("Check alternatives across the catalogue"):
+                alternatives = execute(lambda progress: find_alternatives(result), consumes_quota=False)
+                if alternatives is not None:
+                    st.session_state["alternatives"] = alternatives["cities"]
+            options = st.session_state.get("alternatives", [])
+            if "alternatives" in st.session_state and not options:
+                st.warning("No alternatives could be confirmed in the comfort range. You can choose an original match or try different preferences.")
+        if options:
+            def label(i):
+                c = options[i]
+                temp = c.get("temperature")
+                return c["city"] + (f" · {temp:.1f} °C" if temp is not None else " · weather unavailable")
+            default = next((i for i, c in enumerate(options) if c["city"] == result.get("top_destination")), 0)
+            choice = st.selectbox("Destination", range(len(options)), index=default, format_func=label)
+            if st.button("Approve destination & build guide", type="primary"):
+                selected = options[choice]
+                updated = execute(lambda progress: plan_for_city(result, selected, passed_check=selected.get("condition") in {"chilly", "warm"}))
+                if updated:
+                    st.session_state["result"] = updated
                     st.rerun()
-
-        else:
-            st.caption(
-                "Checks live weather for every city in the catalogue, then ranks the "
-                "ones that pass \u2014 at most one per country, so the list stays varied."
-            )
-            if st.button("Search for cooler cities", key="cooler_search"):
-                with st.spinner("Checking weather further down the ranking..."):
-                    st.session_state["cooler"] = find_cooler_alternatives(result)
-
-            cooler = st.session_state.get("cooler")
-            if cooler is not None:
-                if not cooler:
-                    st.warning(
-                        "No city in the top 25 matches passed the weather check either. "
-                        "Try different preferences, or pick one of the originals anyway."
-                    )
+    else:
+        if result.get("human_override"):
+            selected = result.get("final_destination", {})
+            temp = selected.get("temperature")
+            if temp is not None:
+                st.caption(f"Selected city's current apparent temperature: {temp:.1f} °C ({selected.get('condition', '')}).")
+        errors = result.get("generation_errors", [])
+        if errors:
+            st.warning(result.get("generation_message") or "Some writing agents are temporarily unavailable. Your destination and weather results are saved; you can retry the missing sections below.")
+        itinerary, culture, packing = st.tabs(["Two-day itinerary", "Culture & etiquette", "Packing list"])
+        for container, key in [(itinerary,"itinerary"), (culture,"culture_tips"), (packing,"packing_list")]:
+            with container:
+                if result.get(key):
+                    st.markdown(result[key])
                 else:
-                    cool_options = {
-                        f"{c['city']}, {c['country']} — {c['temperature']:.1f} °C ({c['condition']})": c["city"]
-                        for c in cooler
-                    }
-                    cool_choice = st.selectbox(
-                        "These passed the weather check", list(cool_options.keys()), key="cooler_choice"
-                    )
-                    if st.button("Plan this destination", key="cooler_go"):
-                        with st.spinner(f"Planning your trip to {cool_options[cool_choice]}..."):
-                            st.session_state["result"] = plan_for_city(
-                                result, cool_options[cool_choice], passed_check=True
-                            )
-                        st.rerun()
+                    st.info("This section couldn't be generated. Please retry in a minute.")
+        if errors and st.button("Retry missing sections"):
+            def retry_missing(progress):
+                from utils.plan_generation import generate_sections
+                update = dict(result)
+                # Retain successful sections if the retry has a partial failure.
+                fresh = generate_sections(result, only=errors)
+                for key in ("itinerary", "culture_tips", "packing_list"):
+                    update[key] = result.get(key) or fresh.get(key, "")
+                update["generation_message"] = fresh.get("generation_message", "")
+                update["generation_errors"] = [key for key in ("itinerary", "culture_tips", "packing_list") if not update[key]]
+                return update
+            updated = execute(retry_missing)
+            if updated:
+                st.session_state["result"] = updated
+                st.rerun()
+        st.download_button("Download travel guide", export_plan(result), file_name="travel-guide.md", mime="text/markdown")
+        st.caption("AI-generated suggestions: verify opening hours, reservations, entry requirements and local conditions before traveling.")
 
-    elif result.get("human_override"):
-        if result.get("override_passed"):
-            st.caption(
-                f"Planned for {result['human_override']}, which you chose from the "
-                "cooler alternatives that passed the weather check."
-            )
-        else:
-            st.caption(
-                f"Planned for {result['human_override']}, chosen by you despite the weather check."
-            )
+with st.expander("How the agents work"):
+    st.markdown("**1. Understand your style** → **2. Rank destinations** → **3. Check current weather** → **4–6. Write itinerary, cultural tips and packing list**")
+    st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; three independent writing agents call one shared generation client, trying Gemini first and Hugging Face when Gemini cannot respond. Every discovery pauses for your approval. If no city passes the weather preference check, you can override it or search alternatives.")
+    st.caption("Discovery filters a sourced catalogue by explicit requirements, then ranks supported matches using semantic similarity and evidence. Quieter-area recommendations refer to specific locations, not entire cities. It does not search flights, verify availability or make bookings.")
+    st.link_button("Explore the source on GitHub", "https://github.com/madhumitha-gv/Multi-Agent-Travel-Discovery-Planner")
