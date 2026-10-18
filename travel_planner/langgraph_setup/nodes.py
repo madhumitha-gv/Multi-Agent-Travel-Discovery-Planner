@@ -26,6 +26,9 @@ def analyze_persona(state: dict) -> dict:
 
 # Step 2: Recommend destinations based on persona
 def recommend_destinations(state: dict) -> dict:
+    from utils.preferences import extract_requirements
+    needs = extract_requirements(state.get("user_input", ""))
+    state["matching_requirements"] = needs
     matches = destination_agent.run(state)
 
     if not matches or not isinstance(matches, list):
@@ -34,6 +37,11 @@ def recommend_destinations(state: dict) -> dict:
         state["destination_scores"] = {}
         state["destinations"] = []
         state["all_recommendations"] = []
+        state["matching_message"] = (
+            "Your request contains conflicting requirements. Please clarify which you prefer."
+            if needs["conflicts"] else
+            "No sufficiently supported destinations meet all your requirements in this catalogue. Try allowing a city base with nearby excursions, or broaden one preference."
+        )
         return state
 
     log("Destination shortlist: " + ", ".join(d["name"] for d in matches))
@@ -42,6 +50,7 @@ def recommend_destinations(state: dict) -> dict:
     state["top_destination"] = matches[0]["name"]
     state["destination_scores"] = {d["name"]: d["score"] for d in matches}
     state["destinations"] = [d["name"] for d in matches]
+    state["matching_message"] = "Only " + str(len(matches)) + " supported match(es) found; requirements were not relaxed." if len(matches) < 3 else ""
 
     return state
 
@@ -68,6 +77,7 @@ def check_weather(state: dict) -> dict:
 
     # ✅ Log this destination's weather outcome
     state["weather_log"].append({
+        **{key: destination[key] for key in ("lat", "lng", "match_reasons", "match_sources", "match_area", "match_limits", "score_components") if key in destination},
         "city": destination["name"],
         "country": destination.get("country", ""),
         "temperature": temp,

@@ -26,9 +26,6 @@ h1 {letter-spacing:-.04em;}
 st.caption("NOMAD'S NEST  /  MULTI-AGENT TRAVEL DISCOVERY")
 st.title("Start with a feeling. Find your next trip.")
 st.write("Describe what you love. Six specialized agents discover a destination, check its weather, and create your two-day travel guide.")
-st.caption("Public demo · No login required · First plan may take a minute while models warm up")
-if "gemini|" in os.getenv("GEN_CANDIDATES", "gemini|"):
-    st.caption("Writing uses Gemini's free API tier. Requests are limited; avoid sharing personal or sensitive information. Google may use free-tier inputs and outputs to improve its products.")
 
 EXAMPLES = {
     "Choose an example…": "",
@@ -138,8 +135,7 @@ def find_alternatives(result):
     from agents.destination_agent import rank
     from utils.weather_api import fetch_apparent_temperatures
     from utils.weather_utils import get_current_weather
-    from utils.preferences import wants_coast
-    ranked = rank(result.get("persona", []), top_n=None, coastal_only=wants_coast(result.get("user_input", "")), query_text=result.get("user_input", ""))
+    ranked = rank(result.get("persona", []), top_n=None, query_text=result.get("user_input", ""))
     already = {entry["city"] for entry in result.get("weather_log", [])}
     ranked = [c for c in ranked if c["name"] not in already]
     temperatures = fetch_apparent_temperatures((c["lat"], c["lng"]) for c in ranked)
@@ -180,6 +176,10 @@ if traces:
     st.caption("Execution events and provider outcomes. No credentials or private model reasoning are shown.")
 
 result = st.session_state.get("result")
+if result and result.get("matching_message"):
+    st.info(result["matching_message"])
+if result and not result.get("all_recommendations") and result.get("matching_message"):
+    result = None
 if result:
     st.divider()
     preferences = result.get("persona", [])
@@ -207,6 +207,15 @@ if result:
         else:
             st.info("No weather observations are available.")
         st.caption("Current apparent temperature from Open-Meteo; cached for up to one hour. This is a temperature preference check, not a travel safety assessment.")
+        for candidate in result.get("all_recommendations", []):
+            if candidate.get("match_reasons"):
+                st.markdown("**" + candidate["name"] + "**")
+                for reason in candidate["match_reasons"]:
+                    st.write(reason)
+                for source in candidate.get("match_sources", []):
+                    st.markdown(f"[{source['label']} evidence]({source['url']})")
+                for note in candidate.get("match_limits", []):
+                    st.caption(note)
 
     if needs_choice(result):
         mode = st.radio("How would you like to continue?", ["Choose a shortlisted city", "Find comfortable alternatives"], horizontal=True)
@@ -270,5 +279,5 @@ if result:
 with st.expander("How the agents work"):
     st.markdown("**1. Understand your style** → **2. Rank destinations** → **3. Check current weather** → **4–6. Write itinerary, cultural tips and packing list**")
     st.write("Persona classification and destination matching run locally with DeBERTa and MiniLM. LangGraph coordinates the weather decision loop; three independent writing agents call one shared generation client, trying Gemini first and Hugging Face when Gemini cannot respond. Every discovery pauses for your approval. If no city passes the weather preference check, you can override it or search alternatives.")
-    st.caption("Discovery uses a curated 500-city catalogue with broad travel categories. It does not search flights, verify availability or make bookings.")
+    st.caption("Discovery filters a sourced catalogue by explicit requirements, then ranks supported matches using semantic similarity and evidence. Quieter-area recommendations refer to specific locations, not entire cities. It does not search flights, verify availability or make bookings.")
     st.link_button("Explore the source on GitHub", "https://github.com/madhumitha-gv/Multi-Agent-Travel-Discovery-Planner")

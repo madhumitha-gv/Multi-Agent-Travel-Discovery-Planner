@@ -76,3 +76,16 @@ def test_approval_gate_checks_all_candidates_and_does_not_generate(graph,monkeyp
     assert result['itinerary']==''
     agents.itinerary_agent.run.assert_not_called()
     agents.culture_agent.cultural_tips.assert_not_called()
+
+
+def test_unsupported_requirements_never_reach_weather_or_writers(graph,monkeypatch):
+    nodes,runner,agents=graph
+    monkeypatch.setattr(nodes.destination_agent, 'run', lambda state: [])
+    weather=Mock()
+    monkeypatch.setattr(nodes,'fetch_apparent_temperature',weather)
+    result=runner.run_trip_planner('quiet beaches, no cities',require_approval=True)
+    assert result['all_recommendations']==[]
+    assert 'No sufficiently supported' in result['matching_message']
+    assert not result.get('awaiting_approval')
+    weather.assert_not_called()
+    agents.itinerary_agent.run.assert_not_called()

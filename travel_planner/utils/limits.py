@@ -32,7 +32,7 @@ def admit(session_starts, consumes_quota=True):
         if len(recent) >= int(_number("SESSION_PLANS_PER_HOUR", 5, 1, 50)):
             raise LimitError("You've reached the demo limit for this hour. Please return later.")
         if len([t for t in _starts if now - t < 60]) >= int(_number("GLOBAL_PLANS_PER_MINUTE", 1, 1, 30)):
-            raise LimitError("Please allow a minute between demo requests to protect the free API quota.")
+            raise LimitError("Please allow me some time.")
         if _active:
             raise LimitError("Another trip is being planned. Please try again in a moment.")
         if len(_starts) >= int(_number("GLOBAL_PLANS_PER_DAY", 10, 1, 1000)):

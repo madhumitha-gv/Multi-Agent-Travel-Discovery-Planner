@@ -85,3 +85,16 @@ def test_approval_button_generates_and_records_human_decision(monkeypatch):
     assert result['itinerary']=='Day 1: Beach walk'
     assert any('Human approval: Miami' in event['Event'] for event in app.session_state['trace_events'])
     limits._starts.clear()
+
+
+def test_no_supported_matches_explains_evidence_gap_without_approval():
+    app=AppTest.from_file(str(APP))
+    app.session_state['result']={
+        'persona':['nature'], 'top_destination':'Unknown', 'weather_check_result':'fail',
+        'all_recommendations':[], 'matching_message':'No sufficiently supported destinations meet all your requirements.',
+        'weather_log':[],
+    }
+    app.run(timeout=30)
+    assert not app.exception
+    assert any('No sufficiently supported' in i.value for i in app.info)
+    assert not any(b.label=='Approve destination & build guide' for b in app.button)

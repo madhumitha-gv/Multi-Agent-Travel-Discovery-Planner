@@ -20,3 +20,5 @@ class TripState(TypedDict, total=False):
     generation_message: str
     require_approval: bool
     awaiting_approval: bool
+    matching_requirements: dict
+    matching_message: str
